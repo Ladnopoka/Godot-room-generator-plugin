@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ci7nx8wfe8vdk"]
 
-[ext_resource type="FontFile" uid="uid://cg5e10waxsb3x" path="res://addons/editor-plugin/fonts/Bildad.ttf" id="1_dy7wi"]
+[ext_resource type="FontFile" uid="uid://cg5e10waxsb3x" path="res://addons/room-generator/fonts/Bildad.ttf" id="1_dy7wi"]
 
 [sub_resource type="Theme" id="Theme_qhqxy"]
 default_font = ExtResource("1_dy7wi")
