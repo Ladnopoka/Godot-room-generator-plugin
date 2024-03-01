@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://3jaggpfclhi3"]
+
+[ext_resource type="PackedScene" uid="uid://ci66d6nlmqckg" path="res://addons/room-generator/dungeon/dungeon_menu.tscn" id="1_h4he6"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="dungeon_grid_0" parent="." instance=ExtResource("1_h4he6")]

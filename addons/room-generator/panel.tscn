@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci7nx8wfe8vdk"]
+
+[ext_resource type="FontFile" uid="uid://cg5e10waxsb3x" path="res://addons/editor-plugin/fonts/Bildad.ttf" id="1_dy7wi"]
+
+[sub_resource type="Theme" id="Theme_qhqxy"]
+default_font = ExtResource("1_dy7wi")
+default_font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm5nh"]
+bg_color = Color(0.807843, 0.529412, 0.243137, 1)
+border_color = Color(0.813791, 0.798162, 0.774307, 1)
+
+[node name="RoomGenerator" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+
+[node name="Models" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="Wall" type="Button" parent="TabContainer/Models"]
+layout_mode = 2
+text = "Add Wall"
+
+[node name="Cube" type="Button" parent="TabContainer/Models"]
+layout_mode = 2
+text = "Add Cube"
+
+[node name="DungeonGeneratorMenu" type="MenuButton" parent="TabContainer/Models"]
+layout_mode = 2
+theme = SubResource("Theme_qhqxy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pm5nh")
+text = "Dungeon Menu"
+
+[node name="Layouts" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Room" type="Button" parent="TabContainer/Layouts"]
+layout_mode = 2
+text = "Add Room"
+
+[node name="Hideout" type="Button" parent="TabContainer/Layouts"]
+layout_mode = 2
+text = "Add Hideout"
+
+[node name="Dungeon" type="Button" parent="TabContainer/Layouts"]
+layout_mode = 2
+text = "Add Dungeon"
+
+[node name="Generator" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Generator"]
+layout_mode = 2
+
+[node name="SpinBox2" type="SpinBox" parent="TabContainer/Generator"]
+layout_mode = 2
+
+[node name="SpinBox3" type="SpinBox" parent="TabContainer/Generator"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="TabContainer/Generator"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="TabContainer/Generator"]
+layout_mode = 2
+
+[node name="Preview" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2

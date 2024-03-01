@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj2ovq0bkg3hh"]
+
+[ext_resource type="PackedScene" uid="uid://cs1c54q62868r" path="res://addons/room-generator/import_tiles/dungeon_tiles.glb" id="1_nfv8i"]
+
+[node name="dungeon_tiles" instance=ExtResource("1_nfv8i")]

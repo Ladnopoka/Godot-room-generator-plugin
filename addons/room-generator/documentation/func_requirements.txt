@@ -1,0 +1,60 @@
+---
+
+Non-functional Requirements:
+•       NF1: The tool works as an editor extension for Godot 4.x and works as such (within the editor at design-time and not at game-runtime).
+DONE
+•       NF2: The extension has a user interface that becomes available when the extension is installed.
+DONE
+•       NF3: The extension can be added to individual projects.
+DONE
+•       NF4: The output of the extension does not generate a dependency to the extension. In other words, removing the extension after having done the work should not break the project, meaning the extension does not need to be included to maintain the project and does not need to be compiled into a finished game/experience.
+DONE
+
+
+Functional Requirements (Godot Editor UI):
+•       F1: The extension adds a new Tab to the bottom Panel ‘3D RoomGen’.
+DONE - bottom right panel.
+
+•       The bottom Panel has two tabs: “Models” and “Layouts” within.
+DONE
+
+
+•       F2: Model works with individual scenes that a designer wants to work with in a project:
+(Note: These scenes are typically rooms, or sections of a scenery, like a part of a surface)
+DONE
+
+•       F2.1: The user can attach a scene (e.g., of a room) as such a ‘model’ and instantiate it with a button.
+DONE
+
+
+•       F2.2: Models would (ideally) be previewed on the right side of the panel
+•       F2.3: Models can be added and deleted.
+•       F2.4: Since Models are scenes that exist in the project (in the FileSystem), the view must check if the scene still exist (i.e., is part of the project). If the scene is gone, the list must be updated.
+•       F3: Layouts  works with arrangements of models (as scenes) that the designer can arrange for more complex structures:
+•       F3.1: The user can define layouts from templates, as building blocks used during a design session.
+•       F3.2: Models can be rotated and placed (e.g., a room models, arranged in a typical floor layout of an apartment or a part of an office complex) into these larger structures.
+
+Possible Simplifications (that can be applied)
+•       Template scenes must fit a grid or possible sizes, e.g., maximum size 5m x 5m x 3m, in 1m steps – like on a metered grid. This would mean that a door could only be 1 meter wide (and not 90cm) and 2 meters high (and not 2.20m). This would simplify the modelling as doors could be easier matched.
+•       These gridding would be a requirement on the designer of the scenes (and not being checked by the extension). Models that do not confirm with this grid, would not align well with other models (e.g., when combining two rooms). Practically, you would prototype a 4-5 room types (e.g., L-shaped, square, rectangular) following these grid guidelines.
+
+Use Cases:
+•       The user should be able to generate a single room.
+•       Two rooms, connected by a door
+•       Three rooms, connected by a hallway
+•       two rooms, connected by a hallway that has some steps going upwards.
+•       three rooms, connected
+
+---
+
+Having said that and now having learnt a lot more about 2D tile maps, I found out that 3d grid maps do an awful lot of that already. Please watch this video and try it out:
+
+https://www.youtube.com/watch?v=JxbnStn-BIY
+
+
+Godot 4 GridMap Tutorial - TileMaps, but 3D
+In this Godot 4.1.1 tutorial video I talk about how we can use grid maps in order to create fast levels. I discuss everything you need in order to start using GridMaps, including MeshLibraries, how to navigate the GridMap interface, and tips and tricks to avoid common issues when using them. Gridmaps are an important tool in Godot level design ...
+www.youtube.com
+
+
+Perhaps there is a way of the plugin to tap into the 3D grid map feature and add a layer of content (set of default rooms) and a logic of selecting them smartly (e.g., based on connection points such as doors or open sections) to form larger layouts (e.g., two rooms connecting, or a room opening up in a corridor)?
