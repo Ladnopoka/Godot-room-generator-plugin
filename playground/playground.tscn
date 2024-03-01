@@ -7,7 +7,8 @@
 
 [node name="dungeon_grid_0" type="Node3D" parent="." instance=ExtResource("1_aaggc")]
 script = ExtResource("2_kkcoa")
-border_size = 100
-room_size_maximum = 24
+border_size = 50
+room_size_minimum = 12
+room_size_maximum = 3
 room_number = 6
 room_margin = 3
