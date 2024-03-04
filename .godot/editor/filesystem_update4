@@ -1,2 +1,2 @@
-res://addons/room-generator/dungeon/DungeonMenu.gd
+res://addons/room-generator/dungeon/dungeon_menu.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres

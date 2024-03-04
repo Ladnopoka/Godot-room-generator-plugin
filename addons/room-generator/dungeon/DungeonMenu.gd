@@ -4,7 +4,7 @@ extends Node3D
 @onready var grid_map : GridMap = $GridMap
 
 @export var start : bool = false : set = set_start
-@export var border_size : int = 20 : set = set_border_size
+@export var border_size : int = 10 : set = set_border_size
 @export var room_size_minimum : int = 2
 @export var room_size_maximum : int = 4
 @export var room_number : int = 3
@@ -63,9 +63,9 @@ func generate_room(rec: int):
 	for r in height: #for every row in height
 		for c in width:	#for every row in width
 			var pos : Vector3i = start_pos + Vector3i(c, 0 , r)
-			grid_map.set_cell_item(pos, 2)
-			room.append(pos)
-	room_tiles.append(room)
+			grid_map.set_cell_item(pos, 4) #set texture for dungeon walls
+			room.append(pos) 	#create a wall for each iteration
+	room_tiles.append(room) #append whole room to scene
 	
 	#calculating x an z positions separately
 	var avg_x : float = start_pos.x + (float(width)/2)
