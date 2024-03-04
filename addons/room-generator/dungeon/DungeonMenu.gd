@@ -39,6 +39,32 @@ func generate():
 		generate_room(room_recursion)
 	print(room_positions) #debugger to see position values
 	
+	var room_pv2 : PackedVector2Array = []
+	var delaunay_graph : AStar2D = AStar2D.new() #AStar2D requires and ID and a position for each point
+	var min_span_tree_graph : AStar2D = AStar2D.new()
+	
+	#turn room positions into Vector2's, this only places the points
+	for p in room_positions:
+		room_pv2.append(Vector2(p.x,p.z))
+		delaunay_graph.add_point(delaunay_graph.get_available_point_id(), Vector2(p.x,p.z))
+		min_span_tree_graph.add_point(min_span_tree_graph.get_available_point_id(), Vector2(p.x,p.z))
+	
+	# Doing the actual triangulation
+	# triangulate_delaunay() function here takes in a packed Vector2 array
+	# and returns an array of integers in a form of a packed int32 array
+	# we need to conver this into a regular array first
+	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_pv2))
+	
+	# explained more in depth in the report
+	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
+		var p1 : int = delaunay_triangulation.pop_front()
+		var p2 : int = delaunay_triangulation.pop_front()
+		var p3 : int = delaunay_triangulation.pop_front()
+		delaunay_graph.connect_points(p1, p2)
+		delaunay_graph.connect_points(p2, p3)
+		delaunay_graph.connect_points(p1, p3)
+		
+	
 func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached
 		return
