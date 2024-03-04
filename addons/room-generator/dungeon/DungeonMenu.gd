@@ -12,7 +12,7 @@ extends Node3D
 @export var room_recursion : int = 15
 
 @export_range(0,1) var survival_chance : float = 0.25
-@export_multiline var custom_seed = "" : set = set_seed
+@export_multiline var custom_seed : String = "" : set = set_seed
 func set_seed(val):
 	custom_seed = val
 	seed(val.hash())
@@ -41,13 +41,11 @@ func visualize_border():
 func generate():
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
-	
 	if custom_seed: set_seed(custom_seed)
 	
 	visualize_border()
 	for i in room_number: # for every room number
 		generate_room(room_recursion)
-	print(room_positions) #debugger to see position values
 	
 	# Below code is the minimum spanning tree algorithm
 	var room_pv2 : PackedVector2Array = []
@@ -66,11 +64,11 @@ func generate():
 	# we need to conver this into a regular array first
 	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_pv2))
 	
-	# explained more in depth in the report
+	# explained more in depth in the report, but this is basically the Delaunay graph
 	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
-		var p1 = delaunay_triangulation.pop_front()
-		var p2 = delaunay_triangulation.pop_front()
-		var p3 = delaunay_triangulation.pop_front()
+		var p1 : int = delaunay_triangulation.pop_front()
+		var p2 : int = delaunay_triangulation.pop_front()
+		var p3 : int = delaunay_triangulation.pop_front()
 		delaunay_graph.connect_points(p1, p2)
 		delaunay_graph.connect_points(p2, p3)
 		delaunay_graph.connect_points(p1, p3)
@@ -80,7 +78,7 @@ func generate():
 	while visited_points.size() != min_span_tree_graph.get_point_count(): # loop until size of visited points is higher than graph
 		var possible_connections : Array[PackedInt32Array] = []
 		for vp in visited_points: #for every visited point in points
-			for c in delaunay_graph.get_point_connections(vp): #for each connection
+			for c in delaunay_graph.get_point_connections(vp): #for each connection within visited point
 				if !visited_points.has(c): #make sure the point is not visited already
 					var con : PackedInt32Array = [vp, c]
 					possible_connections.append(con)
@@ -100,11 +98,14 @@ func generate():
 			if c > p:
 				var kill = randf()
 				if survival_chance > kill:
+					print("Survival: ", survival_chance)
+					print("Kill: ", kill)
 					tunnel_graph.connect_points(p, c)
 					
 	create_tunnels(tunnel_graph)
 	
 func create_tunnels(tunnel_graph):
+	# //// this part of the code is for marking the doors on the rooms
 	var tunnels : Array[PackedVector3Array] = []
 	for p in tunnel_graph.get_point_ids():
 		for c in tunnel_graph.get_point_connections(p):
@@ -128,6 +129,7 @@ func create_tunnels(tunnel_graph):
 				tunnels.append(tunnel)
 				grid_map.set_cell_item(tile_from, 5)
 				grid_map.set_cell_item(tile_to, 5)
+	# /////// end of code for marking doors
 
 	var astar = AStarGrid2D.new()
 	astar.size = Vector2i.ONE * border_size
@@ -135,7 +137,8 @@ func create_tunnels(tunnel_graph):
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	
-	for t in grid_map.get_used_cells_by_item(0):
+	#Define the obstacle tiles here
+	for t in grid_map.get_used_cells_by_item(4):
 		astar.set_point_solid(Vector2i(t.x, t.z))
 	
 	#actual pathfinding	
@@ -143,10 +146,6 @@ func create_tunnels(tunnel_graph):
 		var pos_from = Vector2i(tun[0].x, tun[0].z)
 		var pos_to = Vector2i(tun[1].x, tun[1].z)
 		var hall = astar.get_point_path(pos_from, pos_to)
-		
-		print("pos from: ", pos_from)
-		print("pos to: ", pos_to)
-		print("hall: ", hall)
 		
 		for t in hall:
 			var pos = Vector3i(t.x, 0, t.y)
