@@ -99,7 +99,7 @@ func generate():
 	
 func create_tunnels(tunnel_graph):
 	var tunnels = []
-	for p in tunnel_graph.get_point_is():
+	for p in tunnel_graph.get_point_ids():
 		for c in tunnel_graph.get_point_connections(p):
 			if c > p:
 				var room_from = room_tiles[p]
@@ -111,7 +111,7 @@ func create_tunnels(tunnel_graph):
 					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
 							tile_from = t
 				for t in room_to:
-					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
+					if t.distance_squared_to(room_positions[p]) < tile_from.distance_squared_to(room_positions[p]):
 							tile_to = t
 				
 				var tunnel = [tile_from, tile_to]
@@ -128,15 +128,15 @@ func create_tunnels(tunnel_graph):
 	for t in grid_map.get_used_cells_by_item(0):
 		astar.set_point_solid(Vector2i(t.x, t.z))
 		
-	for tun in tunnels:
+	for tun in tunnels: # for every tunnel in tunnels, we are making a hall variable to store the path
 		var pos_from = Vector2i(tun[0].x, tun[0].z)
 		var pos_to = Vector2i(tun[1].x, tun[1].z)
-		var hall : PackedVector2Array = astar.get_point_path(pos_from, pos_to)
+		var hall = astar.get_point_path(pos_from, pos_to)
 		
 		for t in hall:
 			var pos = Vector3i(t.x, 0, t.y)
 			if grid_map.get_cell_item(pos) < 0:
-				grid_map.set_cell_item(pos, 1)
+				grid_map.set_cell_item(pos, 6)
 				
 func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached

@@ -5,7 +5,6 @@
 
 [node name="DungeonMenu" type="Node3D"]
 script = ExtResource("1_ft6v0")
-survival_chance = null
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_63s47")
