@@ -32,15 +32,15 @@ func visualize_border():
 			grid_map.set_cell_item(Vector3i(-1, 0, pos1), 5)
 	
 func generate():
-	room_tiles.clear()
-	room_positions.clear()
+	room_tiles.clear() #need to clear
+	room_positions.clear() #need to clear 
 	visualize_border()
 	for i in room_number: # for every room number
 		generate_room(room_recursion)
-	print(room_positions)
+	print(room_positions) #debugger to see position values
 	
 func generate_room(rec: int):
-	if !rec > 0:
+	if !rec > 0: #don't run if recursion limit is reached
 		return
 	# get random width and heights
 	var width : int = (randi() % (room_size_maximum - room_size_minimum)) + room_size_minimum
@@ -52,11 +52,11 @@ func generate_room(rec: int):
 	start_pos.z = randi() % (border_size - height + 1)
 	
 	# Minimum distance checker that rooms should keep away form each other (margin)
-	for r in range(-room_margin, height + room_margin): 
-		for c in range(-room_margin, width + room_margin):	
-			var pos : Vector3i = start_pos + Vector3i(c, 0 , r)
-			if grid_map.get_cell_item(pos) == 4:
-				generate_room(rec-1)
+	for r in range(-room_margin, height + room_margin): #for every row in height
+		for c in range(-room_margin, width + room_margin):	#for every column in width
+			var pos : Vector3i = start_pos + Vector3i(c, 0 , r) # variable for the position
+			if grid_map.get_cell_item(pos) == 4: #check if the cell is a previously defined texture (hardcoded number fix later)
+				generate_room(rec-1) #gererate rooms until recursion checker is triggered
 				return
 	
 	#we fill in the columns from left to right 
@@ -65,8 +65,8 @@ func generate_room(rec: int):
 		for c in width:	#for every column in width
 			var pos : Vector3i = start_pos + Vector3i(c, 0 , r) # variable for the position
 			grid_map.set_cell_item(pos, 4) #set texture for dungeon walls
-			room.append(pos) 	#create a wall for each iteration
-	room_tiles.append(room) #append whole room to scene
+			room.append(pos) 	#add to room array for each iteration
+	room_tiles.append(room) #append whole room to the tiles
 	
 	#calculating x an z positions separately
 	var avg_x : float = start_pos.x + (float(width)/2)
