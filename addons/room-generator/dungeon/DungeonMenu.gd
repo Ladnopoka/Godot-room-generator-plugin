@@ -53,17 +53,28 @@ func generate():
 	# triangulate_delaunay() function here takes in a packed Vector2 array
 	# and returns an array of integers in a form of a packed int32 array
 	# we need to conver this into a regular array first
-	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_pv2))
+	var delaunay_triangulation = Array(Geometry2D.triangulate_delaunay(room_pv2))
 	
 	# explained more in depth in the report
 	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
-		var p1 : int = delaunay_triangulation.pop_front()
-		var p2 : int = delaunay_triangulation.pop_front()
-		var p3 : int = delaunay_triangulation.pop_front()
+		var p1 = delaunay_triangulation.pop_front()
+		var p2 = delaunay_triangulation.pop_front()
+		var p3 = delaunay_triangulation.pop_front()
 		delaunay_graph.connect_points(p1, p2)
 		delaunay_graph.connect_points(p2, p3)
 		delaunay_graph.connect_points(p1, p3)
 		
+	var visited_points = []
+	visited_points.append(randi() % room_positions.size())
+	while visited_points.size() != min_span_tree_graph.get_point_count():
+		var possible_connections = []
+		for vp in visited_points:
+			for c in delaunay_graph.get_point_connections(vp):
+				if !visited_points.has(c):
+					var con = [vp,c]
+					possible_connections.append(con)
+		
+		var connection = possible_connections.pick_random()
 	
 func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached
