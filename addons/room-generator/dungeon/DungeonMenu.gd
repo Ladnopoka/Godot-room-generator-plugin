@@ -11,6 +11,8 @@ extends Node3D
 @export var room_margin : int = 1 #minimum distance the rooms must keep from each other
 @export var room_recursion : int = 15
 
+@export_range(0,1) var survival_chance : float = 0.25
+
 var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
 
@@ -39,6 +41,7 @@ func generate():
 		generate_room(room_recursion)
 	print(room_positions) #debugger to see position values
 	
+	# Below code is the minimum spanning tree algorithm
 	var room_pv2 : PackedVector2Array = []
 	var delaunay_graph : AStar2D = AStar2D.new() #AStar2D requires and ID and a position for each point
 	var min_span_tree_graph : AStar2D = AStar2D.new()
@@ -75,7 +78,66 @@ func generate():
 					possible_connections.append(con)
 		
 		var connection = possible_connections.pick_random()
+		for pc in possible_connections:
+			if room_pv2[pc[0]].distance_squared_to(room_pv2[pc[1]]) < room_pv2[connection[0]].distance_squared_to(room_pv2[connection[1]]):
+				connection = pc
+				
+		visited_points.append(connection[1])
+		min_span_tree_graph.connect_points(connection[0], connection[1])
+		delaunay_graph.disconnect_points(connection[0], connection[1])
+		
+	var tunnel_graph = min_span_tree_graph
 	
+	for p in delaunay_graph.get_point_ids():
+		for c in delaunay_graph.get_point_connections(p):
+			if c>p:
+				var kill = randf()
+				if survival_chance > kill:
+					tunnel_graph.connect_points(p, c)
+					
+	create_tunnels(tunnel_graph)
+	
+func create_tunnels(tunnel_graph):
+	var tunnels = []
+	for p in tunnel_graph.get_point_is():
+		for c in tunnel_graph.get_point_connections(p):
+			if c > p:
+				var room_from = room_tiles[p]
+				var room_to = room_tiles[c]
+				var tile_from = room_from[0]
+				var tile_to = room_to[0]
+				
+				for t in room_from:
+					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
+							tile_from = t
+				for t in room_to:
+					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
+							tile_to = t
+				
+				var tunnel = [tile_from, tile_to]
+				tunnels.append(tunnel)
+				grid_map.set_cell_item(tile_from, 5)
+				grid_map.set_cell_item(tile_to, 5)
+
+	var astar = AStarGrid2D.new()
+	astar.size = Vector2i.ONE * border_size
+	astar.update()
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	
+	for t in grid_map.get_used_cells_by_item(0):
+		astar.set_point_solid(Vector2i(t.x, t.z))
+		
+	for tun in tunnels:
+		var pos_from = Vector2i(tun[0].x, tun[0].z)
+		var pos_to = Vector2i(tun[1].x, tun[1].z)
+		var hall : PackedVector2Array = astar.get_point_path(pos_from, pos_to)
+		
+		for t in hall:
+			var pos = Vector3i(t.x, 0, t.y)
+			if grid_map.get_cell_item(pos) < 0:
+				grid_map.set_cell_item(pos, 1)
+				
 func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached
 		return

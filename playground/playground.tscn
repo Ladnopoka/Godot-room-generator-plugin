@@ -7,4 +7,3 @@
 
 [node name="dungeon_grid_0" type="Node3D" parent="." instance=ExtResource("1_3k68i")]
 script = ExtResource("2_vdo22")
-room_number = 1
