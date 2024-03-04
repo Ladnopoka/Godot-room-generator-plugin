@@ -1,6 +1,5 @@
-res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.tscn
-res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres
-res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.gd
 res://addons/room-generator/dungeon/dungeon_menu.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres
 res://addons/room-generator/dungeon/DungeonMesh.gd
-res://playground/playground.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.gd

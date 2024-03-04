@@ -1,16 +1,19 @@
 @tool
 extends Node3D
 
-@onready var wall_up = $wall_up
-@onready var wall_left = $wall_left
-@onready var wall_down = $wall_down
-@onready var wall_right = $wall_right
-
 func remove_wall_up():
-	wall_up.free()
+	$wall_up.free()
 func remove_wall_down():
-	wall_down.free()
+	$wall_down.free()
 func remove_wall_left():
-	wall_left.free()
+	$wall_left.free()
 func remove_wall_right():
-	wall_right.free()
+	$wall_right.free()
+func remove_door_up():
+	$door_up.free()
+func remove_door_down():
+	$door_down.free()
+func remove_door_left():
+	$door_left.free()
+func remove_door_right():
+	$door_right.free()
