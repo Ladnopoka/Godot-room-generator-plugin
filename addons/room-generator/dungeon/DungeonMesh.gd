@@ -14,6 +14,28 @@ var directions = {
 
 var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.tscn")
 
+func handle_none(cell, dir):
+	pass
+func handle_00(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_01(cell, dir):
+	pass
+func handle_02(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_10(cell, dir):
+	pass
+func handle_11(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_12(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_20(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_21(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_22(cell, dir):
+	cell.call("remove_wall_"+dir)		
+	
+
 func set_start(val):
 	if Engine.is_editor_hint():
 		create_dungeon()#
@@ -31,3 +53,12 @@ func create_dungeon():
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
+			
+			for i in 4:
+				var cell_n = c + directions.values()[i]
+				var cell_n_index = grid_map.get_cell_item(cell_n)
+				if cell_n_index == -1 || cell_n_index == 3:
+					handle_none(dungeon_cell, directions.keys()[i])
+				else:
+					var key = str(cell_index) + str(cell_n_index)
+					call("handle_"+key, dungeon_cell, directions.keys()[i])
