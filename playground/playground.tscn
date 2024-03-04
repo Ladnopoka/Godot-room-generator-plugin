@@ -12,6 +12,7 @@ room_size_minimum = 4
 room_size_maximum = 12
 room_number = 4
 survival_chance = 0.055
+custom_seed = null
 
 [node name="from" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 18)

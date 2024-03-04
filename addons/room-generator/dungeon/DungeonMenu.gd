@@ -12,12 +12,17 @@ extends Node3D
 @export var room_recursion : int = 15
 
 @export_range(0,1) var survival_chance : float = 0.25
+@export_multiline var custom_seed = "" : set = set_seed
+func set_seed(val):
+	custom_seed = val
+	seed(val.hash())
 
 var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
 
 func set_start(val:bool):
-	generate() #eventually generate a whole dungeon
+	if Engine.is_editor_hint():
+		generate() #eventually generate a whole dungeon
 
 func set_border_size(val : int):
 	border_size = val
@@ -36,6 +41,9 @@ func visualize_border():
 func generate():
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
+	
+	if custom_seed: set_seed(custom_seed)
+	
 	visualize_border()
 	for i in room_number: # for every room number
 		generate_room(room_recursion)
