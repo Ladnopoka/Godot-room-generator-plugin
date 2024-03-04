@@ -41,7 +41,6 @@ func handle_22(cell, dir):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)
 	
-
 func set_start(val):
 	if Engine.is_editor_hint():
 		create_dungeon()
