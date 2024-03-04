@@ -4,7 +4,7 @@ extends Node3D
 @onready var grid_map : GridMap = $GridMap
 
 @export var start : bool = false : set = set_start
-@export var border_size : int = 10 : set = set_border_size
+@export var border_size : int = 20 : set = set_border_size
 @export var room_size_minimum : int = 2
 @export var room_size_maximum : int = 4
 @export var room_number : int = 3
@@ -25,7 +25,7 @@ func set_border_size(val : int):
 func visualize_border():
 	if grid_map:
 		grid_map.clear() # need to clear every time because the textures stay
-		for pos1 in range(-1, border_size+1):
+		for pos1 in range(-1, border_size+1): # border size has to be 1 grid cell bigger because of inner contents
 			grid_map.set_cell_item(Vector3i(pos1, 0, -1), 5)
 			grid_map.set_cell_item(Vector3i(pos1, 0, border_size), 5)
 			grid_map.set_cell_item(Vector3i(border_size, 0, pos1), 5)
@@ -35,7 +35,7 @@ func generate():
 	room_tiles.clear()
 	room_positions.clear()
 	visualize_border()
-	for i in room_number:
+	for i in room_number: # for every room number
 		generate_room(room_recursion)
 	print(room_positions)
 	
@@ -48,21 +48,22 @@ func generate_room(rec: int):
 	
 	#pick starting position
 	var start_pos : Vector3i
-	start_pos.x = randi() % (border_size - width + 1) # need to have +1 there at the end because of how the mod operator works in godot
+	start_pos.x = randi() % (border_size - width + 1) # need to have +1 there at the end because of how the mod operator works
 	start_pos.z = randi() % (border_size - height + 1)
 	
+	# Minimum distance checker that rooms should keep away form each other (margin)
 	for r in range(-room_margin, height + room_margin): 
 		for c in range(-room_margin, width + room_margin):	
 			var pos : Vector3i = start_pos + Vector3i(c, 0 , r)
-			if grid_map.get_cell_item(pos) == 0:
+			if grid_map.get_cell_item(pos) == 4:
 				generate_room(rec-1)
 				return
 	
 	#we fill in the columns from left to right 
 	var room : PackedVector3Array = []
 	for r in height: #for every row in height
-		for c in width:	#for every row in width
-			var pos : Vector3i = start_pos + Vector3i(c, 0 , r)
+		for c in width:	#for every column in width
+			var pos : Vector3i = start_pos + Vector3i(c, 0 , r) # variable for the position
 			grid_map.set_cell_item(pos, 4) #set texture for dungeon walls
 			room.append(pos) 	#create a wall for each iteration
 	room_tiles.append(room) #append whole room to scene

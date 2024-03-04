@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-const dungeon_menu_script = preload("res://addons/room-generator/dungeon/DungeonMenu.gd")
+#const dungeon_menu_script = preload("res://addons/room-generator/dungeon/DungeonMenu.gd")
 const panel = preload("res://addons/room-generator/panel.tscn")
 const RoomTemplate = preload("res://addons/room-generator/room_template/room_template.tscn")
 const dungeon_corner_in = preload("res://addons/room-generator/dungeon_tiles/dungeon_corner_in.tscn")

@@ -5,10 +5,6 @@
 
 [node name="DungeonMenu" type="Node3D"]
 script = ExtResource("1_ft6v0")
-border_size = 100
-room_size_maximum = 24
-room_number = 6
-room_margin = 3
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_63s47")
