@@ -56,7 +56,7 @@ func generate():
 	# triangulate_delaunay() function here takes in a packed Vector2 array
 	# and returns an array of integers in a form of a packed int32 array
 	# we need to conver this into a regular array first
-	var delaunay_triangulation = Array(Geometry2D.triangulate_delaunay(room_pv2))
+	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_pv2))
 	
 	# explained more in depth in the report
 	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
@@ -67,18 +67,18 @@ func generate():
 		delaunay_graph.connect_points(p2, p3)
 		delaunay_graph.connect_points(p1, p3)
 		
-	var visited_points = []
-	visited_points.append(randi() % room_positions.size())
-	while visited_points.size() != min_span_tree_graph.get_point_count():
-		var possible_connections = []
-		for vp in visited_points:
-			for c in delaunay_graph.get_point_connections(vp):
-				if !visited_points.has(c):
-					var con = [vp,c]
+	var visited_points : PackedInt32Array = []
+	visited_points.append(randi() % room_positions.size()) #this will give us a random point in graph
+	while visited_points.size() != min_span_tree_graph.get_point_count(): # loop until size of visited points is higher than graph
+		var possible_connections : Array[PackedInt32Array] = []
+		for vp in visited_points: #for every visited point in points
+			for c in delaunay_graph.get_point_connections(vp): #for each connection
+				if !visited_points.has(c): #make sure the point is not visited already
+					var con : PackedInt32Array = [vp, c]
 					possible_connections.append(con)
 		
-		var connection = possible_connections.pick_random()
-		for pc in possible_connections:
+		var connection : PackedInt32Array = possible_connections.pick_random()
+		for pc in possible_connections: #for each possible connection (pc)
 			if room_pv2[pc[0]].distance_squared_to(room_pv2[pc[1]]) < room_pv2[connection[0]].distance_squared_to(room_pv2[connection[1]]):
 				connection = pc
 				
@@ -111,7 +111,7 @@ func create_tunnels(tunnel_graph):
 					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
 							tile_from = t
 				for t in room_to:
-					if t.distance_squared_to(room_positions[p]) < tile_from.distance_squared_to(room_positions[p]):
+					if t.distance_squared_to(room_positions[p]) < tile_to.distance_squared_to(room_positions[p]):
 							tile_to = t
 				
 				var tunnel = [tile_from, tile_to]
