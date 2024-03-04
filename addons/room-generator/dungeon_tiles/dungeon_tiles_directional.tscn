@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddhusum83bby4"]
+[gd_scene load_steps=8 format=3 uid="uid://ddhusum83bby4"]
 
 [ext_resource type="Texture2D" uid="uid://ch3woy2gqbe7y" path="res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png" id="1_r1ce4"]
 [ext_resource type="Texture2D" uid="uid://cyjamtf15en82" path="res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png" id="2_q7vj8"]
+[ext_resource type="PackedScene" uid="uid://bygs5ahnckhgf" path="res://addons/room-generator/dungeon_tiles/dungeon_floor.tscn" id="3_vuyox"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1h6q7"]
 resource_name = "Material.001"
@@ -58,30 +59,34 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wall_up/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bslau")
 
-[node name="wall_up2" type="MeshInstance3D" parent="."]
+[node name="wall_left" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_u5hwx")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="wall_up2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="wall_left"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_up2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_left/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bslau")
 
-[node name="wall_up3" type="MeshInstance3D" parent="."]
+[node name="wall_down" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_u5hwx")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="wall_up3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="wall_down"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_up3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_down/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bslau")
 
-[node name="wall_up4" type="MeshInstance3D" parent="."]
+[node name="wall_right" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.96046e-08, 0, 1, 0, 1, 0, -1, 0, 5.96046e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_u5hwx")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="wall_up4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="wall_right"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_up4/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall_right/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bslau")
+
+[node name="floor" parent="." instance=ExtResource("3_vuyox")]
