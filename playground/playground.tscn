@@ -1,12 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1usrkdp7bvml"]
+[gd_scene load_steps=3 format=3 uid="uid://b1usrkdp7bvml"]
 
 [ext_resource type="PackedScene" uid="uid://ci66d6nlmqckg" path="res://addons/room-generator/dungeon/dungeon_menu.tscn" id="1_3k68i"]
+[ext_resource type="Script" path="res://addons/room-generator/dungeon/DungeonMenu.gd" id="2_vdo22"]
 
 [node name="Playground" type="Node3D"]
 
-[node name="dungeon_grid_0" parent="." instance=ExtResource("1_3k68i")]
-start = true
-border_size = 55
-room_size_minimum = 12
-room_size_maximum = 19
-survival_chance = 0.84
+[node name="dungeon_grid_0" type="Node3D" parent="." instance=ExtResource("1_3k68i")]
+script = ExtResource("2_vdo22")
+border_size = 40
+room_size_minimum = 4
+room_size_maximum = 12
+room_number = 4
+survival_chance = 0.055
+
+[node name="from" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 18)
+
+[node name="to" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 36)

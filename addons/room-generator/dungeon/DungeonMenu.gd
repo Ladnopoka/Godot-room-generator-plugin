@@ -87,10 +87,9 @@ func generate():
 		delaunay_graph.disconnect_points(connection[0], connection[1])
 		
 	var tunnel_graph = min_span_tree_graph
-	
 	for p in delaunay_graph.get_point_ids():
 		for c in delaunay_graph.get_point_connections(p):
-			if c>p:
+			if c > p:
 				var kill = randf()
 				if survival_chance > kill:
 					tunnel_graph.connect_points(p, c)
@@ -98,14 +97,17 @@ func generate():
 	create_tunnels(tunnel_graph)
 	
 func create_tunnels(tunnel_graph):
-	var tunnels = []
+	var tunnels : Array[PackedVector3Array] = []
 	for p in tunnel_graph.get_point_ids():
 		for c in tunnel_graph.get_point_connections(p):
 			if c > p:
-				var room_from = room_tiles[p]
-				var room_to = room_tiles[c]
-				var tile_from = room_from[0]
-				var tile_to = room_to[0]
+				var room_from : PackedVector3Array = room_tiles[p]
+				var room_to : PackedVector3Array = room_tiles[c]
+				var tile_from : Vector3 = room_from[0]
+				var tile_to : Vector3 = room_to[0]
+				
+				print("from: ", tile_from)
+				print("to: ", tile_to)
 				
 				for t in room_from:
 					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
@@ -114,7 +116,7 @@ func create_tunnels(tunnel_graph):
 					if t.distance_squared_to(room_positions[p]) < tile_to.distance_squared_to(room_positions[p]):
 							tile_to = t
 				
-				var tunnel = [tile_from, tile_to]
+				var tunnel : PackedVector3Array = [tile_from, tile_to]
 				tunnels.append(tunnel)
 				grid_map.set_cell_item(tile_from, 5)
 				grid_map.set_cell_item(tile_to, 5)
@@ -127,11 +129,16 @@ func create_tunnels(tunnel_graph):
 	
 	for t in grid_map.get_used_cells_by_item(0):
 		astar.set_point_solid(Vector2i(t.x, t.z))
-		
+	
+	#actual pathfinding	
 	for tun in tunnels: # for every tunnel in tunnels, we are making a hall variable to store the path
 		var pos_from = Vector2i(tun[0].x, tun[0].z)
 		var pos_to = Vector2i(tun[1].x, tun[1].z)
 		var hall = astar.get_point_path(pos_from, pos_to)
+		
+		print("pos from: ", pos_from)
+		print("pos to: ", pos_to)
+		print("hall: ", hall)
 		
 		for t in hall:
 			var pos = Vector3i(t.x, 0, t.y)
