@@ -76,6 +76,7 @@ func create_dungeon():
 		c.queue_free()
 	
 	var t : int = 0
+	var current_scene = EditorInterface.get_edited_scene_root()
 	
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
@@ -87,7 +88,8 @@ func create_dungeon():
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
-			dungeon_cell.set_owner(owner)
+			
+			dungeon_cell.owner = current_scene
 			t += 1
 			
 			for i in 4: #each side of the wall
