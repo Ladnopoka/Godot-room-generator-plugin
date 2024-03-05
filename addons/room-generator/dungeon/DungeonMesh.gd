@@ -41,6 +41,31 @@ func handle_22(cell, dir):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)
 	
+func handle_44(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+func handle_45(cell, dir):
+	cell.call("remove_door_"+dir)
+func handle_46(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+func handle_54(cell, dir):
+	cell.call("remove_door_"+dir)
+func handle_55(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+func handle_56(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+func handle_64(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+func handle_65(cell, dir):
+	cell.call("remove_wall_"+dir)
+func handle_66(cell, dir):
+	cell.call("remove_wall_"+dir)
+	cell.call("remove_door_"+dir)
+	
 func set_start(val):
 	if Engine.is_editor_hint():
 		create_dungeon()
@@ -54,9 +79,10 @@ func create_dungeon():
 	
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
+	print(".: ",grid_map.get_used_cells())
 	for c in grid_map.get_used_cells(): 
 		var cell_index = grid_map.get_cell_item(c)
-		if cell_index <= 2 && cell_index >= 0:
+		if cell_index <= 6 && cell_index >= 4:
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
