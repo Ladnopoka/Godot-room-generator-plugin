@@ -32,11 +32,11 @@ func set_border_size(val : int):
 func visualize_border():
 	if grid_map:
 		grid_map.clear() # need to clear every time because the textures stay
-		for pos1 in range(-1, border_size+1): # border size has to be 1 grid cell bigger because of inner contents
-			grid_map.set_cell_item(Vector3i(pos1, 0, -1), 5)
-			grid_map.set_cell_item(Vector3i(pos1, 0, border_size), 5)
-			grid_map.set_cell_item(Vector3i(border_size, 0, pos1), 5)
-			grid_map.set_cell_item(Vector3i(-1, 0, pos1), 5)
+		for pos1 in range(-1, border_size + 1): # border size has to be 1 grid cell bigger because of inner contents
+			grid_map.set_cell_item(Vector3i(pos1, 0, -1), 3)
+			grid_map.set_cell_item(Vector3i(pos1, 0, border_size), 3)
+			grid_map.set_cell_item(Vector3i(border_size, 0, pos1), 3)
+			grid_map.set_cell_item(Vector3i(-1, 0, pos1), 3)
 	
 func generate_tiles():
 	room_tiles.clear() #need to clear
@@ -54,9 +54,9 @@ func generate_tiles():
 	
 	#turn room positions into Vector2's, this only places the points
 	for p in room_positions:
-		room_pv2.append(Vector2(p.x,p.z))
-		delaunay_graph.add_point(delaunay_graph.get_available_point_id(), Vector2(p.x,p.z))
-		min_span_tree_graph.add_point(min_span_tree_graph.get_available_point_id(), Vector2(p.x,p.z))
+		room_pv2.append(Vector2(p.x, p.z))
+		delaunay_graph.add_point(delaunay_graph.get_available_point_id(), Vector2(p.x, p.z))
+		min_span_tree_graph.add_point(min_span_tree_graph.get_available_point_id(), Vector2(p.x, p.z))
 	
 	# Doing the actual triangulation
 	# triangulate_delaunay() function here takes in a packed Vector2 array
@@ -127,8 +127,8 @@ func create_tunnels(tunnel_graph):
 				
 				var tunnel : PackedVector3Array = [tile_from, tile_to]
 				tunnels.append(tunnel)
-				grid_map.set_cell_item(tile_from, 5)
-				grid_map.set_cell_item(tile_to, 5)
+				grid_map.set_cell_item(tile_from, 2)
+				grid_map.set_cell_item(tile_to, 2)
 	# /////// end of code for marking doors
 
 	var astar = AStarGrid2D.new()
@@ -138,19 +138,19 @@ func create_tunnels(tunnel_graph):
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	
 	#Define the obstacle tiles here
-	for t in grid_map.get_used_cells_by_item(4):
+	for t in grid_map.get_used_cells_by_item(0):
 		astar.set_point_solid(Vector2i(t.x, t.z))
 	
 	#actual pathfinding	
 	for tun in tunnels: # for every tunnel in tunnels, we are making a hall variable to store the path
-		var pos_from = Vector2i(tun[0].x, tun[0].z)
-		var pos_to = Vector2i(tun[1].x, tun[1].z)
+		var pos_from = Vector2i(tun[0].x, tun[0].z) #from this point
+		var pos_to = Vector2i(tun[1].x, tun[1].z) #to this point
 		var hall = astar.get_point_path(pos_from, pos_to)
 		
 		for t in hall:
 			var pos = Vector3i(t.x, 0, t.y)
 			if grid_map.get_cell_item(pos) < 0:
-				grid_map.set_cell_item(pos, 6)
+				grid_map.set_cell_item(pos, 1) # finally, set the cell to a tunnel tile
 				
 func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached
@@ -167,8 +167,8 @@ func generate_room(rec: int):
 	# Minimum distance checker that rooms should keep away form each other (margin)
 	for r in range(-room_margin, height + room_margin): #for every row in height
 		for c in range(-room_margin, width + room_margin):	#for every column in width
-			var pos : Vector3i = start_pos + Vector3i(c, 0 , r) # variable for the position
-			if grid_map.get_cell_item(pos) == 4: #check if the cell is a previously defined texture (hardcoded number fix later)
+			var pos : Vector3i = start_pos + Vector3i(c, 0, r) # variable for the position
+			if grid_map.get_cell_item(pos) == 0: #check if the cell is a previously defined texture (hardcoded number fix later)
 				generate_room(rec-1) #gererate rooms until recursion checker is triggered
 				return
 	
@@ -176,8 +176,8 @@ func generate_room(rec: int):
 	var room : PackedVector3Array = []
 	for r in height: #for every row in height
 		for c in width:	#for every column in width
-			var pos : Vector3i = start_pos + Vector3i(c, 0 , r) # variable for the position
-			grid_map.set_cell_item(pos, 4) #set texture for dungeon walls
+			var pos : Vector3i = start_pos + Vector3i(c, 0, r) # variable for the position
+			grid_map.set_cell_item(pos, 0) #set texture for dungeon walls????????
 			room.append(pos) 	#add to room array for each iteration
 	room_tiles.append(room) #append whole room to the tiles
 	

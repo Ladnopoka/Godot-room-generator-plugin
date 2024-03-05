@@ -5,3 +5,5 @@ res://addons/room-generator/dungeon_tiles/wooden_walls.tscn
 res://addons/room-generator/dungeon_tiles/wooden_walls.gd
 res://playground/playground.tscn
 res://addons/room-generator/dungeon/DungeonMesh.gd
+res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres

@@ -83,7 +83,7 @@ func create_dungeon():
 		var cell_index = gridmap.get_cell_item(c)
 		
 		print("cell_index: ", cell_index)
-		if cell_index <= 6 && cell_index >= 2:
+		if cell_index <= 2 && cell_index >= 0:
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
