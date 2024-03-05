@@ -1,9 +1,9 @@
 @tool
 extends Node3D
 
-@export var start : bool = false : set = set_start
-@export var grid_map_path : NodePath
-@onready var grid_map : GridMap = get_node(grid_map_path)
+@export var generate : bool = false : set = set_start
+@export var gridmap_path : NodePath
+@onready var gridmap : GridMap = get_node(gridmap_path)
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -12,7 +12,7 @@ var directions = {
 	"right": Vector3i.RIGHT
 }
 
-var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.tscn")
+var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
 
 func handle_none(cell, dir):
 	cell.call("remove_door_"+dir)
@@ -79,10 +79,11 @@ func create_dungeon():
 	
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
-	print(".: ",grid_map.get_used_cells())
-	for c in grid_map.get_used_cells(): 
-		var cell_index = grid_map.get_cell_item(c)
-		if cell_index <= 6 && cell_index >= 4:
+	for c in gridmap.get_used_cells(): 
+		var cell_index = gridmap.get_cell_item(c)
+		
+		print("cell_index: ", cell_index)
+		if cell_index <= 6 && cell_index >= 2:
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
@@ -90,7 +91,7 @@ func create_dungeon():
 			
 			for i in 4: #each side of the wall
 				var cell_n = c + directions.values()[i]
-				var cell_n_index = grid_map.get_cell_item(cell_n)
+				var cell_n_index = gridmap.get_cell_item(cell_n)
 				if cell_n_index == -1 || cell_n_index == 3:
 					handle_none(dungeon_cell, directions.keys()[i])
 				else:

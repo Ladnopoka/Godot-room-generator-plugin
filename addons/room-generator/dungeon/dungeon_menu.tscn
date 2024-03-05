@@ -6,10 +6,7 @@
 
 [node name="DungeonMenu" type="Node3D"]
 script = ExtResource("1_ft6v0")
-start = false
-room_size_minimum = 3
-room_size_maximum = 8
-room_recursion = 15
+generate_with_custom_seed = null
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_63s47")
@@ -21,4 +18,4 @@ data = {
 
 [node name="DungeonMesh" type="Node3D" parent="."]
 script = ExtResource("3_jbgjg")
-grid_map_path = NodePath("../GridMap")
+gridmap_path = NodePath("../GridMap")

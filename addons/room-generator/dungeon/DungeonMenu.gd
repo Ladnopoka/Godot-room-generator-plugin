@@ -12,9 +12,9 @@ extends Node3D
 @export var room_recursion_tries : int = 15
 
 @export_range(0,1) var survival_chance : float = 0.25
-@export_multiline var custom_seed : String = "" : set = set_seed
+@export_multiline var generate_with_custom_seed : String = "" : set = set_seed
 func set_seed(val):
-	custom_seed = val
+	generate_with_custom_seed = val
 	seed(val.hash())
 
 var room_tiles : Array[PackedVector3Array] = []
@@ -41,7 +41,7 @@ func visualize_border():
 func generate_tiles():
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
-	if custom_seed: set_seed(custom_seed)
+	if generate_with_custom_seed: set_seed(generate_with_custom_seed)
 	
 	visualize_border()
 	for i in room_number: # for every room number

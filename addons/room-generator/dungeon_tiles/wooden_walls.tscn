@@ -1,5 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://dgrujwvmd27cg"]
+[gd_scene load_steps=36 format=3 uid="uid://dgrujwvmd27cg"]
 
+[ext_resource type="Script" path="res://addons/room-generator/dungeon_tiles/wooden_walls.gd" id="1_u5nvb"]
 [ext_resource type="Texture2D" uid="uid://dfebkkxg3o3df" path="res://addons/room-generator/import_tiles/wooden_walls_with_collisions_wood_cabinet_worn_long_diff_4k.jpg" id="1_w5tsj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0qf7m"]
@@ -379,6 +380,7 @@ shadow_mesh = SubResource("ArrayMesh_ghh78")
 data = PackedVector3Array(-0.5, -0.020103, 0.5, -0.5, 0.020103, -0.5, -0.5, 0.020103, 0.5, -0.5, -0.020103, 0.5, -0.5, -0.020103, -0.5, -0.5, 0.020103, -0.5, -0.5, -0.020103, -0.5, 0.5, 0.020103, -0.5, -0.5, 0.020103, -0.5, -0.5, -0.020103, -0.5, 0.5, -0.020103, -0.5, 0.5, 0.020103, -0.5, 0.5, -0.020103, -0.5, 0.5, 0.020103, 0.5, 0.5, 0.020103, -0.5, 0.5, -0.020103, -0.5, 0.5, -0.020103, 0.5, 0.5, 0.020103, 0.5, 0.5, -0.020103, 0.5, -0.5, 0.020103, 0.5, 0.5, 0.020103, 0.5, 0.5, -0.020103, 0.5, -0.5, -0.020103, 0.5, -0.5, 0.020103, 0.5, -0.5, -0.020103, -0.5, 0.5, -0.020103, 0.5, 0.5, -0.020103, -0.5, -0.5, -0.020103, -0.5, -0.5, -0.020103, 0.5, 0.5, -0.020103, 0.5, 0.5, 0.020103, -0.5, -0.5, 0.020103, 0.5, -0.5, 0.020103, -0.5, 0.5, 0.020103, -0.5, 0.5, 0.020103, 0.5, -0.5, 0.020103, 0.5)
 
 [node name="WoodenWalls" type="Node3D"]
+script = ExtResource("1_u5nvb")
 
 [node name="floor" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_qand4")
