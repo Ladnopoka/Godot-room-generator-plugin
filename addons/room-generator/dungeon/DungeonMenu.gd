@@ -3,13 +3,13 @@ extends Node3D
 
 @onready var grid_map : GridMap = $GridMap
 
-@export var start : bool = false : set = set_start
+@export var generate : bool = false : set = set_start
 @export var border_size : int = 20 : set = set_border_size
-@export var room_size_minimum : int = 3
-@export var room_size_maximum : int = 8
+@export var MIN_room_size : int = 3
+@export var MAX_room_size: int = 8
 @export var room_number : int = 4
 @export var room_margin : int = 1 #minimum distance the rooms must keep from each other
-@export var room_recursion : int = 15
+@export var room_recursion_tries : int = 15
 
 @export_range(0,1) var survival_chance : float = 0.25
 @export_multiline var custom_seed : String = "" : set = set_seed
@@ -22,7 +22,7 @@ var room_positions : PackedVector3Array
 
 func set_start(val:bool):
 	if Engine.is_editor_hint():
-		generate() #eventually generate a whole dungeon
+		generate_tiles() #eventually generate a whole dungeon
 
 func set_border_size(val : int):
 	border_size = val
@@ -38,14 +38,14 @@ func visualize_border():
 			grid_map.set_cell_item(Vector3i(border_size, 0, pos1), 5)
 			grid_map.set_cell_item(Vector3i(-1, 0, pos1), 5)
 	
-func generate():
+func generate_tiles():
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
 	if custom_seed: set_seed(custom_seed)
 	
 	visualize_border()
 	for i in room_number: # for every room number
-		generate_room(room_recursion)
+		generate_room(room_recursion_tries)
 	
 	# Below code is the minimum spanning tree algorithm
 	var room_pv2 : PackedVector2Array = []
@@ -156,8 +156,8 @@ func generate_room(rec: int):
 	if !rec > 0: #don't run if recursion limit is reached
 		return
 	# get random width and heights
-	var width : int = (randi() % (room_size_maximum - room_size_minimum)) + room_size_minimum
-	var height : int = (randi() % (room_size_maximum - room_size_minimum)) + room_size_minimum
+	var width : int = (randi() % (MAX_room_size - MIN_room_size)) + MIN_room_size
+	var height : int = (randi() % (MAX_room_size - MIN_room_size)) + MIN_room_size
 	
 	#pick starting position
 	var start_pos : Vector3i
