@@ -5,9 +5,9 @@ extends Node3D
 
 @export var start : bool = false : set = set_start
 @export var border_size : int = 20 : set = set_border_size
-@export var room_size_minimum : int = 2
-@export var room_size_maximum : int = 4
-@export var room_number : int = 3
+@export var room_size_minimum : int = 3
+@export var room_size_maximum : int = 8
+@export var room_number : int = 4
 @export var room_margin : int = 1 #minimum distance the rooms must keep from each other
 @export var room_recursion : int = 15
 
