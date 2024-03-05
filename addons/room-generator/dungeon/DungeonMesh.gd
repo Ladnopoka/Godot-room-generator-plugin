@@ -87,6 +87,7 @@ func create_dungeon():
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
 			add_child(dungeon_cell)
+			dungeon_cell.set_owner(owner)
 			t += 1
 			
 			for i in 4: #each side of the wall
