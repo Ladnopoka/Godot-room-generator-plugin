@@ -1,2 +1,3 @@
-res://addons/room-generator/dungeon_tiles/dungeon_tiles_directional.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres
+res://addons/room-generator/import_tiles/tiles_medieval_square.tres
+res://addons/room-generator/dungeon_tiles/wooden_walls_with_collisions.tscn

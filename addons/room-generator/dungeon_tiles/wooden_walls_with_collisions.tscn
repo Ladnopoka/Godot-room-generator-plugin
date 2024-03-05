@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6vyjpb1klv46"]
+
+[ext_resource type="PackedScene" uid="uid://6c5r18t05lrn" path="res://addons/room-generator/import_tiles/wooden_walls_with_collisions.glb" id="1_35ve2"]
+
+[node name="wooden_walls_with_collisions" instance=ExtResource("1_35ve2")]
