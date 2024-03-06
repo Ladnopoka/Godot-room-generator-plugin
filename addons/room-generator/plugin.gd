@@ -55,12 +55,12 @@ func setup_button_connections():
 	wall_button.connect("pressed", create_wall)
 	button2.connect("pressed", create_box)
 	button3.connect("pressed", create_room)
-	menu_button.connect("pressed", menu_button_pressed)
+	#menu_button.connect("pressed", menu_button_pressed)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	
 func wooden_cabin_menu_button_pressed():
+	#popup_menu.clear()
 	popup_menu = wooden_cabin_menu_button.get_popup()
-	wooden_cabin_menu_button.get_popup().popup()  # Show the popup again
 	var popup_theme = Theme.new()  # Create a new theme
 	var style_box = StyleBoxFlat.new()
 	style_box.bg_color = Color(0, 0, 0)  # Example brown color
@@ -68,7 +68,7 @@ func wooden_cabin_menu_button_pressed():
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
 	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.5, 0.2, 0.2))  # Set to black
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.9, 0.1, 0.9))  # Set to black
 	popup_theme.set_font_size("font_size", "PopupMenu", 25)
 	popup_menu.theme = popup_theme
 	
