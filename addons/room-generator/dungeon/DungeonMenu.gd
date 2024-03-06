@@ -16,6 +16,17 @@ extends Node3D
 func set_seed(val):
 	generate_with_custom_seed = val
 	seed(val.hash())
+	
+@export var generate_mesh : bool = false : set = set_start
+@export var gridmap_path : NodePath
+@onready var gridmap : GridMap = get_node(gridmap_path)
+
+var directions = {
+	"up": Vector3i.FORWARD,
+	"down": Vector3i.BACK,
+	"left": Vector3i.LEFT,
+	"right": Vector3i.RIGHT
+}
 
 var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
