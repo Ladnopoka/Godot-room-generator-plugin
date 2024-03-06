@@ -4,10 +4,18 @@ extends EditorPlugin
 #const dungeon_menu_script = preload("res://addons/room-generator/dungeon/DungeonMenu.gd")
 const panel = preload("res://addons/room-generator/panel.tscn")
 const RoomTemplate = preload("res://addons/room-generator/room_template/room_template.tscn")
+#dungeon textures
 const dungeon_corner_in = preload("res://addons/room-generator/dungeon_tiles/dungeon_corner_in.tscn")
 const dungeon_corner_out = preload("res://addons/room-generator/dungeon_tiles/dungeon_corner_out.tscn")
 const dungeon_floor = preload("res://addons/room-generator/dungeon_tiles/dungeon_floor.tscn")
 const dungeon_wall = preload("res://addons/room-generator/dungeon_tiles/dungeon_wall.tscn")
+#wooden cabin textures
+const WOODEN_CABIN_CEILING = preload("res://addons/room-generator/texture_tiles/wooden_cabin_ceiling.tscn")
+const WOODEN_CABIN_DOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_door.tscn")
+const WOODEN_CABIN_FLOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_floor.tscn")
+const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/wooden_cabin_wall.tscn")
+
+#this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
 
 var dockedScene
@@ -37,7 +45,7 @@ func _enter_tree():
 	tab_container.visible = true
 	
 	setup_button_connections()
-	setup_menu_button()
+	setup_dungeon_menu_button()
 		
 	# Initial setup when the plugin is enabled
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dockedScene)
@@ -81,9 +89,56 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Roof")
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
-	#wooden_cabins_popup_menu.connect("id_pressed", _on_model_selected)
+	wooden_cabins_popup_menu.connect("id_pressed", _on_wooden_cabin_model_selected)
 	
-func setup_menu_button():
+func _on_wooden_cabin_model_selected(id):
+	print("Wooden Cabin Model ID: ", id)
+	wooden_cabin_menu_button.get_popup().popup()  # Show the popup again
+	match id:
+		0:
+			instantiate_dungeon_wall()
+		1:
+			instantiate_dungeon_corner_in()
+		2:
+			instantiate_dungeon_floor()
+		3:
+			instantiate_dungeon_corner_out()
+		4:
+			instantiate_dungeon_gridmap()
+		_:
+			print("Unknown model selected")
+	
+func instantiate_wooden_cabin_texture(id):
+	var current_scene = get_editor_interface().get_edited_scene_root()
+
+	match id:
+		0:
+			var wooden_cabin_texture = dungeon_corner_out.instantiate()
+		1:
+			instantiate_dungeon_corner_in()
+		2:
+			instantiate_dungeon_floor()
+		3:
+			instantiate_dungeon_corner_out()
+		4:
+			instantiate_dungeon_gridmap()
+		_:
+			print("Unknown model selected")
+
+	#if current_scene:
+		#_dungeon_corner_out.name = "dungeon_corner_out_" + str(current_scene.get_child_count())
+#
+		## For undo/redo functionality:
+		#undo_redo.create_action("Create Dungeon Wall")
+		#undo_redo.add_do_method(current_scene, "add_child", _dungeon_corner_out)
+		#undo_redo.add_do_reference(_dungeon_corner_out)
+		#undo_redo.add_undo_method(current_scene, "remove_child", _dungeon_corner_out)
+		#undo_redo.commit_action(true)
+		#_dungeon_corner_out.owner = current_scene
+	#else:
+		#print("No active scene!")	
+
+func setup_dungeon_menu_button():
 	dungeon_popup_menu = dungeon_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
 	var style_box = StyleBoxFlat.new()
