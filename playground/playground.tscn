@@ -31,7 +31,7 @@ data = {
 
 [node name="DungeonMesh" parent="dungeon_grid_3" index="1"]
 script = ExtResource("5_j5c8u")
-generate = false
+generate_mesh = null
 gridmap_path = NodePath("../GridMap")
 
 [editable path="dungeon_grid_3"]

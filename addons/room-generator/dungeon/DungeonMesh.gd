@@ -80,16 +80,15 @@ func create_dungeon():
 	
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
-	for c in gridmap.get_used_cells(): 
-		var cell_index = gridmap.get_cell_item(c)
+	for c in gridmap.get_used_cells(): #for each cell in grid map
+		var cell_index = gridmap.get_cell_item(c) #get the index of an item used
 		
+		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		print("cell_index: ", cell_index)
-		if cell_index <= 2 && cell_index >= 0:
+		if cell_index <= 2 && cell_index >= 0: 
 			var dungeon_cell = dungeon_cell_scene.instantiate()
-			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5)
+			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			add_child(dungeon_cell)
-			
-			dungeon_cell.owner = current_scene
 			t += 1
 			
 			for i in 4: #each side of the wall
@@ -100,5 +99,8 @@ func create_dungeon():
 				else:
 					var key = str(cell_index) + str(cell_n_index)
 					call("handle_"+key, dungeon_cell, directions.keys()[i])
+				
+			dungeon_cell.owner = current_scene #this allows you to work with spawned cells in your scene
 					
-		if t%10 == 9: await get_tree().create_timer(0).timeout
+		if t%10 == 9: await get_tree().create_timer(0).timeout #I've added this timer to load textures slowly, 
+		#because my laptop freezes for too long if dungeon is big, and I don't like frozen laptops.
