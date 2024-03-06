@@ -21,10 +21,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Wall" type="Button" parent="TabContainer/Models"]
+visible = false
 layout_mode = 2
 text = "Add Wall"
 
 [node name="Cube" type="Button" parent="TabContainer/Models"]
+visible = false
 layout_mode = 2
 text = "Add Cube"
 
@@ -49,25 +51,6 @@ text = "Add Hideout"
 [node name="Dungeon" type="Button" parent="TabContainer/Layouts"]
 layout_mode = 2
 text = "Add Dungeon"
-
-[node name="Generator" type="VBoxContainer" parent="TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="SpinBox" type="SpinBox" parent="TabContainer/Generator"]
-layout_mode = 2
-
-[node name="SpinBox2" type="SpinBox" parent="TabContainer/Generator"]
-layout_mode = 2
-
-[node name="SpinBox3" type="SpinBox" parent="TabContainer/Generator"]
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="TabContainer/Generator"]
-layout_mode = 2
-
-[node name="LineEdit2" type="LineEdit" parent="TabContainer/Generator"]
-layout_mode = 2
 
 [node name="Preview" type="VBoxContainer" parent="TabContainer"]
 visible = false

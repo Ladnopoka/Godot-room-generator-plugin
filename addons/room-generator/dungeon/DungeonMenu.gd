@@ -20,9 +20,12 @@ func set_seed(val):
 var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
 
+signal dungeon_generated
+
 func set_start(val:bool):
 	if Engine.is_editor_hint():
 		generate_tiles() #eventually generate a whole dungeon
+		emit_signal("dungeon_generated")
 
 func set_border_size(val : int):
 	border_size = val

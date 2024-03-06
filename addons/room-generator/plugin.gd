@@ -22,11 +22,6 @@ var hideout_button: Button
 var menu_button: MenuButton
 var dungeon_layout_button: Button
 var popup_menu
-var generator_spinbox_1
-
-#@export var test : bool = false : test_set = test_set_start
-@export var room_size_minimum : int = 2
-@export var room_size_maximum : int = 4
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -40,13 +35,9 @@ func _enter_tree():
 	
 	setup_button_connections()
 	setup_menu_button()
-	setup_generator()
 		
 	# Initial setup when the plugin is enabled
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dockedScene)
-	
-func setup_generator():
-	generator_spinbox_1.value = 10
 
 func setup_button_connections():
 	# Connect the toggle button signal
@@ -56,7 +47,6 @@ func setup_button_connections():
 	hideout_button = dockedScene.get_node("TabContainer/Layouts/Hideout")
 	menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
-	generator_spinbox_1 = dockedScene.get_node("TabContainer/Generator/SpinBox")
 
 	wall_button.connect("pressed", create_wall)
 	button2.connect("pressed", create_box)
@@ -307,6 +297,8 @@ func instantiate_dungeon_corner_out():
 func instantiate_dungeon_gridmap():
 	var dungeon_menu_inst = dungeon_menu.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
+	
+	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)#
 
 	if current_scene:
 		dungeon_menu_inst.name = "dungeon_grid_" + str(current_scene.get_child_count())
@@ -319,3 +311,6 @@ func instantiate_dungeon_gridmap():
 		dungeon_menu_inst.owner = current_scene
 	else:
 		print("No active scene!")	
+
+func plugin_connection():
+	print("Plugin connected to the dungeon menu")
