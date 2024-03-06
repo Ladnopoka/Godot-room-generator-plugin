@@ -23,6 +23,7 @@ var menu_button: MenuButton
 var dungeon_layout_button: Button
 var popup_menu
 var stored_gridmaps: Array[GridMap] = []
+var wooden_cabin_menu_button
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -47,14 +48,38 @@ func setup_button_connections():
 	button3 = dockedScene.get_node("TabContainer/Layouts/Room")
 	hideout_button = dockedScene.get_node("TabContainer/Layouts/Hideout")
 	menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
+	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
-
+	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
+	
 	wall_button.connect("pressed", create_wall)
 	button2.connect("pressed", create_box)
 	button3.connect("pressed", create_room)
-	#hideout_button.connect("pressed", create_hideout)
 	menu_button.connect("pressed", menu_button_pressed)
-	#dungeon_layout_button.connect("pressed", dungeon_layout_button_pressed)
+	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
+	
+func wooden_cabin_menu_button_pressed():
+	popup_menu = wooden_cabin_menu_button.get_popup()
+	wooden_cabin_menu_button.get_popup().popup()  # Show the popup again
+	var popup_theme = Theme.new()  # Create a new theme
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color(0, 0, 0)  # Example brown color
+
+	var popup_font = FontFile.new()
+	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
+	popup_theme.set_font("font", "PopupMenu", popup_font)
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.5, 0.2, 0.2))  # Set to black
+	popup_theme.set_font_size("font_size", "PopupMenu", 25)
+	popup_menu.theme = popup_theme
+	
+	popup_menu.add_theme_stylebox_override("panel", style_box)
+	
+	popup_menu.add_item("Wall")
+	popup_menu.add_item("Corner IN")
+	popup_menu.add_item("Floor")
+	popup_menu.add_item("Corner OUT")
+	popup_menu.add_item("GridMap Generator")
+	#popup_menu.connect("id_pressed", _on_model_selected)
 	
 func setup_menu_button():
 	popup_menu = menu_button.get_popup()
@@ -75,7 +100,7 @@ func setup_menu_button():
 	popup_menu.add_item("Corner IN")
 	popup_menu.add_item("Floor")
 	popup_menu.add_item("Corner OUT")
-	popup_menu.add_item("Create GridMap")
+	popup_menu.add_item("GridMap Generator")
 	popup_menu.connect("id_pressed", _on_model_selected)
 		
 func _on_model_selected(id):
@@ -127,7 +152,7 @@ func get_plugin_name():
 	return "RoomGenerator"
 
 func get_plugin_description():
-	return "An editor for creating 3D isometric rooms and blocks."
+	return "An editor for creating 3D rooms, tunnels, gridmaps and more."
 	
 func create_wall():
 	print("Inside create wall")
