@@ -89,37 +89,21 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Roof")
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
-	wooden_cabins_popup_menu.connect("id_pressed", _on_wooden_cabin_model_selected)
-	
-func _on_wooden_cabin_model_selected(id):
-	print("Wooden Cabin Model ID: ", id)
-	wooden_cabin_menu_button.get_popup().popup()  # Show the popup again
-	match id:
-		0:
-			instantiate_dungeon_wall()
-		1:
-			instantiate_dungeon_corner_in()
-		2:
-			instantiate_dungeon_floor()
-		3:
-			instantiate_dungeon_corner_out()
-		4:
-			instantiate_dungeon_gridmap()
-		_:
-			print("Unknown model selected")
-	
+	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
+
 func instantiate_wooden_cabin_texture(id):
 	var current_scene = get_editor_interface().get_edited_scene_root()
-
+	var wooden_cabin_texture
+	
 	match id:
 		0:
-			var wooden_cabin_texture = dungeon_corner_out.instantiate()
+			wooden_cabin_texture = WOODEN_CABIN_WALL.instantiate()
 		1:
-			instantiate_dungeon_corner_in()
+			wooden_cabin_texture = WOODEN_CABIN_DOOR.instantiate()
 		2:
-			instantiate_dungeon_floor()
+			wooden_cabin_texture = WOODEN_CABIN_CEILING.instantiate()
 		3:
-			instantiate_dungeon_corner_out()
+			wooden_cabin_texture = WOODEN_CABIN_FLOOR.instantiate()
 		4:
 			instantiate_dungeon_gridmap()
 		_:
