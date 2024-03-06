@@ -108,7 +108,7 @@ func instantiate_wooden_cabin_texture(id):
 		3:
 			wooden_cabin_texture = WOODEN_CABIN_FLOOR.instantiate()
 		4:
-			instantiate_dungeon_gridmap()
+			wooden_cabin_texture = WOODEN_CABIN_FLOOR.instantiate()
 		_:
 			print("Unknown model selected")
 

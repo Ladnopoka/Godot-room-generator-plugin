@@ -70,7 +70,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		pass
 	else:
-		#create_dungeon()
+		create_dungeon()
 		gridmap.hide()
 
 func set_start(val):
