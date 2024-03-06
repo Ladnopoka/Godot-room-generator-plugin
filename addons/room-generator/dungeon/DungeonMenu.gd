@@ -24,8 +24,8 @@ signal dungeon_generated
 
 func set_start(val:bool):
 	if Engine.is_editor_hint():
-		generate_tiles() #eventually generate a whole dungeon
-		emit_signal("dungeon_generated")
+		generate_tiles()
+		emit_signal("dungeon_generated", grid_map) #eventually generate a whole dungeon
 
 func set_border_size(val : int):
 	border_size = val

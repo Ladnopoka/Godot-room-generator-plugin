@@ -22,6 +22,7 @@ var hideout_button: Button
 var menu_button: MenuButton
 var dungeon_layout_button: Button
 var popup_menu
+var stored_gridmaps: Array[GridMap] = []
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -312,5 +313,8 @@ func instantiate_dungeon_gridmap():
 	else:
 		print("No active scene!")	
 
-func plugin_connection():
+func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
+	stored_gridmaps.append(gridmap)
+	
+	print("My gridmaps: ", stored_gridmaps.size())
