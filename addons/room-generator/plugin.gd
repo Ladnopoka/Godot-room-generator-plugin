@@ -19,9 +19,10 @@ var wall_button: Button
 var button2: Button
 var button3: Button
 var hideout_button: Button
-var menu_button: MenuButton
+var dungeon_menu_button: MenuButton
 var dungeon_layout_button: Button
-var popup_menu
+var dungeon_popup_menu
+var wooden_cabins_popup_menu
 var stored_gridmaps: Array[GridMap] = []
 var wooden_cabin_menu_button
 
@@ -47,7 +48,7 @@ func setup_button_connections():
 	button2 = dockedScene.get_node("TabContainer/Models/Cube")
 	button3 = dockedScene.get_node("TabContainer/Layouts/Room")
 	hideout_button = dockedScene.get_node("TabContainer/Layouts/Hideout")
-	menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
+	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
@@ -59,30 +60,31 @@ func setup_button_connections():
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	
 func wooden_cabin_menu_button_pressed():
-	#popup_menu.clear()
-	popup_menu = wooden_cabin_menu_button.get_popup()
+	if wooden_cabins_popup_menu:
+		wooden_cabins_popup_menu.clear()
+	wooden_cabins_popup_menu = wooden_cabin_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
 	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0, 0, 0)  # Example brown color
+	style_box.bg_color = Color(0.408, 0.241, 0.007) # Example brown color
 
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
 	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.9, 0.1, 0.9))  # Set to black
-	popup_theme.set_font_size("font_size", "PopupMenu", 25)
-	popup_menu.theme = popup_theme
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.0, 0.0, 0.0))  
+	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+
+	wooden_cabins_popup_menu.theme = popup_theme
+	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
-	popup_menu.add_theme_stylebox_override("panel", style_box)
-	
-	popup_menu.add_item("Wall")
-	popup_menu.add_item("Corner IN")
-	popup_menu.add_item("Floor")
-	popup_menu.add_item("Corner OUT")
-	popup_menu.add_item("GridMap Generator")
-	#popup_menu.connect("id_pressed", _on_model_selected)
+	wooden_cabins_popup_menu.add_item("Wall")
+	wooden_cabins_popup_menu.add_item("Door")
+	wooden_cabins_popup_menu.add_item("Roof")
+	wooden_cabins_popup_menu.add_item("Floor")
+	wooden_cabins_popup_menu.add_item("GridMap Generator")
+	#wooden_cabins_popup_menu.connect("id_pressed", _on_model_selected)
 	
 func setup_menu_button():
-	popup_menu = menu_button.get_popup()
+	dungeon_popup_menu = dungeon_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
 	var style_box = StyleBoxFlat.new()
 	style_box.bg_color = Color(0, 0, 0)  # Example brown color
@@ -91,21 +93,21 @@ func setup_menu_button():
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
 	popup_theme.set_font("font", "PopupMenu", popup_font)
 	popup_theme.set_color("font_color", "PopupMenu", Color(0.5, 0.2, 0.2))  # Set to black
-	popup_theme.set_font_size("font_size", "PopupMenu", 25)
-	popup_menu.theme = popup_theme
+	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+	dungeon_popup_menu.theme = popup_theme
 	
-	popup_menu.add_theme_stylebox_override("panel", style_box)
+	dungeon_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
-	popup_menu.add_item("Wall")
-	popup_menu.add_item("Corner IN")
-	popup_menu.add_item("Floor")
-	popup_menu.add_item("Corner OUT")
-	popup_menu.add_item("GridMap Generator")
-	popup_menu.connect("id_pressed", _on_model_selected)
+	dungeon_popup_menu.add_item("Wall")
+	dungeon_popup_menu.add_item("Corner IN")
+	dungeon_popup_menu.add_item("Floor")
+	dungeon_popup_menu.add_item("Corner OUT")
+	dungeon_popup_menu.add_item("GridMap Generator")
+	dungeon_popup_menu.connect("id_pressed", _on_dungeon_model_selected)
 		
-func _on_model_selected(id):
+func _on_dungeon_model_selected(id):
 	print("Dungeon Model ID: ", id)
-	menu_button.get_popup().popup()  # Show the popup again
+	dungeon_menu_button.get_popup().popup()  # Show the popup again
 	match id:
 		0:
 			instantiate_dungeon_wall()
@@ -137,11 +139,6 @@ func _on_model_selected(id):
 #		dungeon_layout.owner = current_scene
 #	else:
 #		print("No active scene!")
-	
-func menu_button_pressed():
-	print("Menu button pressed")
-	# Connect the signal for when an item is selected
-	#popup_menu.connect("id_pressed", self, "_on_model_selected")
 
 func _exit_tree():
 	# Clean up when the plugin is disabled
