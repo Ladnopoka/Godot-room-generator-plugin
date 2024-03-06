@@ -70,6 +70,9 @@ func setup_button_connections():
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
 		wooden_cabins_popup_menu.clear()
+		if wooden_cabins_popup_menu.is_connected("id_pressed", instantiate_wooden_cabin_texture):
+			wooden_cabins_popup_menu.disconnect("id_pressed", instantiate_wooden_cabin_texture)
+			
 	wooden_cabins_popup_menu = wooden_cabin_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
 	var style_box = StyleBoxFlat.new()
@@ -109,18 +112,18 @@ func instantiate_wooden_cabin_texture(id):
 		_:
 			print("Unknown model selected")
 
-	#if current_scene:
-		#_dungeon_corner_out.name = "dungeon_corner_out_" + str(current_scene.get_child_count())
-#
-		## For undo/redo functionality:
-		#undo_redo.create_action("Create Dungeon Wall")
-		#undo_redo.add_do_method(current_scene, "add_child", _dungeon_corner_out)
-		#undo_redo.add_do_reference(_dungeon_corner_out)
-		#undo_redo.add_undo_method(current_scene, "remove_child", _dungeon_corner_out)
-		#undo_redo.commit_action(true)
-		#_dungeon_corner_out.owner = current_scene
-	#else:
-		#print("No active scene!")	
+	if current_scene:
+		wooden_cabin_texture.name = "wooden_cabin_texture_" + str(current_scene.get_child_count())
+
+		# For undo/redo functionality:
+		undo_redo.create_action("Create Dungeon Wall")
+		undo_redo.add_do_method(current_scene, "add_child", wooden_cabin_texture)
+		undo_redo.add_do_reference(wooden_cabin_texture)
+		undo_redo.add_undo_method(current_scene, "remove_child", wooden_cabin_texture)
+		undo_redo.commit_action(true)
+		wooden_cabin_texture.owner = current_scene
+	else:
+		print("No active scene!")	
 
 func setup_dungeon_menu_button():
 	dungeon_popup_menu = dungeon_menu_button.get_popup()

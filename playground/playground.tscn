@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1usrkdp7bvml"]
+[gd_scene load_steps=8 format=3 uid="uid://b1usrkdp7bvml"]
 
+[ext_resource type="PackedScene" uid="uid://84btuq85g0pw" path="res://addons/room-generator/texture_tiles/wooden_cabin_wall.tscn" id="2_5tmv6"]
+[ext_resource type="PackedScene" uid="uid://jt4h2xplemlw" path="res://addons/room-generator/texture_tiles/wooden_cabin_door.tscn" id="3_ahb5m"]
+[ext_resource type="PackedScene" uid="uid://cofdc1l4bpbay" path="res://addons/room-generator/texture_tiles/wooden_cabin_ceiling.tscn" id="4_1051n"]
+[ext_resource type="PackedScene" uid="uid://c8fua3orc1j0b" path="res://addons/room-generator/texture_tiles/wooden_cabin_floor.tscn" id="5_08qxw"]
+[ext_resource type="PackedScene" uid="uid://ci66d6nlmqckg" path="res://addons/room-generator/dungeon/dungeon_menu.tscn" id="6_8g23x"]
 [ext_resource type="PackedScene" uid="uid://8ubsrivsr200" path="res://addons/room-generator/player/third_person_player.tscn" id="6_b2jg2"]
+[ext_resource type="Script" path="res://addons/room-generator/dungeon/DungeonMenu.gd" id="7_d0h3g"]
 
 [node name="Playground" type="Node3D"]
 
@@ -12,3 +18,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 36)
 
 [node name="ThirdPersonPlayer" parent="." instance=ExtResource("6_b2jg2")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 16.1701, 0.978837, 12.5513)
+
+[node name="wooden_cabin_texture_3" type="Node3D" parent="." instance=ExtResource("2_5tmv6")]
+
+[node name="wooden_cabin_texture_4" type="Node3D" parent="." instance=ExtResource("3_ahb5m")]
+
+[node name="wooden_cabin_texture_5" type="Node3D" parent="." instance=ExtResource("4_1051n")]
+
+[node name="wooden_cabin_texture_6" type="Node3D" parent="." instance=ExtResource("5_08qxw")]
+
+[node name="dungeon_grid_7" type="Node3D" parent="." instance=ExtResource("6_8g23x")]
+script = ExtResource("7_d0h3g")
