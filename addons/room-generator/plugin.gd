@@ -355,22 +355,17 @@ func create_first_person_controller():
 	var current_scene = get_editor_interface().get_edited_scene_root()
 	
 	if current_scene:
-		# Name the box instance with counting already existing boxes
 		third_person_controller.name = "Player_" + str(current_scene.get_child_count())
 		third_person_controller.scale = Vector3(0.6, 0.6, 0.6)
-		# Begin a new action called "Create Box"
+		third_person_controller.position = Vector3(4.206, 0.63, 6.766)
+
 		undo_redo.create_action("Create First Person Player")
-		
-		# For the "do" operation: Add the box to the scene
 		undo_redo.add_do_method(current_scene, "add_child", third_person_controller)
 		undo_redo.add_do_reference(third_person_controller)  # Ensure box is kept in memory
-		
-		# For the "undo" operation: Remove the box from the scene
 		undo_redo.add_undo_method(current_scene, "remove_child", third_person_controller)
 		undo_redo.add_undo_reference(third_person_controller)  # Ensure box is kept in memory
-		
-		# Commit the action with execution
 		undo_redo.commit_action(true)
+		
 		third_person_controller.owner = current_scene
 	else:
 		print("No active scene!")	

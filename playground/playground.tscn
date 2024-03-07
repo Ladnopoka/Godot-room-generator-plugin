@@ -1,10 +1,540 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1usrkdp7bvml"]
+[gd_scene load_steps=8 format=3 uid="uid://b1usrkdp7bvml"]
 
-[ext_resource type="PackedScene" uid="uid://8ubsrivsr200" path="res://addons/room-generator/player/third_person_player.tscn" id="6_b2jg2"]
-[ext_resource type="Script" path="res://addons/room-generator/player/third_person_player.gd" id="7_vmd08"]
+[ext_resource type="PackedScene" uid="uid://ci66d6nlmqckg" path="res://addons/room-generator/dungeon/dungeon_menu.tscn" id="1_gq2ks"]
+[ext_resource type="Script" path="res://addons/room-generator/dungeon/DungeonMenu.gd" id="2_kmvhq"]
+[ext_resource type="MeshLibrary" uid="uid://vacfu7kerkbf" path="res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres" id="3_1v4d8"]
+[ext_resource type="PackedScene" uid="uid://dgrujwvmd27cg" path="res://addons/room-generator/dungeon_tiles/wooden_walls.tscn" id="4_abpxx"]
+[ext_resource type="Script" path="res://addons/room-generator/dungeon_tiles/wooden_walls.gd" id="5_x5nlj"]
+[ext_resource type="PackedScene" uid="uid://8ubsrivsr200" path="res://addons/room-generator/player/third_person_player.tscn" id="6_jtaem"]
+[ext_resource type="Script" path="res://addons/room-generator/player/third_person_player.gd" id="7_udj8e"]
 
 [node name="Playground" type="Node3D"]
 
-[node name="Player_1" type="CharacterBody3D" parent="." instance=ExtResource("6_b2jg2")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 3.42555, 0.630102, 6.0722)
-script = ExtResource("7_vmd08")
+[node name="Dungeon Generator 0" type="Node3D" parent="." instance=ExtResource("1_gq2ks")]
+script = ExtResource("2_kmvhq")
+
+[node name="GridMap" type="GridMap" parent="Dungeon Generator 0"]
+mesh_library = ExtResource("3_1v4d8")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65535, 65535, 3, 65535, 20, 3, 20, 65535, 3, 0, 65535, 3, 0, 20, 3, 20, 0, 3, 65535, 0, 3, 1, 65535, 3, 1, 20, 3, 20, 1, 3, 65535, 1, 3, 2, 65535, 3, 2, 20, 3, 20, 2, 3, 65535, 2, 3, 3, 65535, 3, 3, 20, 3, 20, 3, 3, 65535, 3, 3, 4, 65535, 3, 4, 20, 3, 20, 4, 3, 65535, 4, 3, 5, 65535, 3, 5, 20, 3, 20, 5, 3, 65535, 5, 3, 6, 65535, 3, 6, 20, 3, 20, 6, 3, 65535, 6, 3, 7, 65535, 3, 7, 20, 3, 20, 7, 3, 65535, 7, 3, 8, 65535, 3, 8, 20, 3, 20, 8, 3, 65535, 8, 3, 9, 65535, 3, 9, 20, 3, 20, 9, 3, 65535, 9, 3, 10, 65535, 3, 10, 20, 3, 20, 10, 3, 65535, 10, 3, 11, 65535, 3, 11, 20, 3, 20, 11, 3, 65535, 11, 3, 12, 65535, 3, 12, 20, 3, 20, 12, 3, 65535, 12, 3, 13, 65535, 3, 13, 20, 3, 20, 13, 3, 65535, 13, 3, 14, 65535, 3, 14, 20, 3, 20, 14, 3, 65535, 14, 3, 15, 65535, 3, 15, 20, 3, 20, 15, 3, 65535, 15, 3, 16, 65535, 3, 16, 20, 3, 20, 16, 3, 65535, 16, 3, 17, 65535, 3, 17, 20, 3, 20, 17, 3, 65535, 17, 3, 18, 65535, 3, 18, 20, 3, 20, 18, 3, 65535, 18, 3, 19, 65535, 3, 19, 20, 3, 20, 19, 3, 65535, 19, 3, 20, 20, 3, 9, 7, 2, 10, 7, 0, 11, 7, 0, 12, 7, 0, 13, 7, 2, 14, 7, 0, 15, 7, 0, 9, 8, 0, 10, 8, 0, 11, 8, 0, 12, 8, 0, 13, 8, 0, 14, 8, 0, 15, 8, 0, 9, 9, 0, 10, 9, 0, 11, 9, 0, 12, 9, 0, 13, 9, 0, 14, 9, 0, 15, 9, 0, 9, 10, 0, 10, 10, 0, 11, 10, 0, 12, 10, 0, 13, 10, 0, 14, 10, 0, 15, 10, 0, 9, 11, 0, 10, 11, 0, 11, 11, 0, 12, 11, 0, 13, 11, 0, 14, 11, 0, 15, 11, 0, 9, 12, 0, 10, 12, 0, 11, 12, 0, 12, 12, 0, 13, 12, 0, 14, 12, 0, 15, 12, 0, 9, 13, 2, 10, 13, 0, 11, 13, 0, 12, 13, 0, 13, 13, 0, 14, 13, 0, 15, 13, 0, 2, 12, 0, 3, 12, 0, 4, 12, 2, 5, 12, 0, 6, 12, 0, 7, 12, 2, 2, 13, 0, 3, 13, 0, 4, 13, 0, 5, 13, 0, 6, 13, 0, 7, 13, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 2, 15, 0, 3, 15, 0, 4, 15, 0, 5, 15, 0, 6, 15, 0, 7, 15, 0, 2, 16, 0, 3, 16, 0, 4, 16, 0, 5, 16, 0, 6, 16, 0, 7, 16, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 12, 3, 2, 13, 3, 0, 14, 3, 0, 1, 5, 0, 2, 5, 0, 3, 5, 0, 4, 5, 0, 5, 5, 0, 6, 5, 0, 7, 5, 0, 1, 6, 0, 2, 6, 0, 3, 6, 0, 4, 6, 0, 5, 6, 0, 6, 6, 0, 7, 6, 0, 1, 7, 0, 2, 7, 0, 3, 7, 0, 4, 7, 0, 5, 7, 0, 6, 7, 0, 7, 7, 0, 1, 8, 0, 2, 8, 0, 3, 8, 0, 4, 8, 0, 5, 8, 2, 6, 8, 0, 7, 8, 2, 8, 13, 1, 8, 12, 1, 13, 6, 1, 13, 5, 1, 13, 4, 1, 12, 4, 1, 8, 7, 1, 8, 8, 1, 4, 11, 1, 4, 10, 1, 4, 9, 1, 5, 9, 1)
+}
+
+[node name="DungeonMesh" type="Node3D" parent="Dungeon Generator 0"]
+
+[node name="WoodenWalls" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19337" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19338" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19339" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19340" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19341" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19342" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19343" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19344" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19345" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19346" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19347" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19348" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19349" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19350" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19351" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19352" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19353" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19354" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19355" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19356" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19357" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19358" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19359" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19360" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19361" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19362" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19363" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19364" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19365" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19366" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19367" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19368" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19369" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19370" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19371" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19372" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19373" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19374" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19375" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19376" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19377" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19378" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19379" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19380" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19381" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19382" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19383" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19384" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19385" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19386" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19387" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19388" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19389" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19390" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19391" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19392" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19393" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19394" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19395" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19396" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19397" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19398" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19399" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19400" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19401" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19402" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 14.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19403" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19404" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19405" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19406" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19407" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19408" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 15.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19409" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19410" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19411" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19412" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19413" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19414" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 16.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19415" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 1.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19416" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 1.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19417" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 1.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19418" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 2.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19419" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 2.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19420" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 2.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19421" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 3.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19422" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 3.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19423" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, 3.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19424" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19425" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19426" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19427" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19428" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19429" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19430" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19431" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19432" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19433" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19434" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19435" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19436" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19437" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19438" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19439" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19440" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19441" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19442" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19443" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19444" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19445" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19446" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19447" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19448" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19449" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19450" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19451" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19452" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 13.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19453" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 12.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19454" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 6.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19455" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 5.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19456" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 4.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19457" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 4.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19458" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 7.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19459" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 8.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19460" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 11.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19461" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 10.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19462" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="@Node3D@19463" type="Node3D" parent="Dungeon Generator 0/DungeonMesh" instance=ExtResource("4_abpxx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 9.5)
+script = ExtResource("5_x5nlj")
+
+[node name="Player_1" type="CharacterBody3D" parent="." instance=ExtResource("6_jtaem")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 4.206, 0.63, 6.766)
+script = ExtResource("7_udj8e")
