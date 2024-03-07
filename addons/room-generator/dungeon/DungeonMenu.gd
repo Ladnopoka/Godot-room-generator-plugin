@@ -44,7 +44,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		pass
 	else:
-		#create_dungeon()
+		create_dungeon()
 		gridmap.hide()
 
 func set_start(val:bool):
@@ -272,9 +272,9 @@ func handle_66(cell, dir):
 
 func create_dungeon():
 	print("get children: ", get_children())
-	#for c in get_children():
-		#remove_child(c)
-		#c.queue_free()
+	for c in dungeon_mesh.get_children():
+		dungeon_mesh.remove_child(c)
+		c.queue_free()
 	
 	var t : int = 0
 	
@@ -287,7 +287,7 @@ func create_dungeon():
 		if cell_index <= 2 && cell_index >= 0: 
 			var dungeon_cell = dungeon_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
-			add_child(dungeon_cell)
+			dungeon_mesh.add_child(dungeon_cell)
 			t += 1
 			
 			for i in 4: #each side of the wall
