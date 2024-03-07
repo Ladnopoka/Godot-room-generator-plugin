@@ -40,7 +40,6 @@ func handle_21(cell, dir):
 func handle_22(cell, dir):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)
-	
 func handle_44(cell, dir):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)

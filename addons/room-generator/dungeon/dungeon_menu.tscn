@@ -7,7 +7,6 @@
 [node name="DungeonMenu" type="Node3D"]
 script = ExtResource("1_ft6v0")
 generate_mesh = null
-gridmap_path = null
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_7o3li")
