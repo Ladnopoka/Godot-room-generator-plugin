@@ -14,6 +14,8 @@ const WOODEN_CABIN_CEILING = preload("res://addons/room-generator/texture_tiles/
 const WOODEN_CABIN_DOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_door.tscn")
 const WOODEN_CABIN_FLOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_floor.tscn")
 const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/wooden_cabin_wall.tscn")
+#player controllers
+const THIRD_PERSON_PLAYER = preload("res://addons/room-generator/player/third_person_player.tscn")
 
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
@@ -24,8 +26,8 @@ var tab_container: TabContainer
 var is_content_visible: bool = false  # Tracks whether the content is currently visible
 
 var wall_button: Button
-var button2: Button
-var button3: Button
+var first_person_controller: Button
+var isometric_controller: Button
 var hideout_button: Button
 var dungeon_menu_button: MenuButton
 var dungeon_layout_button: Button
@@ -52,18 +54,16 @@ func _enter_tree():
 
 func setup_button_connections():
 	# Connect the toggle button signal
-	wall_button = dockedScene.get_node("TabContainer/Models/Wall")
-	button2 = dockedScene.get_node("TabContainer/Models/Cube")
-	button3 = dockedScene.get_node("TabContainer/Layouts/Room")
+	first_person_controller = dockedScene.get_node("TabContainer/Player Controller/First Person Player Controller")
+	isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
 	hideout_button = dockedScene.get_node("TabContainer/Layouts/Hideout")
 	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
-	
-	wall_button.connect("pressed", create_wall)
-	button2.connect("pressed", create_box)
-	button3.connect("pressed", create_room)
+
+	first_person_controller.connect("pressed", create_first_person_controller)
+	isometric_controller.connect("pressed", create_isometric_controller)
 	#menu_button.connect("pressed", menu_button_pressed)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	
@@ -193,85 +193,55 @@ func get_plugin_name():
 func get_plugin_description():
 	return "An editor for creating 3D rooms, tunnels, gridmaps and more."
 	
-func create_wall():
-	print("Inside create wall")
-
-	# Create a new MeshInstance node
-	var wall = MeshInstance3D.new()
-
-	# Create a CubeMesh for our wall
-	var cube_mesh = BoxMesh.new()
-	cube_mesh.size = Vector3(4, 2, 0.2) # adjust size as per your requirements
-	wall.mesh = cube_mesh
-
-	var current_scene = get_editor_interface().get_edited_scene_root()
-	if current_scene:
-				# Name the box instance with counting already existing boxes
-		wall.name = "Wall_" + str(current_scene.get_child_count())
-		# Begin a new action called "Create Box"
-		undo_redo.create_action("Create Wall")
-		
-		# For the "do" operation: Add the box to the scene
-		undo_redo.add_do_method(current_scene, "add_child", wall)
-		undo_redo.add_do_reference(wall)  # Ensure box is kept in memory
-		
-		# For the "undo" operation: Remove the box from the scene
-		undo_redo.add_undo_method(current_scene, "remove_child", wall)
-		undo_redo.add_undo_reference(wall)  # Ensure box is kept in memory
-		
-		# Commit the action with execution
-		undo_redo.commit_action(true)
-		wall.owner = current_scene
-	else:
-		print("No active scene!")
-				
-func create_box():
-	print("Inside create box")
-
-	# Create a new MeshInstance node
-	var box = MeshInstance3D.new()
-
-	# Create a CubeMesh for our box
-	var cube_mesh = BoxMesh.new()
-	box.mesh = cube_mesh
-
-	var current_scene = get_editor_interface().get_edited_scene_root()
-	if current_scene:
-		# Name the box instance with counting already existing boxes
-		box.name = "Box_" + str(current_scene.get_child_count())
-		# Begin a new action called "Create Box"
-		undo_redo.create_action("Create Box")
-		
-		# For the "do" operation: Add the box to the scene
-		undo_redo.add_do_method(current_scene, "add_child", box)
-		undo_redo.add_do_reference(box)  # Ensure box is kept in memory
-		
-		# For the "undo" operation: Remove the box from the scene
-		undo_redo.add_undo_method(current_scene, "remove_child", box)
-		undo_redo.add_undo_reference(box)  # Ensure box is kept in memory
-		
-		# Commit the action with execution
-		undo_redo.commit_action(true)
-		box.owner = current_scene
-	else:
-		print("No active scene!")	
+#func create_wall():
+	#print("Inside create wall")
+#
+	## Create a new MeshInstance node
+	#var wall = MeshInstance3D.new()
+#
+	## Create a CubeMesh for our wall
+	#var cube_mesh = BoxMesh.new()
+	#cube_mesh.size = Vector3(4, 2, 0.2) # adjust size as per your requirements
+	#wall.mesh = cube_mesh
+#
+	#var current_scene = get_editor_interface().get_edited_scene_root()
+	#if current_scene:
+				## Name the box instance with counting already existing boxes
+		#wall.name = "Wall_" + str(current_scene.get_child_count())
+		## Begin a new action called "Create Box"
+		#undo_redo.create_action("Create Wall")
+		#
+		## For the "do" operation: Add the box to the scene
+		#undo_redo.add_do_method(current_scene, "add_child", wall)
+		#undo_redo.add_do_reference(wall)  # Ensure box is kept in memory
+		#
+		## For the "undo" operation: Remove the box from the scene
+		#undo_redo.add_undo_method(current_scene, "remove_child", wall)
+		#undo_redo.add_undo_reference(wall)  # Ensure box is kept in memory
+		#
+		## Commit the action with execution
+		#undo_redo.commit_action(true)
+		#wall.owner = current_scene
+	#else:
+		#print("No active scene!")
 	
-func create_room():
-	var room = RoomTemplate.instantiate()
-	var current_scene = get_editor_interface().get_edited_scene_root()
-
-	if current_scene:
-		room.name = "Room_" + str(current_scene.get_child_count())
-
-		# For undo/redo functionality:
-		undo_redo.create_action("Create Room")
-		undo_redo.add_do_method(current_scene, "add_child", room)
-		undo_redo.add_do_reference(room)
-		undo_redo.add_undo_method(current_scene, "remove_child", room)
-		undo_redo.commit_action(true)
-		room.owner = current_scene
-	else:
-		print("No active scene!")
+func create_isometric_controller():
+	print("inside isometric controller")
+	#var room = RoomTemplate.instantiate()
+	#var current_scene = get_editor_interface().get_edited_scene_root()
+#
+	#if current_scene:
+		#room.name = "Room_" + str(current_scene.get_child_count())
+#
+		## For undo/redo functionality:
+		#undo_redo.create_action("Create Room")
+		#undo_redo.add_do_method(current_scene, "add_child", room)
+		#undo_redo.add_do_reference(room)
+		#undo_redo.add_undo_method(current_scene, "remove_child", room)
+		#undo_redo.commit_action(true)
+		#room.owner = current_scene
+	#else:
+		#print("No active scene!")
 	
 #TURNED OFF FOR NOW TO NOT LOAD ASSETS		
 #func create_hideout():
@@ -366,7 +336,7 @@ func instantiate_dungeon_gridmap():
 	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)#
 
 	if current_scene:
-		dungeon_menu_inst.name = "dungeon_grid_" + str(current_scene.get_child_count())
+		dungeon_menu_inst.name = "Dungeon Generator " + str(current_scene.get_child_count())
 		# For undo/redo functionality:
 		undo_redo.create_action("Create Dungeon Gridmap")
 		undo_redo.add_do_method(current_scene, "add_child", dungeon_menu_inst)
@@ -378,6 +348,33 @@ func instantiate_dungeon_gridmap():
 			n.owner = current_scene
 	else:
 		print("No active scene!")	
+
+func create_first_person_controller():
+	print("Inside first person controller creator")
+	var third_person_controller = THIRD_PERSON_PLAYER.instantiate()
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	
+	if current_scene:
+		# Name the box instance with counting already existing boxes
+		third_person_controller.name = "Player_" + str(current_scene.get_child_count())
+		third_person_controller.scale = Vector3(0.6, 0.6, 0.6)
+		# Begin a new action called "Create Box"
+		undo_redo.create_action("Create First Person Player")
+		
+		# For the "do" operation: Add the box to the scene
+		undo_redo.add_do_method(current_scene, "add_child", third_person_controller)
+		undo_redo.add_do_reference(third_person_controller)  # Ensure box is kept in memory
+		
+		# For the "undo" operation: Remove the box from the scene
+		undo_redo.add_undo_method(current_scene, "remove_child", third_person_controller)
+		undo_redo.add_undo_reference(third_person_controller)  # Ensure box is kept in memory
+		
+		# Commit the action with execution
+		undo_redo.commit_action(true)
+		third_person_controller.owner = current_scene
+	else:
+		print("No active scene!")	
+
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
