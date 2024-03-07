@@ -17,6 +17,10 @@ const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/woo
 #player controllers
 const THIRD_PERSON_PLAYER = preload("res://addons/room-generator/player/third_person_player.tscn")
 
+#@onready var layouts = $TabContainer/Layouts
+#@onready var dungeon_generator_menu = $TabContainer/Models/DungeonGeneratorMenu
+
+
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
 
