@@ -2,6 +2,7 @@
 extends Node3D
 
 @onready var gridmap : GridMap = $GridMap
+@onready var dungeon_mesh = $DungeonMesh
 
 @export var generate : bool = false : set = set_start
 @export var border_size : int = 20 : set = set_border_size

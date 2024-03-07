@@ -374,6 +374,8 @@ func instantiate_dungeon_gridmap():
 		undo_redo.add_undo_method(current_scene, "remove_child", dungeon_menu_inst)
 		undo_redo.commit_action(true)
 		dungeon_menu_inst.owner = current_scene
+		for n in dungeon_menu_inst.get_children():
+			n.owner = current_scene
 	else:
 		print("No active scene!")	
 
