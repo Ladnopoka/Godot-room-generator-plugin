@@ -18,6 +18,7 @@ const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/woo
 const THIRD_PERSON_PLAYER = preload("res://addons/room-generator/player/third_person_player.tscn")
 #images
 const DUNGEON_BACKGROUND = preload("res://addons/room-generator/icons/dungeon_background.png")
+const WOODEN_CABIN_BACKGROUND = preload("res://addons/room-generator/icons/wooden_cabin_background.png")
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
 
@@ -78,16 +79,13 @@ func wooden_cabin_menu_button_pressed():
 	var popup_theme = Theme.new()  # Create a new theme
 	
 	var style_box = StyleBoxTexture.new()
-	var bg_image = DUNGEON_BACKGROUND
+	var bg_image = WOODEN_CABIN_BACKGROUND
 	style_box.texture = bg_image
-	
-	#var style_box = StyleBoxFlat.new()
-	#style_box.bg_color = Color(0.408, 0.241, 0.007) 
 
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
 	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.0, 0.0, 0.0))  
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
 	popup_theme.set_font_size("font_size", "PopupMenu", 30)
 
 	wooden_cabins_popup_menu.theme = popup_theme
@@ -139,10 +137,13 @@ func setup_dungeon_menu_button():
 	style_box.texture = bg_image
 
 	var popup_font = FontFile.new()
+	#"theme_override_constants/outline_size"
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
+
 	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.5, 0.2, 0.2))  # Set to black
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.922, 0.675, 0.514))  # Set to black
 	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+
 	dungeon_popup_menu.theme = popup_theme
 	
 	dungeon_popup_menu.add_theme_stylebox_override("panel", style_box)
@@ -377,6 +378,34 @@ func create_first_person_controller():
 	else:
 		print("No active scene!")	
 
+func frozen_caves_menu_button_pressed():
+	if wooden_cabins_popup_menu:
+		wooden_cabins_popup_menu.clear()
+		if wooden_cabins_popup_menu.is_connected("id_pressed", instantiate_wooden_cabin_texture):
+			wooden_cabins_popup_menu.disconnect("id_pressed", instantiate_wooden_cabin_texture)
+			
+	wooden_cabins_popup_menu = wooden_cabin_menu_button.get_popup()
+	var popup_theme = Theme.new()  # Create a new theme
+	
+	var style_box = StyleBoxTexture.new()
+	var bg_image = WOODEN_CABIN_BACKGROUND
+	style_box.texture = bg_image
+
+	var popup_font = FontFile.new()
+	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
+	popup_theme.set_font("font", "PopupMenu", popup_font)
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
+	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+
+	wooden_cabins_popup_menu.theme = popup_theme
+	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
+	
+	wooden_cabins_popup_menu.add_item("Wall")
+	wooden_cabins_popup_menu.add_item("Door")
+	wooden_cabins_popup_menu.add_item("Roof")
+	wooden_cabins_popup_menu.add_item("Floor")
+	wooden_cabins_popup_menu.add_item("GridMap Generator")
+	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
