@@ -152,7 +152,8 @@ func instantiate_frozen_caves_texture(id):
 		3:
 			frozen_caves_texture = FROZEN_CAVES_FLOOR.instantiate()
 		4:
-			frozen_caves_texture = FROZEN_CAVES_FLOOR.instantiate()
+			instantiate_dungeon_gridmap()
+			return
 		_:
 			print("Unknown model selected")
 		
@@ -183,7 +184,8 @@ func instantiate_wooden_cabin_texture(id):
 		3:
 			wooden_cabin_texture = WOODEN_CABIN_FLOOR.instantiate()
 		4:
-			wooden_cabin_texture = WOODEN_CABIN_FLOOR.instantiate()
+			instantiate_dungeon_gridmap()
+			return
 		_:
 			print("Unknown model selected")
 
@@ -427,6 +429,34 @@ func instantiate_dungeon_gridmap():
 			n.owner = current_scene
 	else:
 		print("No active scene!")	
+		
+		
+func instantiate_frozen_caves_gridmap():
+	var dungeon_menu_inst = dungeon_menu.instantiate()
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	
+	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)#
+
+	if current_scene:
+		dungeon_menu_inst.name = "Dungeon Generator " + str(current_scene.get_child_count())
+		# For undo/redo functionality:
+		undo_redo.create_action("Create Dungeon Gridmap")
+		undo_redo.add_do_method(current_scene, "add_child", dungeon_menu_inst)
+		undo_redo.add_do_reference(dungeon_menu_inst)
+		undo_redo.add_undo_method(current_scene, "remove_child", dungeon_menu_inst)
+		undo_redo.commit_action(true)
+		dungeon_menu_inst.owner = current_scene
+		for n in dungeon_menu_inst.get_children():
+			n.owner = current_scene
+	else:
+		print("No active scene!")			
+		
+		
+		
+		
+		
+		
+		
 
 func create_first_person_controller():
 	print("Inside first person controller creator")

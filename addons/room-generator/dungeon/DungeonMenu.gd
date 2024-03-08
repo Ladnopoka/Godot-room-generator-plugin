@@ -20,8 +20,6 @@ func set_seed(val):
 	seed(val.hash())
 	
 @export var generate_mesh : bool = false : set = set_start_generate_mesh
-#@export var gridmap_path : NodePath
-#@onready var gridmap : GridMap = get_node(gridmap_path)
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -30,7 +28,9 @@ var directions = {
 	"right": Vector3i.RIGHT
 }
 
-var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
+const WOODEN_CABINS_MESH = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
+const FROZEN_CAVES_MESH = preload("res://addons/room-generator/texture_tiles/frozen_caves_mesh.tscn")
+
 var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
 
@@ -286,7 +286,7 @@ func create_dungeon():
 		
 		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		if cell_index <= 2 && cell_index >= 0: 
-			var dungeon_cell = dungeon_cell_scene.instantiate()
+			var dungeon_cell = FROZEN_CAVES_MESH.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			dungeon_mesh.add_child(dungeon_cell)
 			t += 1
