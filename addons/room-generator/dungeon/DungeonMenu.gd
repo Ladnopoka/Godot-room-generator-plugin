@@ -1,3 +1,4 @@
+@icon("res://addons/room-generator/icons/godot_icon.svg")
 @tool
 extends Node3D
 
