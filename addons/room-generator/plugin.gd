@@ -14,11 +14,14 @@ const WOODEN_CABIN_CEILING = preload("res://addons/room-generator/texture_tiles/
 const WOODEN_CABIN_DOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_door.tscn")
 const WOODEN_CABIN_FLOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_floor.tscn")
 const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/wooden_cabin_wall.tscn")
+#frozen cabins textures
+
 #player controllers
 const THIRD_PERSON_PLAYER = preload("res://addons/room-generator/player/third_person_player.tscn")
 #images
 const DUNGEON_BACKGROUND = preload("res://addons/room-generator/icons/dungeon_background.png")
 const WOODEN_CABIN_BACKGROUND = preload("res://addons/room-generator/icons/wooden_cabin_background.png")
+const FROZEN_CAVES_BACKGROUND = preload("res://addons/room-generator/icons/frozen_caves_background.png")
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
 
@@ -27,6 +30,7 @@ var dockedScene
 var tab_container: TabContainer
 var is_content_visible: bool = false  # Tracks whether the content is currently visible
 
+var stored_gridmaps: Array[GridMap] = []
 var wall_button: Button
 var first_person_controller: Button
 var isometric_controller: Button
@@ -35,8 +39,9 @@ var dungeon_menu_button: MenuButton
 var dungeon_layout_button: Button
 var dungeon_popup_menu
 var wooden_cabins_popup_menu
-var stored_gridmaps: Array[GridMap] = []
 var wooden_cabin_menu_button
+var frozen_caves_menu_button
+var frozen_caves_popup_menu
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -63,11 +68,13 @@ func setup_button_connections():
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
+	frozen_caves_menu_button = dockedScene.get_node("TabContainer/Models/FrozenCaveGeneratorMenu")	
 
 	first_person_controller.connect("pressed", create_first_person_controller)
 	isometric_controller.connect("pressed", create_isometric_controller)
 	#menu_button.connect("pressed", menu_button_pressed)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
+	frozen_caves_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
@@ -97,6 +104,53 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
 	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
+	
+func frozen_caves_menu_button_pressed():
+	if frozen_caves_popup_menu:
+		frozen_caves_popup_menu.clear()
+		if frozen_caves_popup_menu.is_connected("id_pressed", instantiate_frozen_caves_texture):
+			frozen_caves_popup_menu.disconnect("id_pressed", instantiate_frozen_caves_texture)
+			
+	frozen_caves_popup_menu = frozen_caves_menu_button.get_popup()
+	var popup_theme = Theme.new()  # Create a new theme
+	
+	var style_box = StyleBoxTexture.new()
+	var bg_image = FROZEN_CAVES_BACKGROUND
+	style_box.texture = bg_image
+
+	var popup_font = FontFile.new()
+	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
+	popup_theme.set_font("font", "PopupMenu", popup_font)
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
+	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+
+	wooden_cabins_popup_menu.theme = popup_theme
+	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
+	
+	wooden_cabins_popup_menu.add_item("Wall")
+	wooden_cabins_popup_menu.add_item("Door")
+	wooden_cabins_popup_menu.add_item("Roof")
+	wooden_cabins_popup_menu.add_item("Floor")
+	wooden_cabins_popup_menu.add_item("GridMap Generator")
+	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
+	
+func instantiate_frozen_caves_texture(id):
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	var frozen_caves_texture
+	
+	match id:
+		0:
+			frozen_caves_texture = FROZEN_CAVES_WALL.instantiate()
+		1:
+			frozen_caves_texture = FROZEN_CAVES_DOOR.instantiate()
+		2:
+			frozen_caves_texture = FROZEN_CAVES_CEILING.instantiate()
+		3:
+			frozen_caves_texture = FROZEN_CAVES_FLOOR.instantiate()
+		4:
+			frozen_caves_texture = FROZEN_CAVES_FLOOR.instantiate()
+		_:
+			print("Unknown model selected")
 
 func instantiate_wooden_cabin_texture(id):
 	var current_scene = get_editor_interface().get_edited_scene_root()
@@ -378,7 +432,7 @@ func create_first_person_controller():
 	else:
 		print("No active scene!")	
 
-func frozen_caves_menu_button_pressed():
+func wooden_cabins_menu_button_pressed():
 	if wooden_cabins_popup_menu:
 		wooden_cabins_popup_menu.clear()
 		if wooden_cabins_popup_menu.is_connected("id_pressed", instantiate_wooden_cabin_texture):
