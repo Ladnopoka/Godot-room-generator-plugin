@@ -6,5 +6,5 @@
 [node name="Playground" type="Node3D"]
 
 [node name="Player_1" type="CharacterBody3D" parent="." instance=ExtResource("6_cek2h")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 4.206, -0.0497264, 9.47441)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 4.206, 2.75338, 9.47441)
 script = ExtResource("7_yk1pk")
