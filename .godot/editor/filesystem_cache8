@@ -14,11 +14,11 @@ func_requirements.txt::TextFile::-1::1703372453::0::1::::<><>::
 DungeonMenu.gd::GDScript::-1::1709904413::0::1::::<>Node3D<>res://addons/room-generator/icons/godot_icon.svg::
 DungeonMesh.gd::GDScript::-1::1709819043::0::1::::<>Node3D<>::
 dungeon_menu.tscn::PackedScene::5400237059846558402::1709903353::0::1::::<><>::res://addons/room-generator/dungeon/DungeonMenu.gd<>uid://vacfu7kerkbf::::res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
-::res://addons/room-generator/dungeon_tiles/::1709909696
+::res://addons/room-generator/dungeon_tiles/::1709911859
 dungeon_corner_in.tscn::PackedScene::5240666334934246191::1709554939::0::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
 dungeon_corner_out.tscn::PackedScene::8840036095904652678::1709554939::0::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
 dungeon_floor.tscn::PackedScene::4084485688624545597::1709554939::0::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
-dungeon_generator_tiles.tres::MeshLibrary::1474097179714861015::1709909696::0::1::::<><>::
+dungeon_generator_tiles.tres::MeshLibrary::1474097179714861015::1709911859::0::1::::<><>::
 dungeon_generator_tiles.tscn::PackedScene::7959644662959205648::1709671274::0::1::::<><>::
 dungeon_tiles.tres::MeshLibrary::8656840881325745276::1709322924::0::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
 dungeon_tiles.tscn::PackedScene::3074746894418519701::1709554939::0::1::::<><>::uid://cs1c54q62868r::::res://addons/room-generator/import_tiles/dungeon_tiles.glb
@@ -32,17 +32,18 @@ wooden_walls_with_collisions.tscn::PackedScene::6993521523562199109::1709828967:
 ::res://addons/room-generator/fonts/::1709319980
 Bildad.ttf::FontFile::5256196407549678931::1703372453::1709319980::1::::<><>::
 Diablo Heavy.ttf::FontFile::8789643128362279737::1703372453::1709319980::1::::<><>::
-::res://addons/room-generator/icons/::1709911172
+::res://addons/room-generator/icons/::1709912216
 dungeon_background.png::CompressedTexture2D::6318280401517744256::1709907446::1709907454::1::::<><>::
 dungeon_generator_icon.png::CompressedTexture2D::8200104632045250670::1709903861::1709903902::1::::<><>::
 dungeon_generator_icon.svg::CompressedTexture2D::491832443646258345::1709904230::1709904235::1::::<><>::
+frozen_caves_background.png::CompressedTexture2D::4294717836693606393::1709912216::1709912941::1::::<><>::
 godot_icon.svg::CompressedTexture2D::2269879523750472782::1709904363::1709904379::1::::<><>::
 wooden_cabin_background.png::CompressedTexture2D::3471613502063675561::1709911168::1709911172::1::::<><>::
 ::res://addons/room-generator/imports/::1709666107
 wooden_wall_with_collisions.blend::PackedScene::6687721310622926870::1709666025::1709666107::1::::<><>::
 ::res://addons/room-generator/imports/textures/::1709666140
 TexturesCom_Pavement_CobblestoneStreet5_2x2_1K_albedo.png::CompressedTexture2D::5326682882176804483::1709666106::1709666140::1::::<><>::
-::res://addons/room-generator/import_tiles/::1709911728
+::res://addons/room-generator/import_tiles/::1709911816
 dungeon_tiles.glb::PackedScene::6090090931618957063::1703372455::1709554941::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
 dungeon_tiles.tres::MeshLibrary::9143068227489612609::1709555210::0::1::::<><>::uid://ch3woy2gqbe7y::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas.png<>uid://cyjamtf15en82::::res://addons/room-generator/import_tiles/dungeon_tiles_atlas_n.png
 dungeon_tiles_atlas.png::CompressedTexture2D::5323327927485794928::1703372455::1709322398::1::::<><>::
@@ -60,8 +61,8 @@ third_person_player.gd::GDScript::-1::1709675662::0::1::::<>CharacterBody3D<>::
 third_person_player.tscn::PackedScene::2357613162653604767::1709829257::0::1::::<><>::res://addons/room-generator/player/third_person_player.gd
 ::res://addons/room-generator/room_template/::1709554939
 room_template.tscn::PackedScene::1473403741818640738::1709554939::0::1::::<><>::
-::res://addons/room-generator/texture_tiles/::1709911781
-frozen_caves_mesh.tscn::PackedScene::5603169090352656112::1709911781::0::1::::<><>::uid://c58vdt6oi7xwg::::res://addons/room-generator/import_tiles/frozen_caves_Blue_Ice_001_COLOR.jpg
+::res://addons/room-generator/texture_tiles/::1709911858
+frozen_caves_mesh.tscn::PackedScene::5603169090352656112::1709911858::0::1::::<><>::uid://c58vdt6oi7xwg::::res://addons/room-generator/import_tiles/frozen_caves_Blue_Ice_001_COLOR.jpg
 wooden_cabin_ceiling.tscn::PackedScene::5765994173574570244::1709757444::0::1::::<><>::uid://dfebkkxg3o3df::::res://addons/room-generator/import_tiles/wooden_walls_with_collisions_wood_cabinet_worn_long_diff_4k.jpg
 wooden_cabin_door.tscn::PackedScene::672697517774346924::1709757638::0::1::::<><>::uid://dfebkkxg3o3df::::res://addons/room-generator/import_tiles/wooden_walls_with_collisions_wood_cabinet_worn_long_diff_4k.jpg
 wooden_cabin_floor.tscn::PackedScene::7100610929124072839::1709757691::0::1::::<><>::uid://dfebkkxg3o3df::::res://addons/room-generator/import_tiles/wooden_walls_with_collisions_wood_cabinet_worn_long_diff_4k.jpg
