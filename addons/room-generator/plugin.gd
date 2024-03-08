@@ -16,7 +16,8 @@ const WOODEN_CABIN_FLOOR = preload("res://addons/room-generator/texture_tiles/wo
 const WOODEN_CABIN_WALL = preload("res://addons/room-generator/texture_tiles/wooden_cabin_wall.tscn")
 #player controllers
 const THIRD_PERSON_PLAYER = preload("res://addons/room-generator/player/third_person_player.tscn")
-
+#images
+const DUNGEON_BACKGROUND = preload("res://addons/room-generator/icons/dungeon_background.png")
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
 
@@ -75,8 +76,13 @@ func wooden_cabin_menu_button_pressed():
 			
 	wooden_cabins_popup_menu = wooden_cabin_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
-	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0.408, 0.241, 0.007) # Example brown color
+	
+	var style_box = StyleBoxTexture.new()
+	var bg_image = DUNGEON_BACKGROUND
+	style_box.texture = bg_image
+	
+	#var style_box = StyleBoxFlat.new()
+	#style_box.bg_color = Color(0.408, 0.241, 0.007) 
 
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
@@ -128,8 +134,9 @@ func instantiate_wooden_cabin_texture(id):
 func setup_dungeon_menu_button():
 	dungeon_popup_menu = dungeon_menu_button.get_popup()
 	var popup_theme = Theme.new()  # Create a new theme
-	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0, 0, 0)  # Example brown color
+	var style_box = StyleBoxTexture.new()
+	var bg_image = DUNGEON_BACKGROUND
+	style_box.texture = bg_image
 
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file

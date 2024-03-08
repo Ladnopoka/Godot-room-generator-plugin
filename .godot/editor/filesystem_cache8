@@ -7,7 +7,7 @@ README.md::TextFile::-1::1709323710::0::1::::<><>::
 panel.tscn::PackedScene::5401244366276246444::1709904438::0::1::::<><>::uid://cg5e10waxsb3x::::res://addons/room-generator/fonts/Bildad.ttf<>uid://dxh1exxrby0bd::::res://addons/room-generator/fonts/Diablo Heavy.ttf
 plugin.cfg::TextFile::-1::1703372453::0::1::::<><>::
 plugin.gd::GDScript::-1::1709902802::0::1::::<>EditorPlugin<>::
-::res://addons/room-generator/documentation/::1709902802
+::res://addons/room-generator/documentation/::1709906854
 algo_diagram.drawio.png::CompressedTexture2D::4111455398597322580::1709317068::1709319980::1::::<><>::
 func_requirements.txt::TextFile::-1::1703372453::0::1::::<><>::
 ::res://addons/room-generator/dungeon/::1709904413
@@ -32,7 +32,8 @@ wooden_walls_with_collisions.tscn::PackedScene::6993521523562199109::1709828967:
 ::res://addons/room-generator/fonts/::1709319980
 Bildad.ttf::FontFile::5256196407549678931::1703372453::1709319980::1::::<><>::
 Diablo Heavy.ttf::FontFile::8789643128362279737::1703372453::1709319980::1::::<><>::
-::res://addons/room-generator/icons/::1709904379
+::res://addons/room-generator/icons/::1709907446
+dungeon_background.png::CompressedTexture2D::6318280401517744256::1709907446::1709907454::1::::<><>::
 dungeon_generator_icon.png::CompressedTexture2D::8200104632045250670::1709903861::1709903902::1::::<><>::
 dungeon_generator_icon.svg::CompressedTexture2D::491832443646258345::1709904230::1709904235::1::::<><>::
 godot_icon.svg::CompressedTexture2D::2269879523750472782::1709904363::1709904379::1::::<><>::
