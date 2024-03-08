@@ -125,7 +125,7 @@ func frozen_caves_menu_button_pressed():
 	var popup_font = FontFile.new()
 	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
 	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.902, 0.686, 1))  
 	popup_theme.set_font_size("font_size", "PopupMenu", 30)
 
 	frozen_caves_popup_menu.theme = popup_theme

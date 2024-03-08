@@ -2,3 +2,4 @@ res://addons/room-generator/texture_tiles/frozen_caves_mesh.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
 res://playground/playground.tscn
 res://addons/room-generator/panel.tscn
+res://addons/room-generator/plugin.gd
