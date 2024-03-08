@@ -101,10 +101,10 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.theme = popup_theme
 	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
-	wooden_cabins_popup_menu.add_item("Wall")
-	wooden_cabins_popup_menu.add_item("Door")
-	wooden_cabins_popup_menu.add_item("Roof")
-	wooden_cabins_popup_menu.add_item("Floor")
+	wooden_cabins_popup_menu.add_item("Wooden Wall")
+	wooden_cabins_popup_menu.add_item("Wooden Entrance")
+	wooden_cabins_popup_menu.add_item("Wooden Ceiling")
+	wooden_cabins_popup_menu.add_item("Wooden Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
 	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
 	
@@ -131,10 +131,10 @@ func frozen_caves_menu_button_pressed():
 	frozen_caves_popup_menu.theme = popup_theme
 	frozen_caves_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
-	frozen_caves_popup_menu.add_item("Wall")
-	frozen_caves_popup_menu.add_item("Door")
-	frozen_caves_popup_menu.add_item("Roof")
-	frozen_caves_popup_menu.add_item("Floor")
+	frozen_caves_popup_menu.add_item("Frozen Wall")
+	frozen_caves_popup_menu.add_item("Icicle Tunnel")
+	frozen_caves_popup_menu.add_item("Cave Roof")
+	frozen_caves_popup_menu.add_item("Cave Floor")
 	frozen_caves_popup_menu.add_item("GridMap Generator")
 	frozen_caves_popup_menu.connect("id_pressed", instantiate_frozen_caves_texture)
 	
