@@ -40,6 +40,7 @@ var wall_button: Button
 var first_person_controller: Button
 var isometric_controller: Button
 var use_layout_button: Button
+var delete_layout_button: Button
 var dungeon_menu_button: MenuButton
 var dungeon_layout_button: Button
 var dungeon_popup_menu
@@ -71,6 +72,7 @@ func setup_button_connections():
 	first_person_controller = dockedScene.get_node("TabContainer/Player Controller/First Person Player Controller")
 	isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
 	use_layout_button = dockedScene.get_node("TabContainer/Layouts/UseLayoutButton")
+	delete_layout_button = dockedScene.get_node("TabContainer/Layouts/DeleteLayoutButton")
 	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
@@ -81,11 +83,20 @@ func setup_button_connections():
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	frozen_caves_menu_button.connect("pressed", frozen_caves_menu_button_pressed)
 	use_layout_button.connect("pressed", use_layout_button_pressed)
+	delete_layout_button.connect("pressed", delete_layout_button_pressed)
 	
 func use_layout_button_pressed():
 	print("Use Layout Button Pressed: ")
 	print("Item selected: ", item_list.get_selected_items())
 	#item_list.get_item_at_position(item_list.get_selected_items())
+	
+func delete_layout_button_pressed():
+	print("Delete Layout Button Pressed: ")
+	print("Item deleted: ", item_list.get_selected_items())
+	
+	var selected_items = item_list.get_selected_items()
+	for i in range(selected_items.size() - 1, -1, -1):  # Iterate backwards
+		item_list.remove_item(selected_items[i])
 
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
@@ -115,36 +126,6 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
 	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
-	
-func frozen_caves_menu_button_pressed():
-	print("frozen cabins pressed")
-	if frozen_caves_popup_menu:
-		frozen_caves_popup_menu.clear()
-		if frozen_caves_popup_menu.is_connected("id_pressed", instantiate_frozen_caves_texture):
-			frozen_caves_popup_menu.disconnect("id_pressed", instantiate_frozen_caves_texture)
-			
-	frozen_caves_popup_menu = frozen_caves_menu_button.get_popup()
-	var popup_theme = Theme.new()  # Create a new theme
-	
-	var style_box = StyleBoxTexture.new()
-	var bg_image = FROZEN_CAVES_BACKGROUND
-	style_box.texture = bg_image
-
-	var popup_font = FontFile.new()
-	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
-	popup_theme.set_font("font", "PopupMenu", popup_font)
-	popup_theme.set_color("font_color", "PopupMenu", Color(0.902, 0.686, 1))  
-	popup_theme.set_font_size("font_size", "PopupMenu", 30)
-
-	frozen_caves_popup_menu.theme = popup_theme
-	frozen_caves_popup_menu.add_theme_stylebox_override("panel", style_box)
-	
-	frozen_caves_popup_menu.add_item("Wall")
-	frozen_caves_popup_menu.add_item("Tunnel")
-	frozen_caves_popup_menu.add_item("Roof")
-	frozen_caves_popup_menu.add_item("Floor")
-	frozen_caves_popup_menu.add_item("GridMap Generator")
-	frozen_caves_popup_menu.connect("id_pressed", instantiate_frozen_caves_texture)
 	
 func instantiate_frozen_caves_texture(id):
 	var current_scene = get_editor_interface().get_edited_scene_root()
@@ -209,6 +190,35 @@ func instantiate_wooden_cabin_texture(id):
 		wooden_cabin_texture.owner = current_scene
 	else:
 		print("No active scene!")	
+
+func frozen_caves_menu_button_pressed():
+	if frozen_caves_popup_menu:
+		frozen_caves_popup_menu.clear()
+		if frozen_caves_popup_menu.is_connected("id_pressed", instantiate_frozen_caves_texture):
+			frozen_caves_popup_menu.disconnect("id_pressed", instantiate_frozen_caves_texture)
+			
+	frozen_caves_popup_menu = frozen_caves_menu_button.get_popup()
+	var popup_theme = Theme.new()  # Create a new theme
+	
+	var style_box = StyleBoxTexture.new()
+	var bg_image = FROZEN_CAVES_BACKGROUND
+	style_box.texture = bg_image
+
+	var popup_font = FontFile.new()
+	popup_font.font_data = load("res://addons/room-generator/fonts/Diablo Heavy.ttf")  # Replace with the path to your font file
+	popup_theme.set_font("font", "PopupMenu", popup_font)
+	popup_theme.set_color("font_color", "PopupMenu", Color(0.902, 0.686, 1))  
+	popup_theme.set_font_size("font_size", "PopupMenu", 30)
+
+	frozen_caves_popup_menu.theme = popup_theme
+	frozen_caves_popup_menu.add_theme_stylebox_override("panel", style_box)
+	
+	frozen_caves_popup_menu.add_item("Wall")
+	frozen_caves_popup_menu.add_item("Tunnel")
+	frozen_caves_popup_menu.add_item("Roof")
+	frozen_caves_popup_menu.add_item("Floor")
+	frozen_caves_popup_menu.add_item("GridMap Generator")
+	frozen_caves_popup_menu.connect("id_pressed", instantiate_frozen_caves_texture)
 
 func setup_dungeon_menu_button():
 	dungeon_popup_menu = dungeon_menu_button.get_popup()
@@ -408,6 +418,8 @@ func create_first_person_controller():
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
+
+
 
 	
 func save_to_layouts_function(gridmap):
