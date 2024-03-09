@@ -36,6 +36,7 @@ var room_tiles : Array[PackedVector3Array] = []
 var room_positions : PackedVector3Array
 
 signal dungeon_generated
+signal save_to_layouts_signal
 
 func set_start_generate_mesh(a):
 	if Engine.is_editor_hint():
@@ -51,6 +52,7 @@ func _ready():
 
 func set_save_to_layouts(val):
 	print("set save to layouts function activated")
+	emit_signal("save_to_layouts_signal", gridmap)
 
 func set_start_generate_layout(val):
 	if Engine.is_editor_hint():

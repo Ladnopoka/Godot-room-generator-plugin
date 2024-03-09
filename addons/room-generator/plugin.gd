@@ -27,6 +27,8 @@ const WOODEN_CABIN_BACKGROUND = preload("res://addons/room-generator/icons/woode
 const FROZEN_CAVES_BACKGROUND = preload("res://addons/room-generator/icons/frozen_caves_background.png")
 #this is the dungeon generator
 const dungeon_menu = preload("res://addons/room-generator/dungeon/dungeon_menu.tscn")
+const GODOT_ICON = preload("res://addons/room-generator/icons/godot_icon.svg")
+const DUNGEON_GENERATOR_ICON = preload("res://addons/room-generator/icons/dungeon_generator_icon.png")
 
 var dockedScene
 #var toggle_button: Button
@@ -45,6 +47,9 @@ var wooden_cabins_popup_menu
 var wooden_cabin_menu_button
 var frozen_caves_menu_button
 var frozen_caves_popup_menu
+
+var item_list : ItemList
+var room2
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -75,7 +80,6 @@ func setup_button_connections():
 
 	first_person_controller.connect("pressed", create_first_person_controller)
 	isometric_controller.connect("pressed", create_isometric_controller)
-	#menu_button.connect("pressed", menu_button_pressed)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	frozen_caves_menu_button.connect("pressed", frozen_caves_menu_button_pressed)
 	
@@ -245,24 +249,6 @@ func _on_dungeon_model_selected(id):
 		_:
 			print("Unknown model selected")
 
-#DISABLED FOR NOW, WORKING ON NEW FUNCTIONALITY	
-#func dungeon_layout_button_pressed():
-#	var dungeon_layout = DungeonTemplate.instantiate()
-#	var current_scene = get_editor_interface().get_edited_scene_root()
-#
-#	if current_scene:
-#		dungeon_layout.name = "Dungeon_" + str(current_scene.get_child_count())
-#
-#		# For undo/redo functionality:
-#		undo_redo.create_action("Create Hideout")
-#		undo_redo.add_do_method(current_scene, "add_child", dungeon_layout)
-#		undo_redo.add_do_reference(dungeon_layout)
-#		undo_redo.add_undo_method(current_scene, "remove_child", dungeon_layout)
-#		undo_redo.commit_action(true)
-#		dungeon_layout.owner = current_scene
-#	else:
-#		print("No active scene!")
-
 func _exit_tree():
 	# Clean up when the plugin is disabled
 	remove_control_from_docks(dockedScene)
@@ -274,73 +260,8 @@ func get_plugin_name():
 func get_plugin_description():
 	return "An editor for creating 3D rooms, tunnels, gridmaps and more."
 	
-#func create_wall():
-	#print("Inside create wall")
-#
-	## Create a new MeshInstance node
-	#var wall = MeshInstance3D.new()
-#
-	## Create a CubeMesh for our wall
-	#var cube_mesh = BoxMesh.new()
-	#cube_mesh.size = Vector3(4, 2, 0.2) # adjust size as per your requirements
-	#wall.mesh = cube_mesh
-#
-	#var current_scene = get_editor_interface().get_edited_scene_root()
-	#if current_scene:
-				## Name the box instance with counting already existing boxes
-		#wall.name = "Wall_" + str(current_scene.get_child_count())
-		## Begin a new action called "Create Box"
-		#undo_redo.create_action("Create Wall")
-		#
-		## For the "do" operation: Add the box to the scene
-		#undo_redo.add_do_method(current_scene, "add_child", wall)
-		#undo_redo.add_do_reference(wall)  # Ensure box is kept in memory
-		#
-		## For the "undo" operation: Remove the box from the scene
-		#undo_redo.add_undo_method(current_scene, "remove_child", wall)
-		#undo_redo.add_undo_reference(wall)  # Ensure box is kept in memory
-		#
-		## Commit the action with execution
-		#undo_redo.commit_action(true)
-		#wall.owner = current_scene
-	#else:
-		#print("No active scene!")
-	
 func create_isometric_controller():
-	print("inside isometric controller")
-	#var room = RoomTemplate.instantiate()
-	#var current_scene = get_editor_interface().get_edited_scene_root()
-#
-	#if current_scene:
-		#room.name = "Room_" + str(current_scene.get_child_count())
-#
-		## For undo/redo functionality:
-		#undo_redo.create_action("Create Room")
-		#undo_redo.add_do_method(current_scene, "add_child", room)
-		#undo_redo.add_do_reference(room)
-		#undo_redo.add_undo_method(current_scene, "remove_child", room)
-		#undo_redo.commit_action(true)
-		#room.owner = current_scene
-	#else:
-		#print("No active scene!")
-	
-#TURNED OFF FOR NOW TO NOT LOAD ASSETS		
-#func create_hideout():
-#	var hideout = HideoutTemplate.instantiate()
-#	var current_scene = get_editor_interface().get_edited_scene_root()
-#
-#	if current_scene:
-#		hideout.name = "Hideout_" + str(current_scene.get_child_count())
-#
-#		# For undo/redo functionality:
-#		undo_redo.create_action("Create Hideout")
-#		undo_redo.add_do_method(current_scene, "add_child", hideout)
-#		undo_redo.add_do_reference(hideout)
-#		undo_redo.add_undo_method(current_scene, "remove_child", hideout)
-#		undo_redo.commit_action(true)
-#		hideout.owner = current_scene
-#	else:
-#		print("No active scene!")
+	print("Isometric player controller functionality to be added here")
 
 func instantiate_dungeon_wall():
 	var _dungeon_wall = dungeon_wall.instantiate()
@@ -414,7 +335,8 @@ func instantiate_dungeon_gridmap():
 	var dungeon_menu_inst = dungeon_menu.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 	
-	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)#
+	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)
+	dungeon_menu_inst.connect("save_to_layouts_signal", save_to_layouts_function)
 
 	if current_scene:
 		dungeon_menu_inst.name = "Dungeon Generator " + str(current_scene.get_child_count())
@@ -435,7 +357,8 @@ func instantiate_frozen_caves_gridmap():
 	var dungeon_menu_inst = dungeon_menu.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 	
-	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)#
+	dungeon_menu_inst.connect("dungeon_generated", plugin_connection)
+	dungeon_menu_inst.connect("save_to_layouts_signal", save_to_layouts_function)
 
 	if current_scene:
 		dungeon_menu_inst.name = "Dungeon Generator " + str(current_scene.get_child_count())
@@ -481,6 +404,17 @@ func create_first_person_controller():
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
+	#stored_gridmaps.append(gridmap)
+	#
+	#print("My gridmaps: ", stored_gridmaps.size())
+	
+func save_to_layouts_function(gridmap):
+	print("Save to layouts function from within the plugin.gd!!!!!!")
 	stored_gridmaps.append(gridmap)
 	
+	item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
+	item_list.add_item("ping pong")#.add_item(gridmap)
+	print("items: ", item_list.item_count)
+	item_list.add_icon_item(DUNGEON_GENERATOR_ICON)
+	hideout_button.hide()
 	print("My gridmaps: ", stored_gridmaps.size())
