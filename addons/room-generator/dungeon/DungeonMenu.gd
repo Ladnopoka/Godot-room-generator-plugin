@@ -68,6 +68,8 @@ func visualize_border():
 			gridmap.set_cell_item(Vector3i(-1, 0, pos1), 3)
 	
 func generate_tiles():
+	if !gridmap:
+		return
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
 	if generate_with_custom_seed: set_seed(generate_with_custom_seed)
@@ -182,7 +184,7 @@ func create_tunnels(tunnel_graph):
 				gridmap.set_cell_item(pos, 1) # finally, set the cell to a tunnel tile
 				
 func generate_room(rec: int):
-	if !rec > 0: #don't run if recursion limit is reached
+	if !rec > 0 || !gridmap: #don't run if recursion limit is reached
 		return
 	# get random width and heights
 	var width : int = (randi() % (MAX_room_size - MIN_room_size)) + MIN_room_size
@@ -272,7 +274,8 @@ func handle_66(cell, dir):
 	cell.call("remove_door_"+dir)
 
 func create_dungeon():
-	print("get children: ", get_children())
+	if !dungeon_mesh:
+		return
 	for c in dungeon_mesh.get_children():
 		dungeon_mesh.remove_child(c)
 		c.queue_free()
