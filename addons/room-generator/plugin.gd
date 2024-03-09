@@ -96,6 +96,9 @@ func use_layout_button_pressed():
 		print("Gridmap ", item_list.get_selected_items(), " spawned")
 		gridmap_from_layouts = stored_gridmaps[i]
 	
+	for i in stored_gridmaps:
+		print(i)
+	
 	instantiate_gridmap_from_layouts(gridmap_from_layouts)
 	#item_list.get_item_at_position(item_list.get_selected_items())
 	
@@ -451,7 +454,7 @@ func plugin_connection(gridmap):
 
 	
 func save_to_layouts_function(gridmap):
-	print("Save to layouts function from within the plugin.gd!!!!!!")
+	print("Save to layouts function from within the plugin.gd!!!!!! ", gridmap)
 	if !item_list:
 		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
 		
