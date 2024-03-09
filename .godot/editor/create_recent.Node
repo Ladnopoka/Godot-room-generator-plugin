@@ -1,7 +1,8 @@
+MeshInstance3D
+Camera3D
 SubViewport
 SubViewportContainer
 ItemList
-MeshInstance3D
 Label
 Node3D
 GridMap

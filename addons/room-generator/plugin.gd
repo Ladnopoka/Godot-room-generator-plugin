@@ -446,9 +446,10 @@ func save_to_layouts_function(gridmap):
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
-	var character = THIRD_PERSON_PLAYER.instantiate()
-	viewport.add_child(character)
 	viewport.size = Vector2(500, 400)  # Set the size of the viewport
-	
-	var camera = character.camera_3d
-	viewport.Camera3D = camera
+	#var character = THIRD_PERSON_PLAYER.instantiate()
+	#viewport.add_child(character)
+	#viewport.size = Vector2(500, 400)  # Set the size of the viewport
+	#
+	#var camera = character.get_node("Head/Camera3D")
+	#viewport.Camera3D
