@@ -50,6 +50,7 @@ var frozen_caves_menu_button
 var frozen_caves_popup_menu
 
 var item_list : ItemList
+var item_list_counter = 0
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -92,10 +93,10 @@ func use_layout_button_pressed():
 	
 func delete_layout_button_pressed():
 	print("Delete Layout Button Pressed: ")
-	print("Item deleted: ", item_list.get_selected_items())
 	
 	var selected_items = item_list.get_selected_items()
 	for i in range(selected_items.size() - 1, -1, -1):  # Iterate backwards
+		print("Item ", item_list.get_selected_items(), " deleted")
 		item_list.remove_item(selected_items[i])
 
 func wooden_cabin_menu_button_pressed():
@@ -429,6 +430,7 @@ func save_to_layouts_function(gridmap):
 		
 	stored_gridmaps.append(gridmap)
 	
-	item_list.add_item("Generated Layout " + str(item_list.item_count), DUNGEON_GENERATOR_ICON, true)
+	item_list.add_item("Generated Layout " + str(item_list_counter), DUNGEON_GENERATOR_ICON, true)
+	item_list_counter+=1
 
 	print("My gridmaps: ", stored_gridmaps.size())
