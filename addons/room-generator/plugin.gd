@@ -90,8 +90,32 @@ func setup_button_connections():
 func use_layout_button_pressed():
 	print("Use Layout Button Pressed: ")
 	print("Item selected: ", item_list.get_selected_items())
-	#var gridmap_from_layouts = 
+	var gridmap_from_layouts
+	
+	for i in range(item_list.item_count):  # Iterate backwards
+		print("Gridmap ", item_list.get_selected_items(), " spawned")
+		gridmap_from_layouts = stored_gridmaps[i]
+	
+	instantiate_gridmap_from_layouts(gridmap_from_layouts)
 	#item_list.get_item_at_position(item_list.get_selected_items())
+	
+func instantiate_gridmap_from_layouts(gridmap):
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	var gridmap_from_layouts = gridmap.duplicate(true)
+	
+	if current_scene:
+		gridmap_from_layouts.name = "Gridmapppp_" + str(current_scene.get_child_count())
+
+		# For undo/redo functionality:
+		undo_redo.create_action("Create Wooden Cabin Texture")
+		undo_redo.add_do_method(current_scene, "add_child", gridmap_from_layouts)
+		undo_redo.add_do_reference(gridmap_from_layouts)
+		undo_redo.add_undo_method(current_scene, "remove_child", gridmap_from_layouts)
+		undo_redo.commit_action(true)
+		gridmap_from_layouts.owner = current_scene
+	else:
+		print("No active scene!")	
+	
 	
 func delete_layout_button_pressed():
 	print("Delete Layout Button Pressed: ")
@@ -121,7 +145,6 @@ func wooden_cabin_menu_button_pressed():
 	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
 	popup_theme.set_font_size("font_size", "PopupMenu", 30)
 
-
 	wooden_cabins_popup_menu.theme = popup_theme
 	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
@@ -131,7 +154,6 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
 	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
-	wooden_cabins_popup_menu.alignment
 	
 func instantiate_frozen_caves_texture(id):
 	var current_scene = get_editor_interface().get_edited_scene_root()
