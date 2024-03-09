@@ -90,6 +90,7 @@ func setup_button_connections():
 func use_layout_button_pressed():
 	print("Use Layout Button Pressed: ")
 	print("Item selected: ", item_list.get_selected_items())
+	#var gridmap_from_layouts = 
 	#item_list.get_item_at_position(item_list.get_selected_items())
 	
 func delete_layout_button_pressed():
@@ -99,6 +100,7 @@ func delete_layout_button_pressed():
 	for i in range(selected_items.size() - 1, -1, -1):  # Iterate backwards
 		print("Item ", item_list.get_selected_items(), " deleted")
 		item_list.remove_item(selected_items[i])
+		stored_gridmaps.remove_at(selected_items[i])
 
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
@@ -119,6 +121,7 @@ func wooden_cabin_menu_button_pressed():
 	popup_theme.set_color("font_color", "PopupMenu", Color(0.663, 0.91, 0))  
 	popup_theme.set_font_size("font_size", "PopupMenu", 30)
 
+
 	wooden_cabins_popup_menu.theme = popup_theme
 	wooden_cabins_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
@@ -128,6 +131,7 @@ func wooden_cabin_menu_button_pressed():
 	wooden_cabins_popup_menu.add_item("Floor")
 	wooden_cabins_popup_menu.add_item("GridMap Generator")
 	wooden_cabins_popup_menu.connect("id_pressed", instantiate_wooden_cabin_texture)
+	wooden_cabins_popup_menu.alignment
 	
 func instantiate_frozen_caves_texture(id):
 	var current_scene = get_editor_interface().get_edited_scene_root()
@@ -447,6 +451,7 @@ func save_to_layouts_function(gridmap):
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
 	viewport.size = Vector2(500, 400)  # Set the size of the viewport
+	
 	#var character = THIRD_PERSON_PLAYER.instantiate()
 	#viewport.add_child(character)
 	#viewport.size = Vector2(500, 400)  # Set the size of the viewport

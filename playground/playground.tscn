@@ -5,4 +5,4 @@
 [node name="Playground" type="Node3D"]
 
 [node name="Player_1" parent="." instance=ExtResource("6_c0f6j")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 11.2391, 2.85356, 5.03748)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.99108, 2.85356, 2.30091)
