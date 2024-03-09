@@ -2,24 +2,25 @@
 @tool
 extends Node3D
 
-@onready var gridmap : GridMap = $GridMap
+@onready var gridmap = $GridMap
 @onready var dungeon_mesh = $DungeonMesh
 
-@export var generate : bool = false : set = set_start
-@export var border_size : int = 20 : set = set_border_size
-@export var MIN_room_size : int = 3
-@export var MAX_room_size: int = 8
-@export var room_number : int = 4
-@export var room_margin : int = 1 #minimum distance the rooms must keep from each other
-@export var room_recursion_tries : int = 15
+@export var border_size = 20 : set = set_border_size
+@export var MIN_room_size = 3
+@export var MAX_room_size = 8
+@export var room_number = 4
+@export var room_margin = 1 #minimum distance the rooms must keep from each other
+@export var room_recursion_tries = 15
 
-@export_range(0,1) var survival_chance : float = 0.25
-@export_multiline var generate_with_custom_seed : String = "" : set = set_seed
+@export_range(0,1) var survival_chance = 0.25
+@export_multiline var generate_with_custom_seed = "" : set = set_seed
 func set_seed(val):
 	generate_with_custom_seed = val
 	seed(val.hash())
 	
-@export var generate_mesh : bool = false : set = set_start_generate_mesh
+@export var generate_layout = false : set = set_start_generate_layout
+@export var generate_mesh = false : set = set_start_generate_mesh
+@export var save_to_layouts = false : set = set_save_to_layouts
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -48,12 +49,15 @@ func _ready():
 		create_dungeon()
 		gridmap.hide()
 
-func set_start(val:bool):
+func set_save_to_layouts(val):
+	print("set save to layouts function activated")
+
+func set_start_generate_layout(val):
 	if Engine.is_editor_hint():
 		generate_tiles()
 		emit_signal("dungeon_generated", gridmap) #eventually generate a whole dungeon
 
-func set_border_size(val : int):
+func set_border_size(val):
 	border_size = val
 	if Engine.is_editor_hint():
 		visualize_border()
@@ -97,9 +101,9 @@ func generate_tiles():
 	
 	# explained more in depth in the report, but this is basically the Delaunay graph
 	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
-		var p1 : int = delaunay_triangulation.pop_front()
-		var p2 : int = delaunay_triangulation.pop_front()
-		var p3 : int = delaunay_triangulation.pop_front()
+		var p1 = delaunay_triangulation.pop_front()
+		var p2 = delaunay_triangulation.pop_front()
+		var p3 = delaunay_triangulation.pop_front()
 		delaunay_graph.connect_points(p1, p2)
 		delaunay_graph.connect_points(p2, p3)
 		delaunay_graph.connect_points(p1, p3)
