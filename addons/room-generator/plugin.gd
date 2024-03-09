@@ -39,7 +39,7 @@ var stored_gridmaps: Array[GridMap] = []
 var wall_button: Button
 var first_person_controller: Button
 var isometric_controller: Button
-var hideout_button: Button
+var use_layout_button: Button
 var dungeon_menu_button: MenuButton
 var dungeon_layout_button: Button
 var dungeon_popup_menu
@@ -49,7 +49,6 @@ var frozen_caves_menu_button
 var frozen_caves_popup_menu
 
 var item_list : ItemList
-var room2
 
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
@@ -71,10 +70,9 @@ func setup_button_connections():
 	# Connect the toggle button signal
 	first_person_controller = dockedScene.get_node("TabContainer/Player Controller/First Person Player Controller")
 	isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
-	hideout_button = dockedScene.get_node("TabContainer/Layouts/Hideout")
+	use_layout_button = dockedScene.get_node("TabContainer/Layouts/UseLayoutButton")
 	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
-	dungeon_layout_button = dockedScene.get_node("TabContainer/Layouts/Dungeon")
 	wooden_cabin_menu_button = dockedScene.get_node("TabContainer/Models/WoodenCabinGeneratorMenu")	
 	frozen_caves_menu_button = dockedScene.get_node("TabContainer/Models/FrozenCaveGeneratorMenu")	
 
@@ -82,7 +80,13 @@ func setup_button_connections():
 	isometric_controller.connect("pressed", create_isometric_controller)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	frozen_caves_menu_button.connect("pressed", frozen_caves_menu_button_pressed)
+	use_layout_button.connect("pressed", use_layout_button_pressed)
 	
+func use_layout_button_pressed():
+	print("Use Layout Button Pressed: ")
+	print("Item selected: ", item_list.get_selected_items())
+	#item_list.get_item_at_position(item_list.get_selected_items())
+
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
 		wooden_cabins_popup_menu.clear()
@@ -404,17 +408,15 @@ func create_first_person_controller():
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
-	#stored_gridmaps.append(gridmap)
-	#
-	#print("My gridmaps: ", stored_gridmaps.size())
+
 	
 func save_to_layouts_function(gridmap):
 	print("Save to layouts function from within the plugin.gd!!!!!!")
+	if !item_list:
+		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
+		
 	stored_gridmaps.append(gridmap)
 	
-	item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
-	item_list.add_item("ping pong")#.add_item(gridmap)
-	print("items: ", item_list.item_count)
-	item_list.add_icon_item(DUNGEON_GENERATOR_ICON)
-	hideout_button.hide()
+	item_list.add_item("Generated Layout " + str(item_list.item_count), DUNGEON_GENERATOR_ICON, true)
+
 	print("My gridmaps: ", stored_gridmaps.size())
