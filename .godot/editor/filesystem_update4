@@ -1,2 +1,5 @@
 res://addons/room-generator/panel.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
+res://addons/room-generator/plugin.gd
+res://playground/playground.tscn
+res://addons/room-generator/player/third_person_player.tscn

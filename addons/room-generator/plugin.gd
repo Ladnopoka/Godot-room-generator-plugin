@@ -64,6 +64,7 @@ func _enter_tree():
 	
 	setup_button_connections()
 	setup_dungeon_menu_button()
+	setup_preview()
 		
 	# Initial setup when the plugin is enabled
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dockedScene)
@@ -434,3 +435,20 @@ func save_to_layouts_function(gridmap):
 	item_list_counter+=1
 
 	print("My gridmaps: ", stored_gridmaps.size())
+	
+
+
+
+
+
+
+
+
+func setup_preview():
+	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
+	var character = THIRD_PERSON_PLAYER.instantiate()
+	viewport.add_child(character)
+	viewport.size = Vector2(500, 400)  # Set the size of the viewport
+	
+	var camera = character.camera_3d
+	viewport.Camera3D = camera
