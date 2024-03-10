@@ -35,7 +35,10 @@ var dockedScene
 var tab_container: TabContainer
 var is_content_visible: bool = false  # Tracks whether the content is currently visible
 
-var stored_gridmaps: Array[GridMap] = []
+#var stored_gridmaps: Array[GridMap] = []
+#var stored_meshes: Array[Node3D] = []
+var stored_layouts = []
+
 var wall_button: Button
 var first_person_controller: Button
 var isometric_controller: Button
@@ -99,10 +102,13 @@ func use_layout_button_pressed():
 	var selected_index = gridmap_from_layouts[0]
 	print("Item selected: ", selected_index)
 	
-	if selected_index >= 0 and selected_index < stored_gridmaps.size():
-		var spawning_gridmap = stored_gridmaps[selected_index]
+	if selected_index >= 0 and selected_index < stored_layouts.size():
+		var layout_dict = stored_layouts[selected_index] # This is the selected layout's dictionary
+		var spawning_gridmap = layout_dict["gridmap"] # Extract the gridmap component
+		var spawning_mesh = layout_dict["mesh"] # Extract the mesh component
 		print("Gridmap ", selected_index, " spawned")
-		instantiate_gridmap_from_layouts(spawning_gridmap)
+		instantiate_gridmap_from_layouts(spawning_gridmap) # Pass both components
+		instantiate_mesh_from_layouts(spawning_mesh) # Pass both components
 	else:
 		print("Selected index out of bounds")
 	
@@ -124,14 +130,31 @@ func instantiate_gridmap_from_layouts(gridmap):
 		gridmap_from_layouts.name = "GridMap_" + str(current_scene.get_child_count())
 
 		# For undo/redo functionality:
-		undo_redo.create_action("Create Wooden Cabin Texture")
+		undo_redo.create_action("Adding gridmap from layouts")
 		undo_redo.add_do_method(current_scene, "add_child", gridmap_from_layouts)
 		undo_redo.add_do_reference(gridmap_from_layouts)
 		undo_redo.add_undo_method(current_scene, "remove_child", gridmap_from_layouts)
 		undo_redo.commit_action(true)
 		gridmap_from_layouts.owner = current_scene
 	else:
-		print("No active scene!")	
+		print("No active scene!")
+		
+func instantiate_mesh_from_layouts(mesh):
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	var mesh_from_layouts = mesh.duplicate(true)
+	
+	if current_scene:
+		mesh_from_layouts.name = "GridMap_" + str(current_scene.get_child_count())
+
+		# For undo/redo functionality:
+		undo_redo.create_action("Adding gridmap from layouts")
+		undo_redo.add_do_method(current_scene, "add_child", mesh_from_layouts)
+		undo_redo.add_do_reference(mesh_from_layouts)
+		undo_redo.add_undo_method(current_scene, "remove_child", mesh_from_layouts)
+		undo_redo.commit_action(true)
+		mesh_from_layouts.owner = current_scene
+	else:
+		print("No active scene!")
 	
 	
 func delete_layout_button_pressed():
@@ -141,7 +164,7 @@ func delete_layout_button_pressed():
 	for i in range(selected_items.size() - 1, -1, -1):  # Iterate backwards
 		print("Item ", item_list.get_selected_items(), " deleted")
 		item_list.remove_item(selected_items[i])
-		stored_gridmaps.remove_at(selected_items[i])
+		stored_layouts.remove_at(selected_items[i])
 
 func wooden_cabin_menu_button_pressed():
 	if wooden_cabins_popup_menu:
@@ -463,30 +486,36 @@ func create_first_person_controller():
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
-
-
-
 	
-func save_to_layouts_function(gridmap):
-	print("Save to layouts function from within the plugin.gd!!!!!! ", gridmap)
+#func save_to_layouts_function(gridmap, mesh):
+	#if !item_list:
+		#item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
+		#
+	#stored_gridmaps.append(gridmap)
+	#stored_meshes.append(mesh)
+	#
+	#item_list.add_item("Generated Layout " + str(item_list_counter), DUNGEON_GENERATOR_ICON, true)
+	#item_list_counter+=1
+	
+func save_to_layouts_function(gridmap, mesh):
 	if !item_list:
 		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
-		
-	print("Adding ", gridmap, " to array.")
-	stored_gridmaps.append(gridmap)
 	
-	item_list.add_item("Generated Layout " + str(item_list_counter), DUNGEON_GENERATOR_ICON, true)
-	item_list_counter+=1
-
-	print("My gridmaps: ", stored_gridmaps.size())
+	# Create a dictionary for the current dungeon layout and its mesh, then append it
+	var dungeon_dict = {
+		"gridmap": gridmap,
+		"mesh": mesh}
+	stored_layouts.append(dungeon_dict)
 	
-
-
-
-
-
-
-
+	# Add an item to the ItemList for this dungeon layout
+	item_list.add_item("Generated Layout " + str(item_list.get_item_count() + 1), DUNGEON_GENERATOR_ICON, true)
+	print("Layouts: ", stored_layouts)
+	
+	#check what I have in the dictionary
+	for layout_dict in stored_layouts:
+		print("Layout Key: ", layout_dict)
+		for key in layout_dict:
+			print("   ", key, ": ", layout_dict[key])
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
