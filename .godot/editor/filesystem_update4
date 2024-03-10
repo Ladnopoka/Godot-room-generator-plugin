@@ -1,3 +1,4 @@
-res://playground/playground.tscn
+res://addons/room-generator/dungeon/dungeon_menu.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
 res://addons/room-generator/plugin.gd
+res://playground/playground.tscn

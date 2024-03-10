@@ -458,6 +458,7 @@ func save_to_layouts_function(gridmap):
 	if !item_list:
 		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
 		
+	print("Adding ", gridmap, " to array.")
 	stored_gridmaps.append(gridmap)
 	
 	item_list.add_item("Generated Layout " + str(item_list_counter), DUNGEON_GENERATOR_ICON, true)
@@ -475,7 +476,7 @@ func save_to_layouts_function(gridmap):
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
-	viewport.size = Vector2(500, 400)  # Set the size of the viewport
+	viewport.size = Vector2(410, 370)  # Set the size of the viewport
 	
 	#var character = THIRD_PERSON_PLAYER.instantiate()
 	#viewport.add_child(character)
