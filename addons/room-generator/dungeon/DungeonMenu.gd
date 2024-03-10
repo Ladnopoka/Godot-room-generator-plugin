@@ -52,9 +52,13 @@ func _ready():
 		gridmap.hide()
 
 func set_save_to_layouts(val):
-	print("set save to layouts function activated")
-	var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
-	emit_signal("save_to_layouts_signal", gridmap_copy)
+	print("set save to layouts function activated")	
+	if gridmap.get_used_cells().size() > 0:
+		var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
+		var mesh_copy = dungeon_mesh.duplicate(true) # Perform a deep copy
+		emit_signal("save_to_layouts_signal", gridmap_copy, mesh_copy)
+	else:
+		print("GridMap is empty, can't save layout.")
 
 func set_start_clear_mesh(val):
 	clear_dungeon_mesh()
