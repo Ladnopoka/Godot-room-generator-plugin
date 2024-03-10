@@ -142,7 +142,7 @@ func instantiate_mesh_from_layouts(mesh):
 	var mesh_from_layouts = mesh.duplicate(true)
 	
 	if current_scene:
-		mesh_from_layouts.name = "GridMap_" + str(current_scene.get_child_count())
+		mesh_from_layouts.name = "MeshTexture_" + str(current_scene.get_child_count())
 
 		# For undo/redo functionality:
 		undo_redo.create_action("Adding gridmap from layouts")
@@ -150,6 +150,7 @@ func instantiate_mesh_from_layouts(mesh):
 		undo_redo.add_do_reference(mesh_from_layouts)
 		undo_redo.add_undo_method(current_scene, "remove_child", mesh_from_layouts)
 		undo_redo.commit_action(true)
+		mesh_from_layouts.visible = true
 		mesh_from_layouts.owner = current_scene
 	else:
 		print("No active scene!")

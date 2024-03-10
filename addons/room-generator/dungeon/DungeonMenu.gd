@@ -49,11 +49,12 @@ func _ready():
 		pass
 	else:
 		create_dungeon_mesh()
-		gridmap.hide()
+		#gridmap.hide()
 
 func set_save_to_layouts(val):
 	print("set save to layouts function activated")	
-	if gridmap.get_used_cells().size() > 0:
+	#if gridmap.get_used_cells().size() > 0:
+	if gridmap:
 		var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
 		var mesh_copy = dungeon_mesh.duplicate(true) # Perform a deep copy
 		emit_signal("save_to_layouts_signal", gridmap_copy, mesh_copy)
