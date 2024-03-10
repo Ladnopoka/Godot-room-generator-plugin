@@ -55,6 +55,8 @@ var frozen_caves_popup_menu
 var item_list : ItemList
 var item_list_counter = 0
 
+var confirmation_dialog: ConfirmationDialog
+
 # Get the undo/redo object
 var undo_redo = get_undo_redo()
 
@@ -67,6 +69,7 @@ func _enter_tree():
 	
 	setup_button_connections()
 	setup_dungeon_menu_button()
+	confirmation_dialog_setup()
 	setup_preview()
 		
 	# Initial setup when the plugin is enabled
@@ -93,22 +96,17 @@ func setup_button_connections():
 func use_layout_button_pressed():
 	print("Use Layout Button Pressed: ")
 	print("Item selected: ", item_list.get_selected_items())
-	var gridmap_from_layouts = item_list.get_selected_items()
+	var selected_items = item_list.get_selected_items()
 	
-	if gridmap_from_layouts.size() == 0:
+	if selected_items.size() == 0:
 		print("No item selected")
 		return
 	
-	var selected_index = gridmap_from_layouts[0]
+	var selected_index = selected_items[0]
 	print("Item selected: ", selected_index)
 	
 	if selected_index >= 0 and selected_index < stored_layouts.size():
-		var layout_dict = stored_layouts[selected_index] # This is the selected layout's dictionary
-		var spawning_gridmap = layout_dict["gridmap"] # Extract the gridmap component
-		var spawning_mesh = layout_dict["mesh"] # Extract the mesh component
-		print("Gridmap ", selected_index, " spawned")
-		instantiate_gridmap_from_layouts(spawning_gridmap) # Pass both components
-		instantiate_mesh_from_layouts(spawning_mesh) # Pass both components
+		confirmation_dialog.popup_centered()  # Show the dialog to let the user decide
 	else:
 		print("Selected index out of bounds")
 	
@@ -516,6 +514,37 @@ func save_to_layouts_function(gridmap, mesh):
 		print("Layout Key: ", layout_dict)
 		for key in layout_dict:
 			print("   ", key, ": ", layout_dict[key])
+			
+			
+func confirmation_dialog_setup():
+	# Create the ConfirmationDialog dynamically
+	confirmation_dialog = ConfirmationDialog.new()
+	confirmation_dialog.dialog_text = "Do you want to spawn the Gridmap, Mesh, or Both?"
+	add_child(confirmation_dialog)
+
+	# Add buttons for choices
+	confirmation_dialog.add_button("Gridmap", true, "gridmap")
+	confirmation_dialog.add_button("Mesh", true, "mesh")
+	confirmation_dialog.add_button("Both", true, "both")
+
+	# Connect signals for the buttons
+	confirmation_dialog.connect("custom_action", _on_confirmation_dialog_custom_action)
+	
+func _on_confirmation_dialog_custom_action(action: String):
+	var selected_index = item_list.get_selected_items()[0]
+	var layout_dict = stored_layouts[selected_index]  # Extract the selected layout
+	var spawning_gridmap = layout_dict["gridmap"]
+	var spawning_mesh = layout_dict["mesh"]
+
+	match action:
+		"gridmap":
+			instantiate_gridmap_from_layouts(spawning_gridmap)
+		"mesh":
+			instantiate_mesh_from_layouts(spawning_mesh)
+		"both":
+			instantiate_gridmap_from_layouts(spawning_gridmap)
+			instantiate_mesh_from_layouts(spawning_mesh)
+
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")

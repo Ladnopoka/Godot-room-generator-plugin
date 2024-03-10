@@ -286,9 +286,10 @@ func handle_66(cell, dir):
 	cell.call("remove_door_"+dir)
 
 func clear_dungeon_mesh():
-	for c in dungeon_mesh.get_children():
-		dungeon_mesh.remove_child(c)
-		c.queue_free()
+	if dungeon_mesh:
+		for c in dungeon_mesh.get_children():
+			dungeon_mesh.remove_child(c)
+			c.queue_free()
 
 func create_dungeon_mesh():
 	if !dungeon_mesh:
