@@ -53,18 +53,18 @@ func _ready():
 
 func set_save_to_layouts(val):
 	print("set save to layouts function activated")
-	emit_signal("save_to_layouts_signal", gridmap)
+	var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
+	emit_signal("save_to_layouts_signal", gridmap_copy)
 
 func set_start_clear_mesh(val):
 	clear_dungeon_mesh()
-	#print("set save to layouts function activated")
-	#emit_signal("save_to_layouts_signal", gridmap)
 
 func set_start_generate_layout(val):
 	if Engine.is_editor_hint():
 		clear_dungeon_mesh()
 		generate_tiles()
-		emit_signal("dungeon_generated", gridmap) #eventually generate a whole dungeon
+		print("DungeonMenu Gridmap: ", gridmap)
+		emit_signal("dungeon_generated", gridmap)
 
 func set_border_size(val):
 	border_size = val

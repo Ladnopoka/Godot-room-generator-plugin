@@ -90,24 +90,38 @@ func setup_button_connections():
 func use_layout_button_pressed():
 	print("Use Layout Button Pressed: ")
 	print("Item selected: ", item_list.get_selected_items())
-	var gridmap_from_layouts
+	var gridmap_from_layouts = item_list.get_selected_items()
 	
-	for i in range(item_list.item_count):  # Iterate backwards
-		print("Gridmap ", item_list.get_selected_items(), " spawned")
-		gridmap_from_layouts = stored_gridmaps[i]
+	if gridmap_from_layouts.size() == 0:
+		print("No item selected")
+		return
 	
-	for i in stored_gridmaps:
-		print(i)
+	var selected_index = gridmap_from_layouts[0]
+	print("Item selected: ", selected_index)
 	
-	instantiate_gridmap_from_layouts(gridmap_from_layouts)
-	#item_list.get_item_at_position(item_list.get_selected_items())
+	if selected_index >= 0 and selected_index < stored_gridmaps.size():
+		var spawning_gridmap = stored_gridmaps[selected_index]
+		print("Gridmap ", selected_index, " spawned")
+		instantiate_gridmap_from_layouts(spawning_gridmap)
+	else:
+		print("Selected index out of bounds")
+	
+	#for i in range(item_list.item_count):  # Iterate backwards
+		#print("Gridmap ", item_list.get_selected_items(), " spawned")
+		#gridmap_from_layouts = stored_gridmaps[i]
+	#
+	#for i in stored_gridmaps:
+		#print(i)
+	#
+	#instantiate_gridmap_from_layouts(gridmap_from_layouts)
+	##item_list.get_item_at_position(item_list.get_selected_items())
 	
 func instantiate_gridmap_from_layouts(gridmap):
 	var current_scene = get_editor_interface().get_edited_scene_root()
 	var gridmap_from_layouts = gridmap.duplicate(true)
 	
 	if current_scene:
-		gridmap_from_layouts.name = "Gridmapppp_" + str(current_scene.get_child_count())
+		gridmap_from_layouts.name = "GridMap_" + str(current_scene.get_child_count())
 
 		# For undo/redo functionality:
 		undo_redo.create_action("Create Wooden Cabin Texture")
