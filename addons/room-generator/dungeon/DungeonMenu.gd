@@ -20,6 +20,7 @@ func set_seed(val):
 	
 @export var generate_layout = false : set = set_start_generate_layout
 @export var generate_mesh = false : set = set_start_generate_mesh
+@export var clear_mesh = false : set = set_start_clear_mesh
 @export var save_to_layouts = false : set = set_save_to_layouts
 
 var directions = {
@@ -40,22 +41,28 @@ signal save_to_layouts_signal
 
 func set_start_generate_mesh(a):
 	if Engine.is_editor_hint():
-		create_dungeon()
+		create_dungeon_mesh()
 		#emit_signal("dungeon_generated", grid_map) #eventually generate a whole dungeon
 		
 func _ready():
 	if Engine.is_editor_hint():
 		pass
 	else:
-		create_dungeon()
+		create_dungeon_mesh()
 		gridmap.hide()
 
 func set_save_to_layouts(val):
 	print("set save to layouts function activated")
 	emit_signal("save_to_layouts_signal", gridmap)
 
+func set_start_clear_mesh(val):
+	clear_dungeon_mesh()
+	#print("set save to layouts function activated")
+	#emit_signal("save_to_layouts_signal", gridmap)
+
 func set_start_generate_layout(val):
 	if Engine.is_editor_hint():
+		clear_dungeon_mesh()
 		generate_tiles()
 		emit_signal("dungeon_generated", gridmap) #eventually generate a whole dungeon
 
@@ -135,8 +142,6 @@ func generate_tiles():
 			if c > p:
 				var kill = randf()
 				if survival_chance > kill:
-					print("Survival: ", survival_chance)
-					print("Kill: ", kill)
 					tunnel_graph.connect_points(p, c)
 					
 	create_tunnels(tunnel_graph)
@@ -151,9 +156,6 @@ func create_tunnels(tunnel_graph):
 				var room_to : PackedVector3Array = room_tiles[c]
 				var tile_from : Vector3 = room_from[0]
 				var tile_to : Vector3 = room_to[0]
-				
-				print("from: ", tile_from)
-				print("to: ", tile_to)
 				
 				for t in room_from:
 					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
@@ -279,7 +281,12 @@ func handle_66(cell, dir):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)
 
-func create_dungeon():
+func clear_dungeon_mesh():
+	for c in dungeon_mesh.get_children():
+		dungeon_mesh.remove_child(c)
+		c.queue_free()
+
+func create_dungeon_mesh():
 	if !dungeon_mesh:
 		return
 	for c in dungeon_mesh.get_children():
