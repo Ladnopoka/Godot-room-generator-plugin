@@ -328,3 +328,7 @@ func create_dungeon_mesh():
 					
 		if t%10 == 9: await get_tree().create_timer(0).timeout #I've added this timer to load textures slowly, 
 		#because my laptop freezes for too long if dungeon is big, and I don't like frozen laptops.
+
+
+func _on_dungeon_mesh_ready():
+	create_dungeon_mesh()

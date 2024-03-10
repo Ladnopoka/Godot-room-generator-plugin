@@ -122,7 +122,7 @@ func use_layout_button_pressed():
 	
 func instantiate_gridmap_from_layouts(gridmap):
 	var current_scene = get_editor_interface().get_edited_scene_root()
-	var gridmap_from_layouts = gridmap.duplicate(true)
+	var gridmap_from_layouts = gridmap
 	
 	if current_scene:
 		gridmap_from_layouts.name = "GridMap_" + str(current_scene.get_child_count())
@@ -139,7 +139,7 @@ func instantiate_gridmap_from_layouts(gridmap):
 		
 func instantiate_mesh_from_layouts(mesh):
 	var current_scene = get_editor_interface().get_edited_scene_root()
-	var mesh_from_layouts = mesh.duplicate(true)
+	var mesh_from_layouts = mesh
 	
 	if current_scene:
 		mesh_from_layouts.name = "MeshTexture_" + str(current_scene.get_child_count())
