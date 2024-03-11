@@ -1,1 +1,5 @@
 res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
+res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres
+res://addons/room-generator/dungeon/dungeon_menu.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_tiles_ladno.tres

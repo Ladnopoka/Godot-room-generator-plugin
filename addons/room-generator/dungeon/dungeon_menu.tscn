@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://ci66d6nlmqckg"]
 
 [ext_resource type="Script" path="res://addons/room-generator/dungeon/DungeonMenu.gd" id="1_ft6v0"]
-[ext_resource type="MeshLibrary" uid="uid://vacfu7kerkbf" path="res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres" id="2_7o3li"]
+[ext_resource type="MeshLibrary" uid="uid://broxkar4effgt" path="res://addons/room-generator/dungeon_tiles/dungeon_tiles_ladno.tres" id="2_bhubi"]
 
 [node name="DungeonMenu" type="Node3D"]
 script = ExtResource("1_ft6v0")
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("2_7o3li")
+mesh_library = ExtResource("2_bhubi")
 cell_size = Vector3(1, 1, 1)
 cell_center_y = false
 data = {
