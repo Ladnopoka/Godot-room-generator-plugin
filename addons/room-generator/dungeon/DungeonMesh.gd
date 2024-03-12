@@ -1,9 +1,9 @@
-@tool
+#@tool
 extends Node3D
-
-@export var generate_mesh : bool = false : set = set_start
-@export var gridmap_path : NodePath
-@onready var gridmap : GridMap = get_node(gridmap_path)
+#
+#@export var generate_mesh : bool = false : set = set_start
+#@export var gridmap_path : NodePath
+@onready var gridmap : GridMap# = get_node(gridmap_path)
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -12,7 +12,9 @@ var directions = {
 	"right": Vector3i.RIGHT
 }
 
-var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
+var dungeon_cell_scene = preload("res://addons/room-generator/dungeon_tiles/dungeon_mesh_ladno.tscn")
+var wooden_cabins_cell_scene = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
+var frozen_caves_cell_scene = preload("res://addons/room-generator/texture_tiles/frozen_caves_mesh.tscn")
 
 func handle_none(cell, dir):
 	cell.call("remove_door_"+dir)
@@ -66,17 +68,19 @@ func handle_66(cell, dir):
 	cell.call("remove_door_"+dir)
 
 func _ready():
+	print("Dungeon Mesh Script Activated Through _ready!")#create_dungeon(gridmap)
 	if Engine.is_editor_hint():
 		pass
 	else:
-		create_dungeon()
-		gridmap.hide()
+		#create_dungeon(gridmap)
+		#gridmap.hide()
+		print("Dungeon Mesh Script Activated Through _ready!")#create_dungeon(gridmap)
 
 func set_start(val):
 	if Engine.is_editor_hint():
-		create_dungeon()
+		print("Dungeon Mesh Script Activated Through set_start! ", val)#create_dungeon(gridmap)
 
-func create_dungeon():
+func create_dungeon(gridmap):
 	for c in get_children():
 		remove_child(c)
 		c.queue_free()

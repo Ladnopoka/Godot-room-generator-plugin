@@ -1,5 +1,10 @@
-res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tres
-res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tscn
-res://addons/room-generator/dungeon_tiles/dungeon_tiles_extra.tres
-res://addons/room-generator/dungeon/dungeon_menu.tscn
+res://addons/room-generator/node_3d.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_tiles_ladno.tres
+res://playground/playground.tscn
+res://addons/room-generator/panel.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_mesh_ladno.tscn
+res://addons/room-generator/dungeon/dungeon_menu.tscn
+res://addons/room-generator/dungeon_tiles/dungeon_generator_tiles.tscn
+res://addons/room-generator/dungeon_tiles/wooden_walls.tscn
+res://addons/room-generator/texture_tiles/frozen_caves_mesh.tscn
+res://addons/room-generator/plugin.gd

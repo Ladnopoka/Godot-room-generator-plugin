@@ -142,7 +142,7 @@ func instantiate_mesh_from_layouts(mesh):
 	var mesh_from_layouts = mesh
 	
 	if current_scene:
-		mesh_from_layouts.name = "MeshTexture_" + str(current_scene.get_child_count())
+		mesh_from_layouts.name = "MeshTextures_" + str(current_scene.get_child_count())
 
 		# For undo/redo functionality:
 		undo_redo.create_action("Adding gridmap from layouts")
@@ -536,7 +536,9 @@ func _on_confirmation_dialog_custom_action(action: String):
 	var layout_dict = stored_layouts[selected_index]  # Extract the selected layout
 	var spawning_gridmap = layout_dict["gridmap"]
 	var spawning_mesh = layout_dict["mesh"]
-
+	spawning_mesh.set_script(load("res://addons/room-generator/dungeon/DungeonMesh.gd"))
+	
+	print("spawning dat mesh yoyo")
 	match action:
 		"gridmap":
 			instantiate_gridmap_from_layouts(spawning_gridmap)
