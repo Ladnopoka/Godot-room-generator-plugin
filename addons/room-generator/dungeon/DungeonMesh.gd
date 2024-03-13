@@ -3,7 +3,7 @@ extends Node3D
 #
 #@export var generate_mesh : bool = false : set = set_start
 #@export var gridmap_path : NodePath
-@onready var gridmap : GridMap# = get_node(gridmap_path)
+#@onready var gridmap : GridMap# = get_node(gridmap_path)
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -68,19 +68,29 @@ func handle_66(cell, dir):
 	cell.call("remove_door_"+dir)
 
 func _ready():
-	print("Dungeon Mesh Script Activated Through _ready!")#create_dungeon(gridmap)
 	if Engine.is_editor_hint():
 		pass
 	else:
-		#create_dungeon(gridmap)
-		#gridmap.hide()
-		print("Dungeon Mesh Script Activated Through _ready!")#create_dungeon(gridmap)
+		var gridmap = get_gridmap_by_pattern_name("GridMap_") # Attempt to find a GridMap node by name pattern
+		print("else gridmap", gridmap)
+		if gridmap:
+			create_dungeon(gridmap)
+
+#check for gridmaps in scene
+func get_gridmap_by_pattern_name(pattern: String) -> Node:
+	var current_scene = get_tree().current_scene
+	for child in current_scene.get_children():
+		print("child: ", child.name)
+		if child.name.begins_with(pattern) and child is GridMap:
+			return child
+	return null
 
 func set_start(val):
 	if Engine.is_editor_hint():
 		print("Dungeon Mesh Script Activated Through set_start! ", val)#create_dungeon(gridmap)
 
 func create_dungeon(gridmap):
+	print("in create_dungeon: ", gridmap)
 	for c in get_children():
 		remove_child(c)
 		c.queue_free()
