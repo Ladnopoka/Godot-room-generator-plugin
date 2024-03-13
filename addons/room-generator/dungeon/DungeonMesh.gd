@@ -104,7 +104,7 @@ func create_dungeon(gridmap):
 		
 		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		if cell_index <= 2 && cell_index >= 0: 
-			var dungeon_cell = dungeon_cell_scene.instantiate()
+			var dungeon_cell = frozen_caves_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			add_child(dungeon_cell)
 			t += 1
