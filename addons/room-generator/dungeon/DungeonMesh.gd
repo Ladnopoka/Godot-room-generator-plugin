@@ -75,6 +75,7 @@ func _ready():
 		print("else gridmap", gridmap)
 		if gridmap:
 			create_dungeon(gridmap)
+			gridmap.hide()
 
 #check for gridmaps in scene
 func get_gridmap_by_pattern_name(pattern: String) -> Node:

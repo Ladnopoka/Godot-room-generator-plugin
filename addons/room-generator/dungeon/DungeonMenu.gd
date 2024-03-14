@@ -49,7 +49,7 @@ func _ready():
 		pass
 	else:
 		create_dungeon_mesh()
-		#gridmap.hide()
+		gridmap.hide()
 
 func set_save_to_layouts(val):
 	print("set save to layouts function activated")	
