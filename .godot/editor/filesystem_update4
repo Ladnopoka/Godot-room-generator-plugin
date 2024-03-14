@@ -5,3 +5,4 @@ res://addons/room-generator/node_3d.tscn
 res://addons/room-generator/dungeon/DungeonMenu.gd
 res://node_3d.tscn
 res://addons/room-generator/dungeon/DungeonMesh.gd
+res://addons/room-generator/dungeon_tiles/dungeon_mesh_ladno.tscn

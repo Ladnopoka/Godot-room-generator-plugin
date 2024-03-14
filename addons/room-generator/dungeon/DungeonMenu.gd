@@ -19,9 +19,16 @@ func set_seed(val):
 	seed(val.hash())
 	
 @export var generate_layout = false : set = set_start_generate_layout
+@export var mesh_theme : MeshTheme = MeshTheme.dungeons
 @export var generate_mesh = false : set = set_start_generate_mesh
 @export var clear_mesh = false : set = set_start_clear_mesh
 @export var save_to_layouts = false : set = set_save_to_layouts
+
+enum MeshTheme {
+	dungeons,
+	wooden_cabins,
+	frozen_caves
+}
 
 var directions = {
 	"up": Vector3i.FORWARD,
@@ -30,6 +37,7 @@ var directions = {
 	"right": Vector3i.RIGHT
 }
 
+const DUNGEON_MESH_LADNO = preload("res://addons/room-generator/dungeon_tiles/dungeon_mesh_ladno.tscn")
 const WOODEN_CABINS_MESH = preload("res://addons/room-generator/dungeon_tiles/wooden_walls.tscn")
 const FROZEN_CAVES_MESH = preload("res://addons/room-generator/texture_tiles/frozen_caves_mesh.tscn")
 
@@ -300,7 +308,16 @@ func create_dungeon_mesh():
 		c.queue_free()
 	
 	var t : int = 0
+	var mesh_theme_to_spawn
+	match mesh_theme:
+		MeshTheme.dungeons:
+			mesh_theme_to_spawn = DUNGEON_MESH_LADNO.instantiate()
+		MeshTheme.wooden_cabins:
+			mesh_theme_to_spawn = WOODEN_CABINS_MESH.instantiate()
+		MeshTheme.frozen_caves:
+			mesh_theme_to_spawn = FROZEN_CAVES_MESH.instantiate()
 	
+	print("Mesh theme: ", mesh_theme_to_spawn)
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
 	for c in gridmap.get_used_cells(): #for each cell in grid map
@@ -308,7 +325,7 @@ func create_dungeon_mesh():
 		
 		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		if cell_index <= 2 && cell_index >= 0: 
-			var dungeon_cell = FROZEN_CAVES_MESH.instantiate()
+			var dungeon_cell = mesh_theme_to_spawn
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			dungeon_mesh.add_child(dungeon_cell)
 			t += 1
@@ -320,15 +337,14 @@ func create_dungeon_mesh():
 					handle_none(dungeon_cell, directions.keys()[i])
 				else:
 					var key = str(cell_index) + str(cell_n_index)
-					call("handle_"+key, dungeon_cell, directions.keys()[i])
+					call("handle_" + key, dungeon_cell, directions.keys()[i])
 		
 			if Engine.is_editor_hint():
 				var current_scene = EditorInterface.get_edited_scene_root()		
 				dungeon_cell.owner = current_scene #this allows you to work with spawned cells in your scene
 					
-		if t%10 == 9: await get_tree().create_timer(0).timeout #I've added this timer to load textures slowly, 
-		#because my laptop freezes for too long if dungeon is big, and I don't like frozen laptops.
-
+			if t%10 == 9: await get_tree().create_timer(0).timeout #I've added this timer to load textures slowly, 
+			#because my laptop freezes for too long if dungeon is big, and I don't like frozen laptops.
 
 func _on_dungeon_mesh_ready():
 	create_dungeon_mesh()
