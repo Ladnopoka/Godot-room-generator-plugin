@@ -311,11 +311,11 @@ func create_dungeon_mesh():
 	var mesh_theme_to_spawn
 	match mesh_theme:
 		MeshTheme.dungeons:
-			mesh_theme_to_spawn = DUNGEON_MESH_LADNO.instantiate()
+			mesh_theme_to_spawn = DUNGEON_MESH_LADNO
 		MeshTheme.wooden_cabins:
-			mesh_theme_to_spawn = WOODEN_CABINS_MESH.instantiate()
+			mesh_theme_to_spawn = WOODEN_CABINS_MESH
 		MeshTheme.frozen_caves:
-			mesh_theme_to_spawn = FROZEN_CAVES_MESH.instantiate()
+			mesh_theme_to_spawn = FROZEN_CAVES_MESH
 	
 	print("Mesh theme: ", mesh_theme_to_spawn)
 	#this is to offset the instances position to allign with the cells in 
@@ -325,7 +325,7 @@ func create_dungeon_mesh():
 		
 		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		if cell_index <= 2 && cell_index >= 0: 
-			var dungeon_cell = mesh_theme_to_spawn
+			var dungeon_cell = mesh_theme_to_spawn.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			dungeon_mesh.add_child(dungeon_cell)
 			t += 1
@@ -342,6 +342,7 @@ func create_dungeon_mesh():
 			if Engine.is_editor_hint():
 				var current_scene = EditorInterface.get_edited_scene_root()		
 				dungeon_cell.owner = current_scene #this allows you to work with spawned cells in your scene
+				dungeon_cell.set_script("")
 					
 			if t%10 == 9: await get_tree().create_timer(0).timeout #I've added this timer to load textures slowly, 
 			#because my laptop freezes for too long if dungeon is big, and I don't like frozen laptops.
