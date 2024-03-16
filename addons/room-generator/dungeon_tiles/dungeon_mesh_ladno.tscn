@@ -1,6 +1,7 @@
-[gd_scene load_steps=35 format=3 uid="uid://ihwnnenys24m"]
+[gd_scene load_steps=36 format=3 uid="uid://ihwnnenys24m"]
 
 [ext_resource type="Texture2D" uid="uid://budhhhjgswxyh" path="res://addons/room-generator/import_tiles/dungeon_mesh_ladno_medieval_wall_02_diff_4k.jpg" id="1_34s14"]
+[ext_resource type="Script" path="res://addons/room-generator/dungeon_tiles/wooden_walls.gd" id="1_vp254"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2l8dn"]
 resource_name = "ceiling"
@@ -379,6 +380,7 @@ shadow_mesh = SubResource("ArrayMesh_kbden")
 data = PackedVector3Array(-0.5, 0.02, -0.46, -0.5, 2.4, -0.5, -0.5, 2.4, -0.46, -0.5, 0.02, -0.46, -0.5, 0.02, -0.5, -0.5, 2.4, -0.5, -0.5, 0.02, -0.5, 0.5, 2.4, -0.5, -0.5, 2.4, -0.5, -0.5, 0.02, -0.5, 0.5, 0.02, -0.5, 0.5, 2.4, -0.5, 0.5, 0.02, -0.5, 0.5, 2.4, -0.46, 0.5, 2.4, -0.5, 0.5, 0.02, -0.5, 0.5, 0.02, -0.46, 0.5, 2.4, -0.46, 0.5, 0.02, -0.46, -0.5, 2.4, -0.46, 0.5, 2.4, -0.46, 0.5, 0.02, -0.46, -0.5, 0.02, -0.46, -0.5, 2.4, -0.46, -0.5, 0.02, -0.5, 0.5, 0.02, -0.46, 0.5, 0.02, -0.5, -0.5, 0.02, -0.5, -0.5, 0.02, -0.46, 0.5, 0.02, -0.46, 0.5, 2.4, -0.5, -0.5, 2.4, -0.46, -0.5, 2.4, -0.5, 0.5, 2.4, -0.5, 0.5, 2.4, -0.46, -0.5, 2.4, -0.46)
 
 [node name="Dungeon Mesh Ladno" type="Node3D"]
+script = ExtResource("1_vp254")
 
 [node name="ceiling" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42, 0)
