@@ -154,8 +154,7 @@ func instantiate_mesh_from_layouts(mesh):
 		mesh_from_layouts.owner = current_scene
 	else:
 		print("No active scene!")
-	
-	
+		
 func delete_layout_button_pressed():
 	print("Delete Layout Button Pressed: ")
 	
@@ -432,8 +431,7 @@ func instantiate_dungeon_gridmap():
 			n.owner = current_scene
 	else:
 		print("No active scene!")	
-		
-		
+			
 func instantiate_frozen_caves_gridmap():
 	var dungeon_menu_inst = dungeon_menu.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
@@ -454,14 +452,7 @@ func instantiate_frozen_caves_gridmap():
 			n.owner = current_scene
 	else:
 		print("No active scene!")			
-		
-		
-		
-		
-		
-		
-		
-
+			
 func create_first_person_controller():
 	print("Inside first person controller creator")
 	var third_person_controller = THIRD_PERSON_PLAYER.instantiate()
@@ -485,17 +476,7 @@ func create_first_person_controller():
 
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
-	
-#func save_to_layouts_function(gridmap, mesh):
-	#if !item_list:
-		#item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
-		#
-	#stored_gridmaps.append(gridmap)
-	#stored_meshes.append(mesh)
-	#
-	#item_list.add_item("Generated Layout " + str(item_list_counter), DUNGEON_GENERATOR_ICON, true)
-	#item_list_counter+=1
-	
+		
 func save_to_layouts_function(gridmap, mesh):
 	if !item_list:
 		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
@@ -515,8 +496,7 @@ func save_to_layouts_function(gridmap, mesh):
 		print("Layout Key: ", layout_dict)
 		for key in layout_dict:
 			print("   ", key, ": ", layout_dict[key])
-			
-			
+						
 func confirmation_dialog_setup():
 	# Create the ConfirmationDialog dynamically
 	confirmation_dialog = ConfirmationDialog.new()
@@ -547,7 +527,6 @@ func _on_confirmation_dialog_custom_action(action: String):
 		"both":
 			instantiate_gridmap_from_layouts(spawning_gridmap)
 			instantiate_mesh_from_layouts(spawning_mesh)
-
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")

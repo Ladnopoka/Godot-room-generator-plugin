@@ -12,11 +12,11 @@ extends Node3D
 @export var room_margin = 1 #minimum distance the rooms must keep from each other
 @export var room_recursion_tries = 15
 
-@export_range(0,1) var survival_chance = 0.25
-@export_multiline var generate_with_custom_seed = "" : set = set_seed
-func set_seed(val):
-	generate_with_custom_seed = val
-	seed(val.hash())
+#@export_range(0,1) var survival_chance = 0.25
+#@export_multiline var generate_with_custom_seed = "" : set = set_seed
+#func set_seed(val):
+	#generate_with_custom_seed = val
+	#seed(val.hash())
 	
 @export var generate_layout = false : set = set_start_generate_layout
 @export var mesh_theme : MeshTheme = MeshTheme.dungeons
@@ -98,7 +98,7 @@ func generate_tiles():
 		return
 	room_tiles.clear() #need to clear
 	room_positions.clear() #need to clear 
-	if generate_with_custom_seed: set_seed(generate_with_custom_seed)
+	#if generate_with_custom_seed: set_seed(generate_with_custom_seed)
 	
 	visualize_border()
 	for i in room_number: # for every room number
@@ -154,8 +154,8 @@ func generate_tiles():
 		for c in delaunay_graph.get_point_connections(p):
 			if c > p:
 				var kill = randf()
-				if survival_chance > kill:
-					tunnel_graph.connect_points(p, c)
+				#if survival_chance > kill:
+					#tunnel_graph.connect_points(p, c)
 					
 	create_tunnels(tunnel_graph)
 	
@@ -238,9 +238,6 @@ func generate_room(rec: int):
 	var avg_z : float = start_pos.z + (float(height)/2)
 	var pos : Vector3 = Vector3(avg_x, 0, avg_z)
 	room_positions.append(pos)
-
-
-
 
 #creating/deleting dungeon tiles below
 func handle_none(cell, dir):
