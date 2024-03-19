@@ -137,24 +137,6 @@ func instantiate_gridmap_from_layouts(gridmap):
 	else:
 		print("No active scene!")
 		
-func instantiate_mesh_from_layouts(mesh):
-	var current_scene = get_editor_interface().get_edited_scene_root()
-	var mesh_from_layouts = mesh
-	
-	if current_scene:
-		mesh_from_layouts.name = "MeshTextures_" + str(current_scene.get_child_count())
-
-		# For undo/redo functionality:
-		undo_redo.create_action("Adding gridmap from layouts")
-		undo_redo.add_do_method(current_scene, "add_child", mesh_from_layouts)
-		undo_redo.add_do_reference(mesh_from_layouts)
-		undo_redo.add_undo_method(current_scene, "remove_child", mesh_from_layouts)
-		undo_redo.commit_action(true)
-		mesh_from_layouts.visible = true
-		mesh_from_layouts.owner = current_scene
-	else:
-		print("No active scene!")
-		
 func delete_layout_button_pressed():
 	print("Delete Layout Button Pressed: ")
 	
@@ -477,14 +459,15 @@ func create_first_person_controller():
 func plugin_connection(gridmap):
 	print("Plugin connected to the dungeon menu")
 		
-func save_to_layouts_function(gridmap, mesh):
+func save_to_layouts_function(gridmap, mesh, mesh_theme):
 	if !item_list:
 		item_list = dockedScene.get_node("TabContainer/Layouts/ItemList")
 	
 	# Create a dictionary for the current dungeon layout and its mesh, then append it
 	var dungeon_dict = {
 		"gridmap": gridmap,
-		"mesh": mesh}
+		"mesh": mesh,
+		"mesh_theme": mesh_theme}
 	stored_layouts.append(dungeon_dict)
 	
 	# Add an item to the ItemList for this dungeon layout
@@ -500,33 +483,53 @@ func save_to_layouts_function(gridmap, mesh):
 func confirmation_dialog_setup():
 	# Create the ConfirmationDialog dynamically
 	confirmation_dialog = ConfirmationDialog.new()
-	confirmation_dialog.dialog_text = "Do you want to spawn the Gridmap, Mesh, or Both?"
+	confirmation_dialog.dialog_text = "Are you sure you want to use this dungeon layout?"
 	add_child(confirmation_dialog)
-
+	
+	confirmation_dialog.get_ok_button().text = "Yes"
 	# Add buttons for choices
-	confirmation_dialog.add_button("Gridmap", true, "gridmap")
-	confirmation_dialog.add_button("Mesh", true, "mesh")
-	confirmation_dialog.add_button("Both", true, "both")
+	#confirmation_dialog.add_button("Gridmap", true, "gridmap")
+	#confirmation_dialog.add_button("Mesh", true, "mesh")
+	#confirmation_dialog.add_button("Layout", true, "layout")
 
 	# Connect signals for the buttons
-	confirmation_dialog.connect("custom_action", _on_confirmation_dialog_custom_action)
+	confirmation_dialog.connect("confirmed", _on_confirmation_dialog_confirmed)
 	
-func _on_confirmation_dialog_custom_action(action: String):
+func _on_confirmation_dialog_confirmed():
+	# Assuming you have a function to retrieve the selected layout details
 	var selected_index = item_list.get_selected_items()[0]
 	var layout_dict = stored_layouts[selected_index]  # Extract the selected layout
 	var spawning_gridmap = layout_dict["gridmap"]
 	var spawning_mesh = layout_dict["mesh"]
+	var spawning_mesh_theme = layout_dict["mesh_theme"]
 	spawning_mesh.set_script(load("res://addons/room-generator/dungeon/DungeonMesh.gd"))
+
+	# Spawn both gridmap and mesh upon confirmation
+	instantiate_gridmap_from_layouts(spawning_gridmap)
+	instantiate_mesh_from_layouts(spawning_mesh, spawning_mesh_theme)
+
+func instantiate_mesh_from_layouts(mesh, spawning_mesh_theme):
+	var current_scene = get_editor_interface().get_edited_scene_root()
+	var mesh_from_layouts = mesh
 	
-	print("spawning dat mesh yoyo")
-	match action:
-		"gridmap":
-			instantiate_gridmap_from_layouts(spawning_gridmap)
-		"mesh":
-			instantiate_mesh_from_layouts(spawning_mesh)
-		"both":
-			instantiate_gridmap_from_layouts(spawning_gridmap)
-			instantiate_mesh_from_layouts(spawning_mesh)
+	if current_scene:
+		if spawning_mesh_theme == 0:
+			mesh_from_layouts.name = "Dungeon_" + str(current_scene.get_child_count())
+		if spawning_mesh_theme == 1:
+			mesh_from_layouts.name = "WoodenCabins_" + str(current_scene.get_child_count())
+		if spawning_mesh_theme == 2:
+			mesh_from_layouts.name = "FrozenCaves_" + str(current_scene.get_child_count())
+
+		# For undo/redo functionality:
+		undo_redo.create_action("Adding gridmap from layouts")
+		undo_redo.add_do_method(current_scene, "add_child", mesh_from_layouts)
+		undo_redo.add_do_reference(mesh_from_layouts)
+		undo_redo.add_undo_method(current_scene, "remove_child", mesh_from_layouts)
+		undo_redo.commit_action(true)
+		mesh_from_layouts.visible = true
+		mesh_from_layouts.owner = current_scene
+	else:
+		print("No active scene!")
 
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")

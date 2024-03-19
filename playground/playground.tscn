@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://b1usrkdp7bvml"]
+[gd_scene load_steps=2 format=3 uid="uid://b1usrkdp7bvml"]
+
+[ext_resource type="PackedScene" uid="uid://8ubsrivsr200" path="res://addons/room-generator/player/third_person_player.tscn" id="2_0vwle"]
 
 [node name="Playground" type="Node3D"]
+
+[node name="Player_1" parent="." instance=ExtResource("2_0vwle")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.82017, 0.769208, 6.766)

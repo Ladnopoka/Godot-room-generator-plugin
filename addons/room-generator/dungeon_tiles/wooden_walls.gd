@@ -28,4 +28,3 @@ func remove_door_left():
 	door_left.free()
 func remove_door_right():
 	door_right.free()
-	

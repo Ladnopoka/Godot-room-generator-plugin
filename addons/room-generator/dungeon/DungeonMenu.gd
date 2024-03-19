@@ -65,7 +65,7 @@ func set_save_to_layouts(val):
 	if gridmap:
 		var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
 		var mesh_copy = dungeon_mesh.duplicate(true) # Perform a deep copy
-		emit_signal("save_to_layouts_signal", gridmap_copy, mesh_copy)
+		emit_signal("save_to_layouts_signal", gridmap_copy, mesh_copy, mesh_theme)
 	else:
 		print("GridMap is empty, can't save layout.")
 

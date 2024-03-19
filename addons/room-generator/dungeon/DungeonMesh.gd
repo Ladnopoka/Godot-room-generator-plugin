@@ -72,10 +72,10 @@ func _ready():
 		pass
 	else:
 		var gridmap = get_gridmap_by_pattern_name("GridMap_") # Attempt to find a GridMap node by name pattern
-		print("else gridmap", gridmap)
 		if gridmap:
-			create_dungeon(gridmap)
 			gridmap.hide()
+			var mesh_theme = self.name
+			create_dungeon(gridmap, mesh_theme)
 
 #check for gridmaps in scene
 func get_gridmap_by_pattern_name(pattern: String) -> Node:
@@ -90,13 +90,30 @@ func set_start(val):
 	if Engine.is_editor_hint():
 		print("Dungeon Mesh Script Activated Through set_start! ", val)#create_dungeon(gridmap)
 
-func create_dungeon(gridmap):
+func create_dungeon(gridmap, mesh_theme):
 	print("in create_dungeon: ", gridmap)
 	for c in get_children():
 		remove_child(c)
 		c.queue_free()
 	
 	var t : int = 0
+	
+	print("Mesh Theme: ", mesh_theme)
+
+	var node_name = mesh_theme  # Assume this is the name of the node, like "Dungeons_1"
+	var name_parts = node_name.split("_")  # This splits the name into parts using "_" as the delimiter
+	var mesh_cell_scene
+	# Now, name_parts[0] should contain the first word of the name
+	match name_parts[0]:
+		"Dungeon":
+			mesh_cell_scene = dungeon_cell_scene
+		"FrozenCaves":
+			mesh_cell_scene = frozen_caves_cell_scene
+		"WoodenCabins":
+			mesh_cell_scene = wooden_cabins_cell_scene
+		_:
+			print("Unknown node type of mesh.")
+		
 	
 	#this is to offset the instances position to allign with the cells in 
 	#the grid map, since they are centered, but our objects are not.
@@ -105,7 +122,7 @@ func create_dungeon(gridmap):
 		
 		#if the item selected are the ones being used (0-3, 3 excluded because its border cells)
 		if cell_index <= 2 && cell_index >= 0: 
-			var dungeon_cell = frozen_caves_cell_scene.instantiate()
+			var dungeon_cell = mesh_cell_scene.instantiate()
 			dungeon_cell.position = Vector3(c) + Vector3(0.5, 0, 0.5) #this position because cells are not perfectly alligned
 			add_child(dungeon_cell)
 			t += 1
