@@ -60,8 +60,6 @@ func _ready():
 		gridmap.hide()
 
 func set_save_to_layouts(val):
-	print("set save to layouts function activated")	
-	#if gridmap.get_used_cells().size() > 0:
 	if gridmap:
 		var gridmap_copy = gridmap.duplicate(true) # Perform a deep copy
 		var mesh_copy = dungeon_mesh.duplicate(true) # Perform a deep copy
@@ -104,14 +102,14 @@ func generate_tiles():
 	for i in room_number: # for every room number
 		generate_room(room_recursion_tries)
 	
-	# Below code is the minimum spanning tree algorithm
-	var room_pv2 : PackedVector2Array = []
+	# Below code is the Dlaunay and minimum spanning tree algorithms
+	var room_positions_v2 : PackedVector2Array = []
 	var delaunay_graph : AStar2D = AStar2D.new() #AStar2D requires and ID and a position for each point
 	var min_span_tree_graph : AStar2D = AStar2D.new()
 	
 	#turn room positions into Vector2's, this only places the points
 	for p in room_positions:
-		room_pv2.append(Vector2(p.x, p.z))
+		room_positions_v2.append(Vector2(p.x, p.z))
 		delaunay_graph.add_point(delaunay_graph.get_available_point_id(), Vector2(p.x, p.z))
 		min_span_tree_graph.add_point(min_span_tree_graph.get_available_point_id(), Vector2(p.x, p.z))
 	
@@ -119,7 +117,7 @@ func generate_tiles():
 	# triangulate_delaunay() function here takes in a packed Vector2 array
 	# and returns an array of integers in a form of a packed int32 array
 	# we need to conver this into a regular array first
-	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_pv2))
+	var delaunay_triangulation : Array = Array(Geometry2D.triangulate_delaunay(room_positions_v2))
 	
 	# explained more in depth in the report, but this is basically the Delaunay graph
 	for i in delaunay_triangulation.size()/3: # 3 for number of triangles
@@ -130,10 +128,10 @@ func generate_tiles():
 		delaunay_graph.connect_points(p2, p3)
 		delaunay_graph.connect_points(p1, p3)
 		
-	var visited_points : PackedInt32Array = []
+	var visited_points : PackedInt32Array = [] #store points by ID and not their positions
 	visited_points.append(randi() % room_positions.size()) #this will give us a random point in graph
 	while visited_points.size() != min_span_tree_graph.get_point_count(): # loop until size of visited points is higher than graph
-		var possible_connections : Array[PackedInt32Array] = []
+		var possible_connections : Array[PackedInt32Array] = [] #to store each connection as an array of integers
 		for vp in visited_points: #for every visited point in points
 			for c in delaunay_graph.get_point_connections(vp): #for each connection within visited point
 				if !visited_points.has(c): #make sure the point is not visited already
@@ -142,18 +140,19 @@ func generate_tiles():
 		
 		var connection : PackedInt32Array = possible_connections.pick_random()
 		for pc in possible_connections: #for each possible connection (pc)
-			if room_pv2[pc[0]].distance_squared_to(room_pv2[pc[1]]) < room_pv2[connection[0]].distance_squared_to(room_pv2[connection[1]]):
+			if room_positions_v2[pc[0]].distance_squared_to(room_positions_v2[pc[1]]) < room_positions_v2[connection[0]].distance_squared_to(room_positions_v2[connection[1]]):
 				connection = pc
-				
-		visited_points.append(connection[1])
-		min_span_tree_graph.connect_points(connection[0], connection[1])
-		delaunay_graph.disconnect_points(connection[0], connection[1])
+		
+		#Now that we have shortest connection selected, we are adding its second point to the visited points array
+		visited_points.append(connection[1]) 
+		min_span_tree_graph.connect_points(connection[0], connection[1]) #connect 2 ends of the edge
+		delaunay_graph.disconnect_points(connection[0], connection[1]) 	#disconnect them in the delaunay graph
 		
 	var tunnel_graph = min_span_tree_graph
-	for p in delaunay_graph.get_point_ids():
-		for c in delaunay_graph.get_point_connections(p):
-			if c > p:
-				var kill = randf()
+	#for p in delaunay_graph.get_point_ids():
+		#for c in delaunay_graph.get_point_connections(p):
+			#if c > p:
+				#var kill = randf()
 				#if survival_chance > kill:
 					#tunnel_graph.connect_points(p, c)
 					
@@ -239,7 +238,7 @@ func generate_room(rec: int):
 	var pos : Vector3 = Vector3(avg_x, 0, avg_z)
 	room_positions.append(pos)
 
-#creating/deleting dungeon tiles below
+#creating/deleting dungeon tiles below, will reduce the number of lines later
 func handle_none(cell, dir):
 	cell.call("remove_door_"+dir)
 func handle_00(cell, dir):
