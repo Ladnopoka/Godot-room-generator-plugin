@@ -160,15 +160,16 @@ func generate_tiles():
 	
 func create_tunnels(tunnel_graph):
 	# //// this part of the code is for marking the doors on the rooms
-	var tunnels : Array[PackedVector3Array] = []
-	for p in tunnel_graph.get_point_ids():
-		for c in tunnel_graph.get_point_connections(p):
-			if c > p:
+	var tunnels : Array[PackedVector3Array] = [] # used to store the two door tiles positions
+	for p in tunnel_graph.get_point_ids(): 	#loop to get access to our connections
+		for c in tunnel_graph.get_point_connections(p): #for connection
+			if c > p: #to make sure we dont run our code on the same connections
 				var room_from : PackedVector3Array = room_tiles[p]
 				var room_to : PackedVector3Array = room_tiles[c]
 				var tile_from : Vector3 = room_from[0]
 				var tile_to : Vector3 = room_to[0]
 				
+				#to find shortest connection
 				for t in room_from:
 					if t.distance_squared_to(room_positions[c]) < tile_from.distance_squared_to(room_positions[c]):
 							tile_from = t
@@ -189,6 +190,7 @@ func create_tunnels(tunnel_graph):
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	
 	#Define the obstacle tiles here
+	#Basically sets all of our room tiles as solid objects that can't be passed
 	for t in gridmap.get_used_cells_by_item(0):
 		astar.set_point_solid(Vector2i(t.x, t.z))
 	

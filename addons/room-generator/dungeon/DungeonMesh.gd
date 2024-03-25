@@ -1,9 +1,4 @@
-#@tool
 extends Node3D
-#
-#@export var generate_mesh : bool = false : set = set_start
-#@export var gridmap_path : NodePath
-#@onready var gridmap : GridMap# = get_node(gridmap_path)
 
 var directions = {
 	"up": Vector3i.FORWARD,
