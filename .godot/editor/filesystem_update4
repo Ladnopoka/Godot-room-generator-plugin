@@ -1,4 +1,2 @@
-res://playground/playground.tscn
+res://node_3d.tscn
 res://addons/room-generator/dungeon_tiles/dungeon_tiles_ladno.tres
-res://addons/room-generator/dungeon/DungeonMenu.gd
-res://addons/room-generator/dungeon/DungeonMesh.gd
