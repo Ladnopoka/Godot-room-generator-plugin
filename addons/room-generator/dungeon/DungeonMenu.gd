@@ -11,12 +11,6 @@ extends Node3D
 @export var room_number = 4
 @export var room_margin = 1 #minimum distance the rooms must keep from each other
 @export var room_recursion_tries = 15
-
-#@export_range(0,1) var survival_chance = 0.25
-#@export_multiline var generate_with_custom_seed = "" : set = set_seed
-#func set_seed(val):
-	#generate_with_custom_seed = val
-	#seed(val.hash())
 	
 @export var generate_layout = false : set = set_start_generate_layout
 @export var mesh_theme : MeshTheme = MeshTheme.dungeons
@@ -50,7 +44,6 @@ signal save_to_layouts_signal
 func set_start_generate_mesh(a):
 	if Engine.is_editor_hint():
 		create_dungeon_mesh()
-		#emit_signal("dungeon_generated", grid_map) #eventually generate a whole dungeon
 		
 func _ready():
 	if Engine.is_editor_hint():
