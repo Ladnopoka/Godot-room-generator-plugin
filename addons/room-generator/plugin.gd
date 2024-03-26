@@ -41,7 +41,7 @@ var stored_layouts = []
 
 var wall_button: Button
 var first_person_controller: Button
-var isometric_controller: Button
+#var isometric_controller: Button
 var use_layout_button: Button
 var delete_layout_button: Button
 var dungeon_menu_button: MenuButton
@@ -62,7 +62,7 @@ var undo_redo = get_undo_redo()
 
 func _enter_tree():
 	dockedScene = panel.instantiate()
-	print("RoomGenerator panel scene instantiated!")
+	print("Dungeon Forge extension is enabled!")
 	
 	tab_container = dockedScene.get_node("TabContainer")
 	tab_container.visible = true
@@ -78,7 +78,7 @@ func _enter_tree():
 func setup_button_connections():
 	# Connect the toggle button signal
 	first_person_controller = dockedScene.get_node("TabContainer/Player Controller/First Person Player Controller")
-	isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
+	#isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
 	use_layout_button = dockedScene.get_node("TabContainer/Layouts/UseLayoutButton")
 	delete_layout_button = dockedScene.get_node("TabContainer/Layouts/DeleteLayoutButton")
 	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
@@ -87,7 +87,7 @@ func setup_button_connections():
 	frozen_caves_menu_button = dockedScene.get_node("TabContainer/Models/FrozenCaveGeneratorMenu")	
 
 	first_person_controller.connect("pressed", create_first_person_controller)
-	isometric_controller.connect("pressed", create_isometric_controller)
+	#isometric_controller.connect("pressed", create_isometric_controller)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	frozen_caves_menu_button.connect("pressed", frozen_caves_menu_button_pressed)
 	use_layout_button.connect("pressed", use_layout_button_pressed)
@@ -317,10 +317,10 @@ func _exit_tree():
 	dockedScene.free()
 
 func get_plugin_name():
-	return "RoomGenerator"
+	return "Dungeon Forge"
 
 func get_plugin_description():
-	return "An editor for creating 3D rooms, tunnels, gridmaps and more."
+	return "A Godot 4.2 extension called Dungeon Forge. This extension has a UI which appears in the bottom right of the editor. It can spawn dungeons with different themes, and save these dungeons for later use. It can spawn player controllers and more!"
 	
 func create_isometric_controller():
 	print("Isometric player controller functionality to be added here")
@@ -436,7 +436,6 @@ func instantiate_frozen_caves_gridmap():
 		print("No active scene!")			
 			
 func create_first_person_controller():
-	print("Inside first person controller creator")
 	var third_person_controller = THIRD_PERSON_PLAYER.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 	
