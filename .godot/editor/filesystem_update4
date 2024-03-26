@@ -4,3 +4,4 @@ res://addons/room-generator/plugin.gd
 res://addons/room-generator/panel.tscn
 res://playground/playground.tscn
 res://addons/room-generator/player/third_person_player.gd
+res://addons/room-generator/plugin.cfg

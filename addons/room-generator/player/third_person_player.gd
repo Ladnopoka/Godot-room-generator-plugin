@@ -18,6 +18,9 @@ const FOV_CHANGE = 1.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
 
+# Levitation delay
+var levitate_delay = 2.0 # Seconds to delay before applying gravity
+
 @onready var head = $Head
 @onready var camera_3d = $Head/Camera3D
 
@@ -31,6 +34,11 @@ func _unhandled_input(event):
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 func _physics_process(delta):
+	# Decrease levitate_delay over time
+	if levitate_delay > 0:
+		levitate_delay -= delta
+		return # Skip the rest of the physics processing while delaying
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
