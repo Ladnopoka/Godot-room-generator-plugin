@@ -9,6 +9,11 @@ const dungeon_corner_in = preload("res://addons/room-generator/dungeon_tiles/dun
 const dungeon_corner_out = preload("res://addons/room-generator/dungeon_tiles/dungeon_corner_out.tscn")
 const dungeon_floor = preload("res://addons/room-generator/dungeon_tiles/dungeon_floor.tscn")
 const dungeon_wall = preload("res://addons/room-generator/dungeon_tiles/dungeon_wall.tscn")
+#newere dungeon textures
+const DUNGEON_CEILING_LADNO = preload("res://addons/room-generator/dungeon_tiles/dungeon_ceiling_ladno.tscn")
+const DUNGEON_DOOR_UP_LADNO = preload("res://addons/room-generator/dungeon_tiles/dungeon_door_up_ladno.tscn")
+const DUNGEON_FLOOR_LADNO = preload("res://addons/room-generator/dungeon_tiles/dungeon_floor_ladno.tscn")
+const DUNGEON_WALL_UP_LADNO = preload("res://addons/room-generator/dungeon_tiles/dungeon_wall_up_ladno.tscn")
 #wooden cabin textures
 const WOODEN_CABIN_CEILING = preload("res://addons/room-generator/texture_tiles/wooden_cabin_ceiling.tscn")
 const WOODEN_CABIN_DOOR = preload("res://addons/room-generator/texture_tiles/wooden_cabin_door.tscn")
@@ -288,9 +293,9 @@ func setup_dungeon_menu_button():
 	dungeon_popup_menu.add_theme_stylebox_override("panel", style_box)
 	
 	dungeon_popup_menu.add_item("Wall")
-	dungeon_popup_menu.add_item("Corner IN")
+	dungeon_popup_menu.add_item("Door")
+	dungeon_popup_menu.add_item("Ceiling")
 	dungeon_popup_menu.add_item("Floor")
-	dungeon_popup_menu.add_item("Corner OUT")
 	dungeon_popup_menu.add_item("GridMap Generator")
 	dungeon_popup_menu.connect("id_pressed", _on_dungeon_model_selected)
 		
@@ -326,7 +331,7 @@ func create_isometric_controller():
 	print("Isometric player controller functionality to be added here")
 
 func instantiate_dungeon_wall():
-	var _dungeon_wall = dungeon_wall.instantiate()
+	var _dungeon_wall = DUNGEON_WALL_UP_LADNO.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 
 	if current_scene:
@@ -341,9 +346,9 @@ func instantiate_dungeon_wall():
 		_dungeon_wall.owner = current_scene
 	else:
 		print("No active scene!")
-		
+
 func instantiate_dungeon_corner_in():
-	var _dungeon_corner_in = dungeon_corner_in.instantiate()
+	var _dungeon_corner_in = DUNGEON_DOOR_UP_LADNO.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 
 	if current_scene:
@@ -360,7 +365,7 @@ func instantiate_dungeon_corner_in():
 		print("No active scene!")
 
 func instantiate_dungeon_floor():
-	var _dungeon_floor = dungeon_floor.instantiate()
+	var _dungeon_floor = DUNGEON_CEILING_LADNO.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 
 	if current_scene:
@@ -377,7 +382,7 @@ func instantiate_dungeon_floor():
 		print("No active scene!")	
 		
 func instantiate_dungeon_corner_out():
-	var _dungeon_corner_out = dungeon_corner_out.instantiate()
+	var _dungeon_corner_out = DUNGEON_FLOOR_LADNO.instantiate()
 	var current_scene = get_editor_interface().get_edited_scene_root()
 
 	if current_scene:

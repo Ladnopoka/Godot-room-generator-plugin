@@ -223,7 +223,7 @@ func generate_room(rec: int):
 	for r in height: #for every row in height
 		for c in width:	#for every column in width
 			var pos : Vector3i = start_pos + Vector3i(c, 0, r) # variable for the position
-			gridmap.set_cell_item(pos, 0) #set texture for dungeon walls????????
+			gridmap.set_cell_item(pos, 0) #set texture for dungeon walls
 			room.append(pos) 	#add to room array for each iteration
 	room_tiles.append(room) #append whole room to the tiles
 	
