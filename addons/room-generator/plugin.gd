@@ -538,10 +538,3 @@ func instantiate_mesh_from_layouts(mesh, spawning_mesh_theme):
 func setup_preview():
 	var viewport = dockedScene.get_node("TabContainer/Preview/SubViewportContainer/SubViewport")
 	viewport.size = Vector2(410, 370)  # Set the size of the viewport
-	
-	#var character = THIRD_PERSON_PLAYER.instantiate()
-	#viewport.add_child(character)
-	#viewport.size = Vector2(500, 400)  # Set the size of the viewport
-	#
-	#var camera = character.get_node("Head/Camera3D")
-	#viewport.Camera3D
