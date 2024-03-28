@@ -52,10 +52,6 @@ func _physics_process(delta):
 		speed = SPRINT_SPEED
 	else:
 		speed = WALK_SPEED
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	#var input_dir = Input.get_vector("Left", "Right", "Forward", "Backward")
 	
 	var input_dir = Vector2(
 		int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A)),

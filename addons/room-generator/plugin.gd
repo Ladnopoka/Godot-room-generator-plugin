@@ -83,7 +83,6 @@ func _enter_tree():
 func setup_button_connections():
 	# Connect the toggle button signal
 	first_person_controller = dockedScene.get_node("TabContainer/Player Controller/First Person Player Controller")
-	#isometric_controller = dockedScene.get_node("TabContainer/Player Controller/Isometric Player Controller")
 	use_layout_button = dockedScene.get_node("TabContainer/Layouts/UseLayoutButton")
 	delete_layout_button = dockedScene.get_node("TabContainer/Layouts/DeleteLayoutButton")
 	dungeon_menu_button = dockedScene.get_node("TabContainer/Models/DungeonGeneratorMenu")
@@ -92,7 +91,6 @@ func setup_button_connections():
 	frozen_caves_menu_button = dockedScene.get_node("TabContainer/Models/FrozenCaveGeneratorMenu")	
 
 	first_person_controller.connect("pressed", create_first_person_controller)
-	#isometric_controller.connect("pressed", create_isometric_controller)
 	wooden_cabin_menu_button.connect("pressed", wooden_cabin_menu_button_pressed)
 	frozen_caves_menu_button.connect("pressed", frozen_caves_menu_button_pressed)
 	use_layout_button.connect("pressed", use_layout_button_pressed)
@@ -491,10 +489,6 @@ func confirmation_dialog_setup():
 	add_child(confirmation_dialog)
 	
 	confirmation_dialog.get_ok_button().text = "Yes"
-	# Add buttons for choices
-	#confirmation_dialog.add_button("Gridmap", true, "gridmap")
-	#confirmation_dialog.add_button("Mesh", true, "mesh")
-	#confirmation_dialog.add_button("Layout", true, "layout")
 
 	# Connect signals for the buttons
 	confirmation_dialog.connect("confirmed", _on_confirmation_dialog_confirmed)
