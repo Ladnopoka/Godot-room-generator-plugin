@@ -34,4 +34,4 @@ The demonstration of the application can be viewed below:
 **itch.io**: https://ladnogames.itch.io/ <br>
 **YouTube**: https://www.youtube.com/@LadnoDev <br>
 **X**: https://x.com/Ladnopokaa <br>
-**Discord**: Ladno#3352
+**Discord**: **Discord**: https://discord.gg/BPsncTZe
